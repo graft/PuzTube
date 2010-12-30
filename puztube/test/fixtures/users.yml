@@ -1,0 +1,21 @@
+
+graft:
+  id:                        1
+  login:                     graft
+  email:                     faplap@gmail.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          74987c27ce34ca1b8236ffb31a78b8f7c86910b4 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s %>
+  remember_token:            77de68daecd823babbb58edb1c8e14d7106e83bb
+      
+stack:
+  id:                        2
+  login:                     stack
+  email:                     astazangasta@yahoo.com
+  salt:                      356a192b7913b04c54574d18c28d46e6395428ab # SHA1('0')
+  crypted_password:          74987c27ce34ca1b8236ffb31a78b8f7c86910b4 # 'monkey'
+  created_at:                <%= 5.days.ago.to_s :db  %>
+  remember_token_expires_at: <%= 1.days.from_now.to_s %>
+  remember_token:            77de68daecd823babbb58edb1c8e14d7106e83bb
+      

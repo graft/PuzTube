@@ -1,0 +1,28 @@
+<h1>Listing rounds</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Hint</th>
+    <th>Captain</th>
+    <th>Answer</th>
+    <th>Puzzles</th>
+  </tr>
+
+<% @rounds.each do |round| %>
+  <tr>
+    <td><%=h round.name %></td>
+    <td><%=h round.hint %></td>
+    <td><%=h round.captain %></td>
+    <td><%=h round.answer %></td>
+    <td><%=h round.puzzles.size %></td>
+    <td><%= link_to 'Show', round %></td>
+    <td><%= link_to 'Edit', edit_round_path(round) %></td>
+    <td><%= link_to 'Destroy', round, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New round', new_round_path %>

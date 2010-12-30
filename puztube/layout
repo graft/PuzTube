@@ -1,0 +1,28 @@
+ROUNDS consist of sets of PUZZLES
+	round info:
+	name
+	hint
+	captain
+	answer
+
+a PUZZLE contains a set of WORKSPACES and a CHAT
+	puzzle info:
+	name
+	meta
+	round_id
+	status
+	captain
+	hint
+	answer
+
+a CHAT contains a bunch of text from various users
+	
+
+a WORKSPACE - hum - let's get the rest done first, okay?
+
+a USER contains the following information:
+	working_on
+	image
+	location
+	name
+	

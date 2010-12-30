@@ -1,0 +1,38 @@
+<p>
+  <b>Name:</b>
+  <%=h @puzzle.name %>
+</p>
+
+<p>
+  <b>Hint:</b>
+  <%=h @puzzle.hint %>
+</p>
+
+<p>
+  <b>Captain:</b>
+  <%=h @puzzle.captain %>
+</p>
+
+<p>
+  <b>Answer:</b>
+  <%=h @puzzle.answer %>
+</p>
+
+<p>
+  <b>Meta:</b>
+  <%=h @puzzle.meta %>
+</p>
+
+<p>
+  <b>Round:</b>
+  <%=h @puzzle.round_id %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%=h @puzzle.status %>
+</p>
+
+
+<%= link_to 'Edit', edit_puzzle_path(@puzzle) %> |
+<%= link_to 'Back', @round %>

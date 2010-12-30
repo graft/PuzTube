@@ -1,0 +1,32 @@
+<h1>Listing puzzles</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Hint</th>
+    <th>Captain</th>
+    <th>Answer</th>
+    <th>Meta</th>
+    <th>Round</th>
+    <th>Status</th>
+  </tr>
+
+<% @puzzles.each do |puzzle| %>
+  <tr>
+    <td><%=h puzzle.name %></td>
+    <td><%=h puzzle.hint %></td>
+    <td><%=h puzzle.captain %></td>
+    <td><%=h puzzle.answer %></td>
+    <td><%=h puzzle.meta %></td>
+    <td><%=h puzzle.round_id %></td>
+    <td><%=h puzzle.status %></td>
+    <td><%= link_to 'Show', puzzle %></td>
+    <td><%= link_to 'Edit', edit_puzzle_path(puzzle) %></td>
+    <td><%= link_to 'Destroy', puzzle, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New puzzle', new_puzzle_path %>

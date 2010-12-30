@@ -1,0 +1,50 @@
+<p>
+  <b>Name:</b>
+  <%=h @round.name %>
+</p>
+
+<p>
+  <b>Hint:</b>
+  <%=h @round.hint %>
+</p>
+
+<p>
+  <b>Captain:</b>
+  <%=h @round.captain %>
+</p>
+
+<p>
+  <b>Answer:</b>
+  <%=h @round.answer %>
+</p>
+
+<% if @round.puzzles.size > 0 %>
+<table>
+  <tr>
+    <th>Round</th>
+    <th>Number</th>
+    <th>Name</th>
+    <th>Url</th>
+    <th>Answer</th>
+    <th>Status</th>
+  </tr>
+
+<% @round.puzzles.each do |puzzle| %>
+  <tr>
+    <td><%=h puzzle.round_id %></td>
+    <td><%=h puzzle.name %></td>
+    <td><%=h puzzle.url %></td>
+    <td><%=h puzzle.answer %></td>
+    <td><%=h puzzle.status %></td>
+    <td><%= link_to 'Show', puzzle %></td>
+    <td><%= link_to 'Edit', edit_puzzle_path(puzzle) %></td>
+    <td><%= link_to 'Destroy', puzzle, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+
+</table>
+<% end %>
+
+<%= link_to 'Add puzzle', :action => 'new_puzzle', :id => @round.id %> <br>
+<%= link_to 'Edit', edit_round_path(@round) %> |
+<%= link_to 'Back', rounds_path %>
