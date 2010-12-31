@@ -2,7 +2,7 @@ class CreateChats < ActiveRecord::Migration
   def self.up
     create_table :chats do |t|
       t.string :user
-      t.integer :puzzle_id
+      t.string :chat_id
       t.string :text
 
       t.timestamps

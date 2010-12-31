@@ -13,7 +13,7 @@
   </p>
   <p>
     <%= f.label :captain %><br />
-    <%= collection_select(:round,:captain,User.all,:login,:login,{:prompt=>true}) %>
+    <%= collection_select(:puzzle,:captain,User.all,:login,:login,{:prompt=>true}) %>
   </p>
   <p>
     <%= f.label :answer %><br />
@@ -36,4 +36,4 @@
   </p>
 <% end %>
 
-<%= link_to 'Back', puzzles_path %>
+<%= link_to 'Back', @round %>
