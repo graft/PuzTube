@@ -2329,3 +2329,214 @@
 [10244] 30 Dec 22:38:35 - 2 clients connected (0 slaves), 534272 bytes in use
 [10244] 30 Dec 22:38:40 - 2 clients connected (0 slaves), 534272 bytes in use
 [10244] 30 Dec 22:38:45 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:38:50 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:38:55 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:00 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:05 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:10 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:15 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:20 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:25 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:30 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:31 # SIGTERM received, scheduling shutting down...
+[10244] 30 Dec 22:39:31 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:31 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:31 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:31 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:32 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:32 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:32 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:32 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:33 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:33 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:33 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:33 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:34 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:34 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:34 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:34 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 - 2 clients connected (0 slaves), 534272 bytes in use
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:35 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:35 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:35 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:35 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information
+[10244] 30 Dec 22:39:36 # User requested shutdown, saving DB...
+[10244] 30 Dec 22:39:36 # Failed saving the DB: Permission denied
+[10244] 30 Dec 22:39:36 # Error trying to save the DB, can't exit
+[10244] 30 Dec 22:39:36 # SIGTERM received but errors trying to shut down the server, check the logs for more information

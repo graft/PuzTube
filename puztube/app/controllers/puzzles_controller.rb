@@ -15,13 +15,14 @@ class PuzzlesController < ApplicationController
   def show
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
+    @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 10)
 
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @puzzle }
     end
   end
-
+  
   # GET /puzzles/new
   # GET /puzzles/new.xml
   def new
@@ -33,6 +34,22 @@ class PuzzlesController < ApplicationController
     end
   end
 
+  def chat
+    @puzzle = Puzzle.find(params[:id])
+    @chat = Chat.new( {
+                       :user => current_user.login,
+                       :text => params[:chat_input],
+                       :chat_id => @puzzle.chat_id
+                      } )
+    if (@chat.save)
+      # how do we render this?
+      Juggernaut.publish(@puzzle.chat_id,{:user => @chat.user,
+                                          :dateformat => @chat.dateformat,
+                                        :text => @chat.text})
+    end
+    render :nothing => true
+  end
+  
   # GET /puzzles/1/edit
   def edit
     @puzzle = Puzzle.find(params[:id])

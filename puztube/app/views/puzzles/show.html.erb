@@ -1,3 +1,18 @@
+<%= javascript_include_tag 'prototype' %>
+
+<!--<script src="http://localhost:8080/application.js" type="text/javascript" charset="utf-8"></script>-->
+  <script src="http://localhost:8080/json.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:8080/socket_io.js" type="text/javascript" charset="utf-8"></script>
+  <script src="http://localhost:8080/juggernaut.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" charset="utf-8">
+  var jug = new Juggernaut;
+  jug.subscribe('<%=h @puzzle.chat_id %>', function(chat){
+    $('chatpane').firstDescendant().insert({bottom:'<li>  '+chat.dateformat+' <b>'+chat.user+':</b> '+chat.text+' </li>'});
+    $('chatpane').scrollTop = $('chatpane').scrollHeight;
+  });
+</script>
+
 <p>
   <b>Name:</b>
   <%=h @puzzle.name %>
@@ -36,11 +51,16 @@
 <%= link_to 'Edit', edit_puzzle_path(@puzzle) %> |
 <%= link_to 'Back', @round %>
 
-<div id="chatpane">
+<div style="height: 200px; overflow: auto" id="chatpane">
+  <ul class="chatlist">
+    <% @chats.reverse_each do |c| %>
+      <li>  <%=h c.dateformat %> <b><%=h c.user %>:</b> <%=h c.text %> </li>
+    <% end %>
+  <ul>
 </div>
-<%= form_remote_tag(
-                  :url => { :action => :send_data },
-                  :complete => "$('chat_input').value = ''" ) %>
-<%= text_field_tag( 'chat_input', '', { :size => 20, :id => 'chat_input'} ) %>
-<%= submit_tag "Add" %>
-</form>
+<% form_remote_tag(
+                  :url => { :action => 'chat', :id => @puzzle.id },
+                  :complete => "$('chat_input').value = '';" ) do %>
+<%= text_field_tag( :chat_input, '', { :size => 20, :id => :chat_input } ) %>
+<%= submit_tag "Add", :disable_with => "Sending..." %>
+<% end %>
