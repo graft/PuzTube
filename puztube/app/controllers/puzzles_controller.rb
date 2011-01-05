@@ -17,7 +17,7 @@ class PuzzlesController < ApplicationController
     @round = Round.find(@puzzle.round_id)
     @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 10)
     @chatusers = Juggernaut.show_clients_for_channel(@puzzle.chat_id)
-
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @puzzle }

@@ -15,6 +15,34 @@
   });
 </script>-->
 
+<script type="text/javascript" charset="utf-8">
+  var users = {};
+  function subscribe_user(user,du) {
+    users[user] = true;
+    if (!du) update_users();
+  }
+
+  function unsubscribe_user(user) {
+    if (users[user]) delete users[user];
+    update_users();
+  }
+
+  function update_users() {
+    $('chatusers').firstDescendant().update();
+    for (var u in users) {
+      $('chatusers').firstDescendant().insert({bottom:'<li> '+u+'</li>'});
+    }
+  }
+
+
+  document.observe("dom:loaded", function() {
+    <% @chatusers.each do |c| %>
+    subscribe_user('<%=h c["client_id"] %>',true);
+    <% end %>
+    update_users();
+  });
+</script>
+
 <p>
   <b>Name:</b>
   <%=h @puzzle.name %>
@@ -70,8 +98,5 @@
 <div id="chatusers">
   Users:
   <ul class="userlist">
-    <% @chatusers.each do |c| %>
-      <li>  <b><%=h c["client_id"] %></b> </li>
-    <% end %>
   </ul>
 </div>
