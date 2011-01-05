@@ -38,7 +38,7 @@ class PuzzlesController < ApplicationController
   def chat
     @puzzle = Puzzle.find(params[:id])
     text = params[:chat_input]
-    user = current_user.login
+    user = current_user ? current_user.login : "anon"
     channel = @puzzle.chat_id
     if (text =~ /\/([\w]*) /)
       channel = $1
@@ -53,7 +53,7 @@ class PuzzlesController < ApplicationController
     if (@chat.save)
       # how do we render this?
       render :juggernaut => { :type => (channel == "all" ? :send_to_all : :send_to_channel ), :channel => channel } do |page|
-        page << "$('chatpane').firstDescendant().insert({bottom:'<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{h javascript_escape(@chat.text)}</li>'}); $('chatpane').scrollTop = $('chatpane').scrollHeight;"
+        page << "$('chatpane').firstDescendant().insert({bottom:'<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{javascript_escape sanitize_text @chat.text }</li>'}); $('chatpane').scrollTop = $('chatpane').scrollHeight;"
       end
     end
     render :nothing => true
@@ -63,6 +63,13 @@ class PuzzlesController < ApplicationController
   def edit
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
+    render :partial => 'edit'
+  end
+  
+  def info
+    @puzzle = Puzzle.find(params[:id])
+    @round = Round.find(@puzzle.round_id)
+    render :partial => 'info'
   end
 
   # POST /puzzles
@@ -90,7 +97,7 @@ class PuzzlesController < ApplicationController
     respond_to do |format|
       if @puzzle.update_attributes(params[:puzzle])
         flash[:notice] = 'Puzzle was successfully updated.'
-        format.html { redirect_to(@puzzle) }
+        format.html { render :partial => "info" }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

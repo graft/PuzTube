@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
 
   # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+  def current_user
+    if (cookies[:user])
+       return User.find_by_login(cookies[:user])
+    end
+    return false
+  end
 end

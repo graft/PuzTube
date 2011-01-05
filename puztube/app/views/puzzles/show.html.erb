@@ -4,7 +4,9 @@
   <script src="http://localhost:8080/juggernaut.js" type="text/javascript" charset="utf-8"></script>-->
 
 <%= javascript_include_tag :defaults, :juggernaut %>
-<%= juggernaut :channels => [@puzzle.chat_id], :client_id => current_user.login, :debug => false %>
+<%= javascript_include_tag "dragresize" %>
+<%= stylesheet_link_tag "dragresize" %>
+<%= juggernaut :channels => [@puzzle.chat_id], :client_id => current_user ? current_user.login : "anon", :debug => false %>
 
 
 <!--<script type="text/javascript" charset="utf-8">
@@ -16,7 +18,24 @@
 </script>-->
 
 <script type="text/javascript" charset="utf-8">
-  var users = {};
+var users = {};
+var dragresize = new DragResize('dragresize',
+ { minWidth: 50, minHeight: 50, minLeft: 0, minTop: 0, maxLeft: 6000, maxTop: 6000 });
+
+dragresize.isElement = function(elm)
+{
+ if (elm.className && elm.className.indexOf('drsElement') > -1) return true;
+};
+dragresize.isHandle = function(elm)
+{
+ if (elm.className && elm.className.indexOf('drsMoveHandle') > -1) return true;
+};
+
+dragresize.ondragend = function(isResize) {
+  
+};
+dragresize.apply(document);
+
   function subscribe_user(user,du) {
     users[user] = true;
     if (!du) update_users();
@@ -43,48 +62,18 @@
   });
 </script>
 
-<p>
-  <b>Name:</b>
-  <%=h @puzzle.name %>
-</p>
+<%= render "welcome/login" %> 
 
-<p>
-  <b>Hint:</b>
-  <%=h @puzzle.hint %>
-</p>
+<div id="info">
+<%= render :partial => 'info' %>
+</div>
 
-<p>
-  <b>Captain:</b>
-  <%=h @puzzle.captain %>
-</p>
-
-<p>
-  <b>Answer:</b>
-  <%=h @puzzle.answer %>
-</p>
-
-<p>
-  <b>Meta:</b>
-  <%=h @puzzle.meta %>
-</p>
-
-<p>
-  <b>Round:</b>
-  <%=h @puzzle.round_id %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%=h @puzzle.status %>
-</p>
-
-<%= link_to 'Edit', edit_puzzle_path(@puzzle) %> |
-<%= link_to 'Back', @round %>
-
+<div class="drsElement" style="left: 500px; top:0px; width: 200 px; height: 400 px;">
+<div class="drsMoveHandle">Chat</div>
 <div style="height: 200px; overflow: auto" id="chatpane">
   <ul class="chatlist">
     <% @chats.reverse_each do |c| %>
-      <li>  <%=h c.dateformat %> <b><%=h c.user %>:</b> <%=h c.text %> </li>
+      <li>  <%=h c.dateformat %> <b><%=h c.user %>:</b> <%= sanitize_text(c.text) %> </li>
     <% end %>
   </ul>
 </div>
@@ -99,4 +88,5 @@
   Users:
   <ul class="userlist">
   </ul>
+</div>
 </div>
