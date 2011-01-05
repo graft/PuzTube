@@ -1,0 +1,11 @@
+<div id="login" style="width: 230px; padding: 4px; border: 1px solid #000; background-color:#5af542;">
+<% if current_user %>
+  <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :id => 'login_form' } do %>
+    Logged in as <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true, :selected => current_user.login }, {:onchange => "$('login_form').onsubmit()"}) %><br>
+  <% end %>
+<% else %>
+  <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :id => 'login_form' } do %>
+    <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true }, {:onchange => "$('login_form').onsubmit()"}) %><br>
+  <% end %>
+<% end %>
+</div>

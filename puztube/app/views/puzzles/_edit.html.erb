@@ -1,0 +1,23 @@
+<% form_remote_for(@puzzle, :update => 'info') do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <b><%= f.label :name %>:</b>
+    <%= f.text_field :name %><br>
+    <b><%= f.label :hint %></b>
+    <%= f.text_field :hint %><br>
+    <b><%= f.label :captain %></b>
+    <%= collection_select(:puzzle,:captain,User.all,:login,:login,{:prompt=>true}) %><br>
+    <b><%= f.label :answer %></b>
+    <%= f.text_field :answer %><br>
+    <b><%= f.label :meta %></b>
+    <%= f.check_box :meta %><br>
+    <b><%= f.label :round_id %></b>
+    <%= f.text_field :round_id %><br>
+    <b><%= f.label :status %></b>
+    <%= f.text_field :status %><br>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to_remote 'Show', :url => { :action => 'info', :id => @puzzle.id }, :method => 'get', :update => 'info' %> |
+<%= link_to 'Back', @round %>

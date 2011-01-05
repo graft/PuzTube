@@ -1,0 +1,12 @@
+<p>
+  <b>Name:</b>  <%=h @puzzle.name %> <br>
+  <b>Hint:</b>  <%=h @puzzle.hint %> <br>
+  <b>Captain:</b> <%=h @puzzle.captain %> <br>
+  <b>Answer:</b>   <%=h @puzzle.answer %> <br>
+  <b>Meta:</b>  <%=h @puzzle.meta %> <br>
+  <b>Round:</b>  <%=h @puzzle.round_id %> <br>
+  <b>Status:</b>  <%=h @puzzle.status %> <br>
+</p>
+
+<%= link_to_remote 'Edit', :url => { :action => 'edit' }, :method => 'get', :update => 'info' %> |
+<%= link_to 'Back', @round %>
