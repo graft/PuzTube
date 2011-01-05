@@ -16,6 +16,7 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
     @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 10)
+    @chatusers = Juggernaut.show_clients_for_channel(@puzzle.chat_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,16 +37,24 @@ class PuzzlesController < ApplicationController
 
   def chat
     @puzzle = Puzzle.find(params[:id])
+    text = params[:chat_input]
+    user = current_user.login
+    channel = @puzzle.chat_id
+    if (text =~ /\/([\w]*) /)
+      channel = $1
+      text.gsub!(/\/[\w]* /,'')
+      user = "MAYHEM" if (channel == "all") 
+    end
     @chat = Chat.new( {
-                       :user => current_user.login,
-                       :text => params[:chat_input],
-                       :chat_id => @puzzle.chat_id
+                       :user => user,
+                       :text => text,
+                       :chat_id => channel
                       } )
     if (@chat.save)
       # how do we render this?
-      Juggernaut.publish(@puzzle.chat_id,{:user => @chat.user,
-                                          :dateformat => @chat.dateformat,
-                                        :text => @chat.text})
+      render :juggernaut => { :type => (channel == "all" ? :send_to_all : :send_to_channel ), :channel => channel } do |page|
+        page << "$('chatpane').firstDescendant().insert({bottom:'<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{h javascript_escape(@chat.text)}</li>'}); $('chatpane').scrollTop = $('chatpane').scrollHeight;"
+      end
     end
     render :nothing => true
   end
