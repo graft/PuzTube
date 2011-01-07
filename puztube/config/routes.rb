@@ -1,15 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
-  map.resources :topics
-
-  map.resources :chats
-
-  map.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  map.login '/login', :controller => 'sessions', :action => 'new'
-  map.register '/register', :controller => 'users', :action => 'create'
-  map.signup '/signup', :controller => 'users', :action => 'new'
   map.resources :users
 
-  map.resource :session
+  #map.resources :topics
+
+  map.resources :chats
 
   map.resources :puzzles
 
@@ -50,13 +44,27 @@ ActionController::Routing::Routes.draw do |map|
   #   end
 
   # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-   map.root :controller => "welcome"
+   map.root :controller => 'topics', :action => 'show', :name => 'Project Electric Mayhem'
 
   # See how all your routes lay out with "rake routes"
 
   # Install the default routes as the lowest priority.
   # Note: These default routes make all actions in every controller accessible via GET requests. You should
   # consider removing or commenting them out if you're using named routes and resources.
+
+  map.edit_topic 'topic/:name/edit', :controller => 'topics', :action => 'edit'
+  map.update_topic 'topic/:name', :controller => 'topics', :action => 'update', :conditions => { :method => :put }
+  map.new_topic 'topic/new', :controller => 'topics', :action => 'new'
+  map.create_topic 'topic', :controller => 'topics', :action => 'create', :conditions => { :method => :post }
+  map.destroy_topic 'topic/:name', :controller => 'topics', :action => 'destroy', :conditions => { :method => :delete }
+  map.topics 'topics', :controller => 'topics', :action => 'index'
+  map.topic 'topic/:name', :controller => 'topics', :action => 'show'
+
+  map.new_workspace 'workspace/new', :controller => 'workspace', :action => 'new', :conditions => { :method => :post }
+  map.delete_workspace 'workspace/delete', :controller => 'workspace', :action => 'delete'
+  map.edit_workspace 'workspace/edit', :controller => 'workspace', :action => 'edit'
+  map.update_workspace 'workspace/update', :controller => 'workspace', :action => 'update'
+
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action/:id.:format'
 end

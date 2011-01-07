@@ -10,4 +10,9 @@ class WelcomeController < ApplicationController
             render :js => 'window.location.reload()'
           end
         end
+        
+        def logout
+          cookies[:user] = nil
+          render :js => 'window.location.reload()'
+        end
 end

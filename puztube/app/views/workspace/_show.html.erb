@@ -1,0 +1,7 @@
+<div class="rounded_title">
+  [<%= link_to_remote 'Destroy', :url => delete_workspace_path(:id => workspace.id), :confirm => "Are you sure?", :method => :delete %> ]
+  [<%= link_to_remote 'Edit', :url => edit_workspace_path(:id => workspace.id), :method => 'get', :update => workspace.div_id %> ]
+</div>
+<div class="rounded_content" id="<%= workspace.div_id %>.content">
+    <%= workspace.content || '<br>' %>
+</div>

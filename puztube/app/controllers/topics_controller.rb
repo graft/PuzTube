@@ -13,8 +13,10 @@ class TopicsController < ApplicationController
   # GET /topics/1
   # GET /topics/1.xml
   def show
-    @topic = Topic.find(params[:id])
-
+    @topic = Topic.find_by_name(params[:name])
+    @chats = Chat.find(:all, :conditions => {:chat_id => @topic.chat_id}, :order => "created_at DESC", :limit => 10)
+    @chatusers = Juggernaut.show_clients_for_channel(@topic.chat_id)
+    
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @topic }
@@ -34,7 +36,7 @@ class TopicsController < ApplicationController
 
   # GET /topics/1/edit
   def edit
-    @topic = Topic.find(params[:id])
+    @topic = Topic.find_by_name(params[:name])
   end
 
   # POST /topics
@@ -45,7 +47,7 @@ class TopicsController < ApplicationController
     respond_to do |format|
       if @topic.save
         flash[:notice] = 'Topic was successfully created.'
-        format.html { redirect_to(@topic) }
+        format.html { redirect_to(topic_path(@topic.name)) }
         format.xml  { render :xml => @topic, :status => :created, :location => @topic }
       else
         format.html { render :action => "new" }
@@ -57,7 +59,7 @@ class TopicsController < ApplicationController
   # PUT /topics/1
   # PUT /topics/1.xml
   def update
-    @topic = Topic.find(params[:id])
+    @topic = Topic.find_by_name(params[:name])
 
     respond_to do |format|
       if @topic.update_attributes(params[:topic])
@@ -74,12 +76,36 @@ class TopicsController < ApplicationController
   # DELETE /topics/1
   # DELETE /topics/1.xml
   def destroy
-    @topic = Topic.find(params[:id])
+    @topic = Topic.find_by_name(params[:name])
     @topic.destroy
 
     respond_to do |format|
       format.html { redirect_to(topics_url) }
       format.xml  { head :ok }
     end
+  end
+  
+  def chat
+    @topic = Topic.find(params[:id])
+    text = params[:chat_input]
+    user = current_user ? current_user.login : "anon"
+    channel = @topic.chat_id
+    if (text =~ /\/([\w]*) /)
+      channel = $1
+      text.gsub!(/\/[\w]* /,'')
+      user = "MAYHEM" if (channel == "all")
+    end
+    @chat = Chat.new( {
+                       :user => user,
+                       :text => text,
+                       :chat_id => channel
+                      } )
+    if (@chat.save)
+      # how do we render this?
+      render :juggernaut => { :type => (channel == "all" ? :send_to_all : :send_to_channel ), :channel => channel } do |page|
+        page << "jug_chat_update('<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{javascript_escape sanitize_text @chat.text }</li>');"
+      end
+    end
+    render :nothing => true
   end
 end

@@ -10,7 +10,7 @@
 <% @chats.each do |chat| %>
   <tr>
     <td><%=h chat.user %></td>
-    <td><%=h chat.puzzle_id %></td>
+    <td><%=h chat.chat_id %></td>
     <td><%=h chat.text %></td>
     <td><%= link_to 'Show', chat %></td>
     <td><%= link_to 'Edit', edit_chat_path(chat) %></td>

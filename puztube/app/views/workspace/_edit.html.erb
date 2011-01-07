@@ -1,0 +1,10 @@
+<% form_remote_for(workspace, :url => update_workspace_path(:id => workspace.id), :method => :put, :html => { :id => workspace.form_id } ) do |f| %>
+  <div class="rounded_title">
+      [<%= link_to_function 'Update', 'javascript: $("'+workspace.form_id+'").onsubmit();' %> ]
+  </div>
+  <div class="rounded_content" id="<%= workspace.div_id %>.content">
+    <p>
+    <%= f.text_area :content %>
+    </p>
+  </div>
+<% end %>

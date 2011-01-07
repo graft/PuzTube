@@ -53,7 +53,7 @@ class PuzzlesController < ApplicationController
     if (@chat.save)
       # how do we render this?
       render :juggernaut => { :type => (channel == "all" ? :send_to_all : :send_to_channel ), :channel => channel } do |page|
-        page << "$('chatpane').firstDescendant().insert({bottom:'<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{javascript_escape sanitize_text @chat.text }</li>'}); $('chatpane').scrollTop = $('chatpane').scrollHeight;"
+        page << "jug_chat_update('<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{javascript_escape sanitize_text @chat.text }</li>');"
       end
     end
     render :nothing => true

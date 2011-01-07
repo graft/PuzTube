@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110105214941) do
+ActiveRecord::Schema.define(:version => 20110106214532) do
 
   create_table "chats", :force => true do |t|
     t.string   "user"
@@ -55,6 +55,15 @@ ActiveRecord::Schema.define(:version => 20110105214941) do
     t.string   "info"
     t.string   "activity"
     t.datetime "lastactive"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "name"
+  end
+
+  create_table "workspaces", :force => true do |t|
+    t.string   "content"
+    t.string   "thread_type"
+    t.integer  "thread_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

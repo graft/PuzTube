@@ -1,11 +1,13 @@
-<div id="login" style="width: 230px; padding: 4px; border: 1px solid #000; background-color:#5af542;">
+<div id="login" class="rounded" style="width: 230px; padding: 4px; border: 1px solid #000; background-color:#5af542;">
 <% if current_user %>
   <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :id => 'login_form' } do %>
-    Logged in as <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true, :selected => current_user.login }, {:onchange => "$('login_form').onsubmit()"}) %><br>
+    <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true, :selected => current_user.login }, {:onchange => "$('login_form').onsubmit()"}) %> 
+     <%= link_to_remote 'Logout', :url => { :action => 'logout', :controller => 'welcome' } %>
   <% end %>
 <% else %>
   <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :id => 'login_form' } do %>
-    <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true }, {:onchange => "$('login_form').onsubmit()"}) %><br>
+    <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true }, {:onchange => "$('login_form').onsubmit()"}) %>
+    or <%= link_to 'sign up', { :action => 'new', :controller => 'users' }, :target => '_blank' %>
   <% end %>
 <% end %>
 </div>
