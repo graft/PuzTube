@@ -10,7 +10,8 @@
 <div id="chatbox" style="padding: 3px;">
 <% form_remote_tag(
                   :url => { :action => 'chat', :id => cid },
-                  :complete => "$('chat_input').value = '';" ) do %>
+                  :complete => "$('chat_input').value = '';",
+                  :html => { :id => 'chatform' } ) do %>
 <%= text_field_tag( :chat_input, '', { :size => 20, :id => :chat_input } ) %>
 <%= submit_tag "Add", :disable_with => "Sending..." %>
 <% end %>
