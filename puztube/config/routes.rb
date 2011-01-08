@@ -1,11 +1,25 @@
 ActionController::Routing::Routes.draw do |map|
+  map.connect '/puzzles/edit_row', :controller => 'puzzles', :action => 'edit_row'
+  map.delete_puzzle '/puzzles/delete/:id', :controller => 'puzzles', :action => 'destroy', :method => :delete
+  map.edit_puzzle '/puzzles/edit/:id', :controller => 'puzzles', :action => 'edit'
+  map.update_puzzle '/puzzles/update/:id', :controller => 'puzzles', :action => 'update'
+  map.new_puzzle '/puzzles/new/:id', :controller => 'puzzles', :action => 'new'
+  map.puzzle '/puzzles/:id', :controller => 'puzzles', :action => 'show'
+
+  map.create_rpuzzle '/rounds/create_puzzle', :controller => 'rounds', :action => 'create_puzzle'
+  map.new_round '/rounds/new', :controller => 'rounds', :action => 'new'
+  map.delete_round '/rounds/delete/:id', :controller => 'rounds', :action => 'destroy', :method => :delete
+  map.edit_round '/rounds/edit/:id', :controller => 'rounds', :action => 'edit'
+  map.rounds '/rounds', :controller => 'rounds', :action => 'index'
+  map.round '/round/:id', :controller => 'rounds', :action => 'show'
+
   map.resources :users
 
   #map.resources :topics
 
   map.resources :chats
 
-  map.resources :puzzles
+  #map.resources :puzzles
 
   map.resources :rounds
 
@@ -65,6 +79,9 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_workspace 'workspace/edit', :controller => 'workspace', :action => 'edit'
   map.update_workspace 'workspace/update', :controller => 'workspace', :action => 'update'
 
+  #map.connect ':controller/:id/:action'
   map.connect ':controller/:action/:id'
-  map.connect ':controller/:action/:id.:format'
+  map.connect ':controller/:action'
+  #map.connect ':controller/:action/:id.:format'
+  #map.connect ':controller/:action/:id.:format'
 end

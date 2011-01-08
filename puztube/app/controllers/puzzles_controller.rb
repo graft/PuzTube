@@ -58,18 +58,39 @@ class PuzzlesController < ApplicationController
     end
     render :nothing => true
   end
+
+  def edit_row
+    @puzzle = Puzzle.find(params[:puzzle][:id])
+    @round = Round.find(@puzzle.round_id)
+    if @puzzle.update_attributes(params[:puzzle])
+      txt = render_to_string :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
+      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+        page << "$('#{@puzzle.t_id}').update('#{javascript_escape txt}');"
+      end
+    else
+      render :nothing => true
+    end
+  end  
   
   # GET /puzzles/1/edit
   def edit
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
-    render :partial => 'edit'
+    if params[:type] == 'mini'
+      render :partial => 'miniedit'
+    else
+      render :partial => 'edit'
+    end
   end
   
   def info
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
-    render :partial => 'info'
+    if params[:type] == 'mini'
+      render :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
+    else
+      render :partial => 'info'
+    end
   end
 
   # POST /puzzles
@@ -94,27 +115,25 @@ class PuzzlesController < ApplicationController
   def update
     @puzzle = Puzzle.find(params[:id])
 
-    respond_to do |format|
-      if @puzzle.update_attributes(params[:puzzle])
-        flash[:notice] = 'Puzzle was successfully updated.'
-        format.html { render :partial => "info" }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @puzzle.errors, :status => :unprocessable_entity }
+    if @puzzle.update_attributes(params[:puzzle])
+      txt = render_to_string :partial => "info"
+      render :juggernaut => { :type => :send_to_channel, :channel => @puzzle.chat_id } do |page|
+        page << "$('info').update('#{javascript_escape txt}');"
       end
     end
+    render :nothing => true
   end
 
   # DELETE /puzzles/1
   # DELETE /puzzles/1.xml
   def destroy
     @puzzle = Puzzle.find(params[:id])
-    @puzzle.destroy
 
-    respond_to do |format|
-      format.html { redirect_to(puzzles_url) }
-      format.xml  { head :ok }
+    render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+      page << "$('#{@puzzle.t_id}').remove();"
     end
+    
+    @puzzle.destroy
+    render :nothing => true
   end
 end

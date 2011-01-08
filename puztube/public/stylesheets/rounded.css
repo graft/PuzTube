@@ -14,7 +14,7 @@
 }
 
 .rounded_content {
-  background-color: #ef8; padding: 4px;
+  padding: 4px;
   -moz-border-radius-bottomleft: 7px;
   -webkit-border-bottom-left-radius: 7px;
   -moz-border-radius-bottomright: 7px;
@@ -27,4 +27,38 @@
 
 .workspace {
   width: 75%;
+  background-color: #ef8; 
+}
+
+.round {
+  width: 75%;
+  background-color: #9fc; 
+}
+
+.round .rounded_title {
+  background-color: #6b9;
+}
+
+.puzzletable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.puzzletable td {
+  border: 2px solid #354;
+  padding: 2px;
+}
+
+.iform {
+   display: inline;
+}
+
+ul.userlist li {
+  display: inline;
+  margin-left:5px;
+}
+
+ul.userlist li:before {
+ content:'\ffed';
+ margin-right:0.1em;
 }

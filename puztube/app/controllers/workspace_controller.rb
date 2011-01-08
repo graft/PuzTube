@@ -1,5 +1,4 @@
 class WorkspaceController < ApplicationController
-  include ApplicationHelper
   def new
     if (params[:type] == "topic")
       @thread = Topic.find_by_name(params[:name])

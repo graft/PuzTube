@@ -2,17 +2,13 @@
 
 <%= javascript_include_tag :defaults, :juggernaut %>
 <%= javascript_include_tag "juggernaut-users" %>
+<%= javascript_include_tag "resize" %>
+
 <%= juggernaut :channels => [@puzzle.chat_id], :client_id => current_user ? current_user.login : "anon", :debug => false %>
 
 <script type="text/javascript" charset="utf-8">
-  document.observe("dom:loaded", function() {
-    <% @chatusers.each do |c| %>
-    subscribe_user('<%=h c["client_id"] %>',true);
-    <% end %>
-    update_users();
-    new Draggable('chatwindow',{});
-    $('chatform').disable();
-  });
+  var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
+  document.observe("dom:loaded", startup);
 </script>
 
 <%= render "welcome/login" %> 

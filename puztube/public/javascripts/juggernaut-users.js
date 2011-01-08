@@ -31,3 +31,20 @@
   function jug_ws_update(dv,txt) {
     $(dv).update(txt);
   }
+  
+  function startup() {
+    userlist.each(function(u) {
+    subscribe_user(u,true);
+    });
+    update_users();
+    new Draggable('chatwindow',{handle: 'chattitle'});
+    new Resizeable('chatwindow',{
+      resize:function(el) {
+        hgt = $('chatwindow').getHeight() - $('chatusers').getHeight() - $('chatbox').getHeight() - 50;
+        $('chatpane').style.height = hgt+'px';
+        hgt += 30;        $('chatbox').style.top = hgt+'px';
+        hgt += 30;        $('chatusers').style.top = hgt+'px';
+      }
+    });
+    $('chatform').disable();
+  }

@@ -1,0 +1,23 @@
+<div id="roundtitle" class="rounded_title">
+    <div style="padding: 2px;">
+    <b><%= link_to_remote 'Show', :url => round_path(round) %></b> |
+    <b><%= link_to_function 'Update', "javascript: $('r#{round.id}.update').onsubmit();" %></b>
+    </div>
+  </div>
+  <div style="padding: 5px;">
+  <% form_remote_for(round,
+                  :url => { :action => 'update', :controller => 'rounds', :id => round.id },
+                  :method => :put,
+                  :html => { :id => "r#{round.id}.update" } ) do |f| %>
+    <b><%= f.label :name %>:</b>
+    <%= f.text_field :name %><br>
+    <b><%= f.label :url %></b>
+    <%= f.text_field :url %><br>
+    <b><%= f.label :hint %></b>
+    <%= f.text_field :hint %><br>
+    <b><%= f.label :captain %></b>
+    <%= collection_select(:round,:captain,User.all,:login,:login,{:prompt=>true}) %><br>
+    <b><%= f.label :answer %></b>
+    <%= f.text_field :answer %><br>
+  <% end %>
+</div>

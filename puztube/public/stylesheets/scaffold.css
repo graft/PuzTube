@@ -1,10 +1,22 @@
-body { background-color: #fff; color: #333; }
+body {
+  color: #333;
+  background-image: url(../images/mayhem.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top right;
+}
 
 body, p, ol, ul, td {
   font-family: helvetica, "Free Sans", sans-serif;
   font-size:   14px;
   line-height: 18px;
 }
+
+h2 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 
 pre {
   background-color: #eee;

@@ -25,10 +25,16 @@ class RoundsController < ApplicationController
   # GET /rounds/new.xml
   def new
     @round = Round.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @round }
+    @round.name = "New Round"
+    
+    if @round.save
+      text = render_to_string :partial => 'round', :locals => { :round => @round}
+      # again, use juggernaut to do this.
+      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+        page << "$('roundstable').insert({bottom: '#{javascript_escape text}'});"
+      end
+    else
+      render :nothing => true
     end
   end
   
@@ -39,22 +45,22 @@ class RoundsController < ApplicationController
 
   def create_puzzle
     @round = Round.find(params[:id])
-    @puzzle = @round.puzzles.build(params[:puzzle])
+    @puzzle = @round.puzzles.build
+    @puzzle.name = "New Puzzle"
     
-    respond_to do |format|
-      if @puzzle.save
-        flash[:notice] = 'Puzzle was successfully created.'
-        format.html { redirect_to(@round) }
-        format.xml  { render :xml => @round, :status => :created, :location => @round }
-      else
-        format.html { render :action => "new_puzzle" }
-        format.xml  { render :xml => @round.errors, :status => :unprocessable_entity }
+    if @puzzle.save
+      text = render_to_string :partial => 'puzzles/miniblock', :locals => { :puzzle => @puzzle }
+      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+        page << "$('RPT#{@round.id}').insert({bottom: '#{javascript_escape text}'});"
       end
     end
+    render :nothing => true
   end
   # GET /rounds/1/edit
   def edit
     @round = Round.find(params[:id])
+    
+    render :partial => 'edit', :locals => { :round => @round }
   end
 
   # POST /rounds
@@ -79,27 +85,26 @@ class RoundsController < ApplicationController
   def update
     @round = Round.find(params[:id])
 
-    respond_to do |format|
-      if @round.update_attributes(params[:round])
-        flash[:notice] = 'Round was successfully updated.'
-        format.html { redirect_to(@round) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @round.errors, :status => :unprocessable_entity }
+     if @round.update_attributes(params[:round])
+      flash[:notice] = 'Round was successfully updated.'
+        # DON'T update here - use juggernaut to send the request. You need the chat id!
+      txt = render_to_string :partial => "show", :locals => { :round => @round }
+      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+        page << "$('ROUND#{@round.id}').update('#{javascript_escape txt}');"
       end
     end
+    render :nothing => true
   end
 
   # DELETE /rounds/1
   # DELETE /rounds/1.xml
   def destroy
     @round = Round.find(params[:id])
-    @round.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(rounds_url) }
-      format.xml  { head :ok }
+    
+    render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+      page << "$('ROUND#{@round.id}').remove();"
     end
+    @round.destroy
+    render :nothing => true
   end
 end

@@ -1,6 +1,11 @@
-<div id="login" class="rounded" style="width: 230px; padding: 4px; border: 1px solid #000; background-color:#5af542;">
+<div id="navbar" class="rounded" style="width: 74%; padding: 8px; background-color:#5af542;">
+<%= link_to 'Home', root_url %> |
+<%= link_to 'Puzzles', { :action => 'index', :controller => 'rounds' } %> |
+<%= link_to 'Topics', { :action => 'index', :controller => 'topics' } %> |
+<%= link_to 'Hunters', { :action => 'index', :controller => 'users' } %> |
+
 <% if current_user %>
-  <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :id => 'login_form' } do %>
+  <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :class => 'iform', :id => 'login_form' } do %>
     <%= collection_select(:user,:login,User.all,:login,:login,{ :prompt=>true, :selected => current_user.login }, {:onchange => "$('login_form').onsubmit()"}) %> 
      <%= link_to_remote 'Logout', :url => { :action => 'logout', :controller => 'welcome' } %>
   <% end %>
@@ -10,4 +15,5 @@
     or <%= link_to 'sign up', { :action => 'new', :controller => 'users' }, :target => '_blank' %>
   <% end %>
 <% end %>
+</div>
 </div>

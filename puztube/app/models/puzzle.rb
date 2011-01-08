@@ -6,4 +6,7 @@ class Puzzle < ActiveRecord::Base
     "PUZ"+id.to_s
   end
 
+  def t_id
+    "PZR"+id.to_s
+  end
 end

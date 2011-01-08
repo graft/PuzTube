@@ -1,0 +1,9 @@
+  <td><%= text_field_tag @puzzle.t_id+".name", @puzzle.name, :size => 12 %></td>
+  <td><%= text_field_tag @puzzle.t_id+".url", @puzzle.url, :size => 12  %></td>
+  <td><%= text_field_tag @puzzle.t_id+".hint", @puzzle.hint, :size => 12  %></td>
+  <td><%= select_tag @puzzle.t_id+".captain", "<option value=''>Select captain</option>" + options_from_collection_for_select(User.all, 'login','login', @puzzle.captain) %></td>
+  <td><%= check_box_tag @puzzle.t_id+".meta", '1', @puzzle.meta %></td>
+  <td><%= text_field_tag @puzzle.t_id+".answer", @puzzle.answer, :size => 12  %></td>
+  <td><%= select_tag @puzzle.t_id+".status", "<option value=''>Select status</option>" + options_for_select(["Under Control", "Needs Insight", "Solved", "Unimportant","New"],@puzzle.status) %></td>
+  <td><%= link_to_remote 'Show', :url => { :action => 'info', :controller => 'puzzles', :id => @puzzle.id, :type => 'mini' }, :update => @puzzle.t_id %></td>
+  <td><%= link_to_function 'Update', "javascript: update_and_submit('#{@puzzle.t_id}','#{@puzzle.id}','r#{@puzzle.round_id}','name,url,hint,captain,meta,answer,status')" %></td>

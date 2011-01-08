@@ -1,0 +1,9 @@
+<td id="<%= puzzle.t_id %>.name"><%= link_to puzzle.name, puzzle, :target => '_blank' %></td>
+<td id="<%= puzzle.t_id %>.url"><%=h puzzle.url %></td>
+<td id="<%= puzzle.t_id %>.hint"><%=h puzzle.hint %></td>
+<td id="<%= puzzle.t_id %>.captain"><%=h puzzle.captain %></td>
+<td id="<%= puzzle.t_id %>.meta"><%= puzzle.meta ? "Yes" : "" %></td>
+<td id="<%= puzzle.t_id %>.answer"><%=h puzzle.answer %></td>
+<td id="<%= puzzle.t_id %>.status"><%=h puzzle.status %></td>
+<td id="<%= puzzle.t_id %>.edit"><%= link_to_remote 'Edit', :url => { :action => 'edit', :controller => 'puzzles', :id => puzzle.id, :type => 'mini' }, :update => "PZR"+puzzle.id.to_s %></td>
+<td id="<%= puzzle.t_id %>.destroy"><%= link_to_remote 'Destroy', :url => { :id => puzzle.id, :controller => 'puzzles', :action => :destroy}, :confirm => 'Are you sure?' %></td>

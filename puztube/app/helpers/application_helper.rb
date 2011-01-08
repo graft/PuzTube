@@ -7,4 +7,9 @@ module ApplicationHelper
   def sanitize_text(str)
     sanitize(auto_link(str, :html => { :target => '_blank' }), :tags => %w(a), :attributes => %w(href target) )
   end
+  
+  
+  def comment_format(str)
+    str.gsub(/\n/,'<br>') # also replace COMMA/ENDCOMMA stuff
+  end
 end
