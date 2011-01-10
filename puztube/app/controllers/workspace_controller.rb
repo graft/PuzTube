@@ -44,6 +44,33 @@ class WorkspaceController < ApplicationController
       end
     end
     render :nothing => true
- end
+  end
   
+  def new_attachment
+    # create the attachment
+    @workspace = Workspace.find(params[:id])
+    @asset = @workspace.assets.build(params[:asset])
+    if @asset.save
+      text = render_to_string :partial => 'asset', :locals => { :asset=> @asset }
+      # again, use juggernaut to do this.
+      render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
+        page << "insert_asset('#{@workspace.div_id}','#{javascript_escape text}');"
+      end
+    else
+      render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
+        page << "alert('failed for some reason');"
+      end
+    end
+    render :nothing => true
+  end
+  
+  def delete_attachment
+    @asset = Asset.find(params[:id])
+    @workspace = Workspace.find(@asset.workspace_id)
+    render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
+      page << "delete_asset('#{@workspace.div_id}','#{@asset.id}');"
+    end
+    @asset.destroy
+    render :nothing => true
+  end
 end

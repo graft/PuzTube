@@ -1,4 +1,5 @@
 class PuzzlesController < ApplicationController
+  include PuzzlesHelper
   # GET /puzzles
   # GET /puzzles.xml
   def index
@@ -38,7 +39,7 @@ class PuzzlesController < ApplicationController
   def chat
     @puzzle = Puzzle.find(params[:id])
     text = params[:chat_input]
-    user = current_user ? current_user.login : "anon"
+    user = current_or_anon_login
     channel = @puzzle.chat_id
     if (text =~ /\/([\w]*) /)
       channel = $1
@@ -62,14 +63,16 @@ class PuzzlesController < ApplicationController
   def edit_row
     @puzzle = Puzzle.find(params[:puzzle][:id])
     @round = Round.find(@puzzle.round_id)
-    if @puzzle.update_attributes(params[:puzzle])
-      txt = render_to_string :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
-      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
-        page << "$('#{@puzzle.t_id}').update('#{javascript_escape txt}');"
-      end
+    if (params[:puzzle][:answer] =~ /[A-Za-z]/ || (params[:puzzle][:status] == "Solved" && @puzzle.status != "Solved"))
+      params[:puzzle][:status] = "Solved"
+      broad = true
     else
-      render :nothing => true
+      broad = false
     end
+    if @puzzle.update_attributes(params[:puzzle])
+      broadcast_puzzle_edit(@puzzle,broad)
+    end
+    render :nothing => true
   end  
   
   # GET /puzzles/1/edit
@@ -89,7 +92,7 @@ class PuzzlesController < ApplicationController
     if params[:type] == 'mini'
       render :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
     else
-      render :partial => 'info'
+      render :partial => 'info', :locals => { :puzzle => @puzzle }
     end
   end
 
@@ -114,12 +117,14 @@ class PuzzlesController < ApplicationController
   # PUT /puzzles/1.xml
   def update
     @puzzle = Puzzle.find(params[:id])
-
+    if (params[:puzzle][:answer] =~ /[A-Za-z]/ || (params[:puzzle][:status] == "Solved" && @puzzle.status != "Solved"))
+      params[:puzzle][:status] = "Solved"
+      broad = true
+    else
+      broad = false
+    end
     if @puzzle.update_attributes(params[:puzzle])
-      txt = render_to_string :partial => "info"
-      render :juggernaut => { :type => :send_to_channel, :channel => @puzzle.chat_id } do |page|
-        page << "$('info').update('#{javascript_escape txt}');"
-      end
+      broadcast_puzzle_edit(@puzzle,broad)
     end
     render :nothing => true
   end

@@ -13,11 +13,16 @@
     <%= f.check_box :meta %><br>
     <b><%= f.label :answer %></b>
     <%= f.text_field :answer %><br>
+    <b><%= f.label :wrong_answer %></b>
+    <%= f.text_field :wrong_answer %><br>
+    <b><%= f.label :round %></b>
+    <%= collection_select :puzzle, :round_id, Round.all,:id,:name %><br>
     <b><%= f.label :status %></b>
-    <%= f.text_field :status %><br>
+    <b><%= select :puzzle, :status, "<option value=''>Select status</option>" + options_for_select(["Under Control", "Needs Insight", "Solved", "Unimportant","New"],@puzzle.status) %><br>
     <%= f.submit 'Update' %>
   </p>
 <% end %>
 
-<%= link_to_remote 'Show', :url => { :action => 'info', :id => @puzzle.id }, :method => 'get', :update => 'info' %> |
-<%= link_to 'Back', @round %>
+<div id="statusblock" class="statusblock" style="background-color: <%= @puzzle.status_color %>;"></div>
+
+<%= link_to_remote 'Show', :url => { :action => 'info', :id => @puzzle.id }, :method => 'get', :update => 'info' %>

@@ -9,12 +9,13 @@
 </div>
 <div id="chatbox" style="position:absolute; top:230px; height: 20px; padding: 3px;">
 <% form_remote_tag(
-                  :url => { :action => 'chat', :id => cid },
+                  :url => { :action => 'chat', :id => thread.id },
                   :complete => "$('chat_input').value = '';",
                   :html => { :id => 'chatform' } ) do %>
 <%= text_field_tag( :chat_input, '', { :size => 20, :id => :chat_input } ) %>
 <%= submit_tag "Add", :disable_with => "Sending..." %>
 <% end %>
 </div>
-<div id="chatusers" style="position:absolute; top:260px; padding:3px;">Users: <ul class="userlist"></ul></div>
+<div id="chatusers" style="position:absolute; top:260px; padding:3px;">Users: <ul class="userlist"></ul>
+<%= link_to 'Log', chat_log_path(:channel => thread.chat_id,:thread=>thread.id,:type=> thread.class.to_s), :target => "_blank" %>
 </div>

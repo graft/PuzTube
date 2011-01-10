@@ -1,0 +1,7 @@
+<div id="<%= asset.workspace.div_id + ".asset" + asset.id.to_s %>" class="asset">
+<%= link_to image_tag(asset_icon(asset)) + " #{asset.file.original_filename} #{asset.file.content_type} #{number_to_human_size asset.file.size}", asset.file.url, :target => '_blank' %>
+<% if asset.file_content_type =~ /mpeg/ %>
+  <%= render :partial => 'workspace/mp3player', :locals => { :mp3 => asset.file.url } %>
+<% end %>
+<div style="float: right;"><%= link_to_remote 'X', :url => delete_attachment_path(:id => asset.id), :confirm => "Are you sure (the file will not be destroyed)?" %></div>
+</div>

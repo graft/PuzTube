@@ -1,4 +1,8 @@
-<h1>Listing users</h1>
+<%= javascript_include_tag :defaults %>
+
+<%= render "welcome/login" %> 
+
+<h1><%= @users.size %> Hunters!</h1>
 
 <table>
   <tr>
@@ -9,9 +13,11 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.login %></user>
-    <td><%= user.name %></user>
-    <td><%= user.email %></user>
+    <td><%= user.login %></td>
+    <td><%= user.name %></td>
+    <td><%= user.email %></td>
+    <td><%= user.info %></td>
+    <td><%= image_tag(user.photo.url(:thumb)) if user.photo? %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>

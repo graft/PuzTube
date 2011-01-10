@@ -74,6 +74,10 @@ ActionController::Routing::Routes.draw do |map|
   map.topics 'topics', :controller => 'topics', :action => 'index'
   map.topic 'topic/:name', :controller => 'topics', :action => 'show'
 
+  map.chat_log 'chats/log/:channel', :controller => 'chats', :action => 'log'
+
+  map.new_attachment 'workspace/new_attachment', :controller => 'workspace', :action => 'new_attachment', :conditions => { :method => :post }
+  map.delete_attachment 'workspace/delete_attachment', :controller => 'workspace', :action => 'delete_attachment'
   map.new_workspace 'workspace/new', :controller => 'workspace', :action => 'new', :conditions => { :method => :post }
   map.delete_workspace 'workspace/delete', :controller => 'workspace', :action => 'delete'
   map.edit_workspace 'workspace/edit', :controller => 'workspace', :action => 'edit'

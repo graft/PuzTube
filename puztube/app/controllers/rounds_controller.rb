@@ -47,6 +47,7 @@ class RoundsController < ApplicationController
     @round = Round.find(params[:id])
     @puzzle = @round.puzzles.build
     @puzzle.name = "New Puzzle"
+    @puzzle.status = "New"
     
     if @puzzle.save
       text = render_to_string :partial => 'puzzles/miniblock', :locals => { :puzzle => @puzzle }

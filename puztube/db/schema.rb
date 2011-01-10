@@ -9,7 +9,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110106214532) do
+ActiveRecord::Schema.define(:version => 20110110062845) do
+
+  create_table "assets", :force => true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+    t.integer  "workspace_id"
+  end
 
   create_table "chats", :force => true do |t|
     t.string   "user"
@@ -30,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20110106214532) do
     t.string   "url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "wrong_answer"
   end
 
   create_table "rounds", :force => true do |t|
@@ -58,6 +69,9 @@ ActiveRecord::Schema.define(:version => 20110106214532) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
   end
 
   create_table "workspaces", :force => true do |t|

@@ -28,5 +28,8 @@ class ConnectionsController < ApplicationController
     end
     render :nothing => true
   end
+  
+  def test
+  end
 
 end

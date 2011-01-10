@@ -1,5 +1,9 @@
+<%= javascript_include_tag :defaults %>
+
 <h1> Hunter <%= @user.name %> </h1>
 
+
+<div><%= image_tag(@user.photo.url) if @user.photo %></div>
 
 <p>
   <b>Name:</b>

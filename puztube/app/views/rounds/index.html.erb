@@ -23,7 +23,8 @@
   }
 </script>
 
-<%= render "welcome/login" %> 
+<%= render :partial => "welcome/login" %> 
+<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => "ROUNDS" } %> 
 
 <!-- This page renders puzzle info - it has the following functions:
     * Show puzzles in round order

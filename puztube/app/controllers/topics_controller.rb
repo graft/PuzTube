@@ -88,7 +88,7 @@ class TopicsController < ApplicationController
   def chat
     @topic = Topic.find(params[:id])
     text = params[:chat_input]
-    user = current_user ? current_user.login : "anon"
+    user = current_or_anon_login
     channel = @topic.chat_id
     if (text =~ /\/([\w]*) /)
       channel = $1

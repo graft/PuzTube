@@ -70,6 +70,15 @@ class ChatsController < ApplicationController
       end
     end
   end
+  
+  def log
+    @chats = Chat.find(:all, :conditions => [ "chat_id = ?",params[:channel]])
+    if (params[:type] == "Puzzle")
+      @thread = Puzzle.find(params[:thread])
+    else
+      @thread = Topic.find(params[:thread])
+    end
+  end
 
   # DELETE /chats/1
   # DELETE /chats/1.xml

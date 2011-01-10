@@ -15,4 +15,11 @@ class WelcomeController < ApplicationController
           cookies[:user] = nil
           render :js => 'window.location.reload()'
         end
+        
+        def test
+          render :juggernaut => { :type => :send_to_client_on_channel, :client_id => params[:user], :channel => params[:channel] } do |page|
+            page << "new Effect.Highlight('connectiontest', { startcolor: '#99cc33', endcolor: '#1d5875', restorecolor: '#1d5875' });"
+          end
+          render :nothing => true
+        end
 end

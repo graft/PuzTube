@@ -11,9 +11,11 @@
   }
 
   function update_users() {
+    if ($('chatusers')) {
     $('chatusers').firstDescendant().update();
     for (var u in users) {
       $('chatusers').firstDescendant().insert({bottom:'<li> '+u+'</li>'});
+    }
     }
   }
 
@@ -22,10 +24,12 @@
   }
 
   function jug_chat_update(txt) {
-  $('chatpane')
+    if ($('chatpane')) {
+      $('chatpane')
       .firstDescendant()
       .insert({ bottom: txt});
       $('chatpane').scrollTop = $('chatpane').scrollHeight;
+    }
   }
   
   function jug_ws_update(dv,txt) {
@@ -47,4 +51,9 @@
       }
     });
     $('chatform').disable();
+//     $(document).observe('juggernaut:disconnected', function(){ alert('Why have you forsaken me!') }); 
+//     $(document).observe('juggernaut:initialized', function(){ alert('Initialized.') }); 
+//     $(document).observe('juggernaut:reconnect', function(){ alert('Reconnect.') }); 
+//     $(document).observe('juggernaut:connect', function(){ alert('Trying to connect.') }); 
+//     $(document).observe('juggernaut:connected', function(){ alert('Connected.') }); 
   }

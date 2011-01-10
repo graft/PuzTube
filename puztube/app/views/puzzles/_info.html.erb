@@ -1,13 +1,15 @@
 <p>
-  <h1><%=h @puzzle.name %> </h1> 
-  <b>Hint:</b>  <%=h @puzzle.hint %> <br>
-  <b>Captain:</b> <%=h @puzzle.captain %> <br>
-  <b>Url:</b> <%=h @puzzle.url %> <br>
-  <b>Answer:</b>   <%=h @puzzle.answer %> <br>
-  <b>Meta:</b>  <%=h @puzzle.meta %> <br>
-  <b>Round:</b>  <%=h @puzzle.round_id %> <br>
-  <b>Status:</b>  <%=h @puzzle.status %> <br>
+  <h1><%=h puzzle.name %> </h1> 
+  <b>Hint:</b>  <%=h puzzle.hint %> <br>
+  <b>Captain:</b> <%=h puzzle.captain %> <br>
+  <b>Url:</b> <%=h puzzle.url %> <br>
+  <b>Answer:</b>   <%=h puzzle.answer %> <br>
+  <b>Wrong Answer:</b>   <%=h puzzle.wrong_answer %> <br>
+  <b>Meta:</b>  <%=h puzzle.meta %> <br>
+  <b>Round:</b>  <%=h puzzle.round.name %> <br>
+  <b>Status:</b>  <%=h puzzle.status %> <br>
 </p>
 
-<%= link_to_remote 'Edit', :url => { :action => 'edit' }, :method => 'get', :update => 'info' %> |
-<%= link_to 'Back', @round %>
+<div id="statusblock" class="statusblock" style="background-color: <%= puzzle.status_color %>;"></div>
+
+<%= link_to_remote 'Edit', :url => { :action => 'edit', :id => puzzle.id }, :method => 'get', :update => 'info' %>

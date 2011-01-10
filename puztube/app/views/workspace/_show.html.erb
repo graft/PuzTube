@@ -5,3 +5,22 @@
 <div class="rounded_content" id="<%= workspace.div_id %>.content">
     <%= comment_format workspace.content || '<br>' %>
 </div>
+<div id="<%= workspace.div_id %>.assets">
+  <% workspace.assets.each do |asset| %>
+    <%= render :partial => 'workspace/asset', :locals => { :asset => asset } %>
+  <% end %>
+</div>
+<div style="padding:2px;">
+<div id="<%= workspace.div_id %>.addbutton">
+<%= link_to_function 'Attach file', "javascript: showUpload('#{workspace.div_id}')" %>
+</div>
+<div id="<%= workspace.div_id %>.cancelbutton" class="hidden">
+<%= link_to_function 'Cancel attachment', "javascript: hideUpload('#{workspace.div_id}')" %>
+</div>
+<div id="<%= workspace.div_id %>.upload" class="hidden">
+<% form_for :asset, :url => new_attachment_path(:id => workspace.id), :html => { :multipart => true, :target => workspace.div_id+".upload_frame" } do |f| %>
+      <%= f.file_field :file %> <%= f.submit 'Upload' %>
+<% end %>
+<iframe id="<%= workspace.div_id %>.upload_frame" name="<%= workspace.div_id %>.upload_frame" style="display: none"></iframe>
+</div>
+</div>
