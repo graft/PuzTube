@@ -20,5 +20,11 @@
   <%=h @user.info%>
 </p>
 
+<% if @user.team_captain %>
+<p>
+  <font style='color:red;'><%= @user.name %> is a Team Captain</font>
+</p>
+<% end %>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

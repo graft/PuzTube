@@ -4,6 +4,7 @@
 <%= link_to 'Puzzles', { :action => 'index', :controller => 'rounds' } %> |
 <%= link_to 'Topics', { :action => 'index', :controller => 'topics' } %> |
 <%= link_to 'Hunters', { :action => 'index', :controller => 'users' } %> |
+<%= link_to 'Help', { :action => 'show', :controller => 'topics', :name => 'Help' } %> |
 
 <% if current_user %>
   <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :class => 'iform', :id => 'login_form', :autocomplete => 'off' } do %>

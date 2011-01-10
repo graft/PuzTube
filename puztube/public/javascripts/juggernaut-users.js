@@ -43,6 +43,8 @@
     update_users();
     new Draggable('chatwindow',{handle: 'chattitle'});
     new Resizeable('chatwindow',{
+      minHeight: '100',
+      //minWidth: '250',
       resize:function(el) {
         hgt = $('chatwindow').getHeight() - $('chatusers').getHeight() - $('chatbox').getHeight() - 50;
         $('chatpane').style.height = hgt+'px';

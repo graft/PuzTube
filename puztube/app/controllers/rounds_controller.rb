@@ -15,10 +15,7 @@ class RoundsController < ApplicationController
   def show
     @round = Round.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @round }
-    end
+    render :partial => 'show', :locals => { :round => @round }
   end
 
   # GET /rounds/new

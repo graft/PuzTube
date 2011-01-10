@@ -1,6 +1,6 @@
 <div id="roundtitle" class="rounded_title">
     <div style="padding: 2px;">
-    <b><%= link_to_remote 'Show', :url => round_path(round) %></b> |
+    <b><%= link_to_remote 'Show', :url => round_path(round), :update => 'ROUND'+round.id.to_s %></b> |
     <b><%= link_to_function 'Update', "javascript: $('r#{round.id}.update').onsubmit();" %></b>
     </div>
   </div>

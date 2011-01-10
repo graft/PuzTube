@@ -20,7 +20,9 @@
     <td><%= image_tag(user.photo.url(:thumb)) if user.photo? %></td>
     <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
+<% if user.team_captain %>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
+<% end %>
   </tr>
 <% end %>
 </table>
