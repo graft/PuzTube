@@ -1,8 +1,8 @@
 class Asset < ActiveRecord::Base
   belongs_to :workspace
   has_attached_file :file, :styles => { :thumb => "20x20>" },
-                :url  => "/uploads/:basename_:style.:extension",
-                :path => ":rails_root/public/uploads/:basename_:style.:extension"
+                :url  => "/uploads/:basename_:id_:style.:extension",
+                :path => ":rails_root/public/uploads/:basename_:id_:style.:extension"
   before_post_process :image?
   def image?
     !(file_content_type =~ /^image.*/).nil?
