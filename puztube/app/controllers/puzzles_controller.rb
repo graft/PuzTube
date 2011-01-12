@@ -41,9 +41,8 @@ class PuzzlesController < ApplicationController
     text = params[:chat_input]
     user = current_or_anon_login
     channel = @puzzle.chat_id
-    if (text =~ /\/([\w]*) /)
+    if (text.sub!(/^\/([\w]*) /,''))
       channel = $1
-      text.gsub!(/\/[\w]* /,'')
       user = "MAYHEM" if (channel == "all") 
     end
     @chat = Chat.new( {
@@ -63,7 +62,7 @@ class PuzzlesController < ApplicationController
   def edit_row
     @puzzle = Puzzle.find(params[:puzzle][:id])
     @round = Round.find(@puzzle.round_id)
-    if (params[:puzzle][:answer] =~ /[A-Za-z]/ || (params[:puzzle][:status] == "Solved" && @puzzle.status != "Solved"))
+    if ((params[:puzzle][:answer] =~ /[A-Za-z]/ || params[:puzzle][:status] == "Solved") && @puzzle.status != "Solved")
       params[:puzzle][:status] = "Solved"
       broad = true
     else
@@ -117,7 +116,7 @@ class PuzzlesController < ApplicationController
   # PUT /puzzles/1.xml
   def update
     @puzzle = Puzzle.find(params[:id])
-    if (params[:puzzle][:answer] =~ /[A-Za-z]/ || (params[:puzzle][:status] == "Solved" && @puzzle.status != "Solved"))
+    if ((params[:puzzle][:answer] =~ /[A-Za-z]/ || params[:puzzle][:status] == "Solved") && @puzzle.status != "Solved")
       params[:puzzle][:status] = "Solved"
       broad = true
     else

@@ -1,0 +1,186 @@
+fix_rack_110_quote_parsing.rb not loaded
+
+
+Processing TopicsController#show (for 99.169.82.71 at 2011-01-11 14:31:23) [GET]
+  Parameters: {"name"=>"Project Electric Mayhem"}
+
+ActiveRecord::StatementInvalid (Could not find table 'topics'):
+  app/controllers/topics_controller.rb:16:in `show'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:81:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:69:in `call'
+  /usr/lib/ruby/1.8/thin/connection.rb:76:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `catch'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:57:in `process'
+  /usr/lib/ruby/1.8/thin/connection.rb:42:in `receive_data'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run_machine'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run'
+  /usr/lib/ruby/1.8/thin/backends/base.rb:57:in `start'
+  /usr/lib/ruby/1.8/thin/server.rb:156:in `start'
+  /usr/lib/ruby/1.8/thin/controllers/controller.rb:80:in `start'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `send'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `run_command'
+  /usr/lib/ruby/1.8/thin/runner.rb:140:in `run!'
+  /usr/bin/thin1.8:10
+
+Rendering /home/graft/rails/PuzTube/puztube/public/500.html (500 Internal Server Error)
+fix_rack_110_quote_parsing.rb not loaded
+
+
+Processing TopicsController#show (for 99.169.82.71 at 2011-01-11 14:32:58) [GET]
+  Parameters: {"name"=>"Project Electric Mayhem"}
+
+ActiveRecord::StatementInvalid (Could not find table 'topics'):
+  app/controllers/topics_controller.rb:16:in `show'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:81:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:69:in `call'
+  /usr/lib/ruby/1.8/thin/connection.rb:76:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `catch'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:57:in `process'
+  /usr/lib/ruby/1.8/thin/connection.rb:42:in `receive_data'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run_machine'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run'
+  /usr/lib/ruby/1.8/thin/backends/base.rb:57:in `start'
+  /usr/lib/ruby/1.8/thin/server.rb:156:in `start'
+  /usr/lib/ruby/1.8/thin/controllers/controller.rb:80:in `start'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `send'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `run_command'
+  /usr/lib/ruby/1.8/thin/runner.rb:140:in `run!'
+  /usr/bin/thin1.8:10
+
+Rendering /home/graft/rails/PuzTube/puztube/public/500.html (500 Internal Server Error)
+fix_rack_110_quote_parsing.rb not loaded
+
+
+Processing TopicsController#show (for 99.169.82.71 at 2011-01-11 14:33:29) [GET]
+  Parameters: {"name"=>"Project Electric Mayhem"}
+
+ActiveRecord::StatementInvalid (Could not find table 'topics'):
+  app/controllers/topics_controller.rb:16:in `show'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:81:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:69:in `call'
+  /usr/lib/ruby/1.8/thin/connection.rb:76:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `catch'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:57:in `process'
+  /usr/lib/ruby/1.8/thin/connection.rb:42:in `receive_data'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run_machine'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run'
+  /usr/lib/ruby/1.8/thin/backends/base.rb:57:in `start'
+  /usr/lib/ruby/1.8/thin/server.rb:156:in `start'
+  /usr/lib/ruby/1.8/thin/controllers/controller.rb:80:in `start'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `send'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `run_command'
+  /usr/lib/ruby/1.8/thin/runner.rb:140:in `run!'
+  /usr/bin/thin1.8:10
+
+Rendering /home/graft/rails/PuzTube/puztube/public/500.html (500 Internal Server Error)
+fix_rack_110_quote_parsing.rb not loaded
+
+
+Processing TopicsController#show (for 99.169.82.71 at 2011-01-11 14:40:32) [GET]
+  Parameters: {"name"=>"Project Electric Mayhem"}
+
+ActiveRecord::StatementInvalid (Could not find table 'topics'):
+  app/controllers/topics_controller.rb:16:in `show'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:81:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:69:in `call'
+  /usr/lib/ruby/1.8/thin/connection.rb:76:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `catch'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:57:in `process'
+  /usr/lib/ruby/1.8/thin/connection.rb:42:in `receive_data'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run_machine'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run'
+  /usr/lib/ruby/1.8/thin/backends/base.rb:57:in `start'
+  /usr/lib/ruby/1.8/thin/server.rb:156:in `start'
+  /usr/lib/ruby/1.8/thin/controllers/controller.rb:80:in `start'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `send'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `run_command'
+  /usr/lib/ruby/1.8/thin/runner.rb:140:in `run!'
+  /usr/bin/thin1.8:10
+
+Rendering /home/graft/rails/PuzTube/puztube/public/500.html (500 Internal Server Error)
+fix_rack_110_quote_parsing.rb not loaded
+
+
+Processing TopicsController#show (for 99.169.82.71 at 2011-01-11 14:45:06) [GET]
+  Parameters: {"name"=>"Project Electric Mayhem"}
+
+ActiveRecord::StatementInvalid (Could not find table 'topics'):
+  app/controllers/topics_controller.rb:16:in `show'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:81:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:69:in `call'
+  /usr/lib/ruby/1.8/thin/connection.rb:76:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `catch'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:57:in `process'
+  /usr/lib/ruby/1.8/thin/connection.rb:42:in `receive_data'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run_machine'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run'
+  /usr/lib/ruby/1.8/thin/backends/base.rb:57:in `start'
+  /usr/lib/ruby/1.8/thin/server.rb:156:in `start'
+  /usr/lib/ruby/1.8/thin/controllers/controller.rb:80:in `start'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `send'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `run_command'
+  /usr/lib/ruby/1.8/thin/runner.rb:140:in `run!'
+  /usr/bin/thin1.8:10
+
+Rendering /home/graft/rails/PuzTube/puztube/public/500.html (500 Internal Server Error)
+fix_rack_110_quote_parsing.rb not loaded
+
+
+Processing TopicsController#show (for 99.169.82.71 at 2011-01-11 14:47:06) [GET]
+  Parameters: {"name"=>"Project Electric Mayhem"}
+
+ActiveRecord::StatementInvalid (Could not find table 'topics'):
+  app/controllers/topics_controller.rb:16:in `show'
+  /usr/lib/ruby/1.8/rack/head.rb:9:in `call'
+  /usr/lib/ruby/1.8/rack/methodoverride.rb:24:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `synchronize'
+  /usr/lib/ruby/1.8/rack/lock.rb:11:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:81:in `call'
+  /usr/lib/ruby/1.8/rack/adapter/rails.rb:69:in `call'
+  /usr/lib/ruby/1.8/thin/connection.rb:76:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `catch'
+  /usr/lib/ruby/1.8/thin/connection.rb:74:in `pre_process'
+  /usr/lib/ruby/1.8/thin/connection.rb:57:in `process'
+  /usr/lib/ruby/1.8/thin/connection.rb:42:in `receive_data'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run_machine'
+  /usr/lib/ruby/1.8/eventmachine.rb:240:in `run'
+  /usr/lib/ruby/1.8/thin/backends/base.rb:57:in `start'
+  /usr/lib/ruby/1.8/thin/server.rb:156:in `start'
+  /usr/lib/ruby/1.8/thin/controllers/controller.rb:80:in `start'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `send'
+  /usr/lib/ruby/1.8/thin/runner.rb:174:in `run_command'
+  /usr/lib/ruby/1.8/thin/runner.rb:140:in `run!'
+  /usr/bin/thin:10
+
+Rendering /home/graft/rails/PuzTube/puztube/public/500.html (500 Internal Server Error)

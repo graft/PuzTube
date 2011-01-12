@@ -18,8 +18,8 @@ class WelcomeController < ApplicationController
         
         def test
           render :juggernaut => { :type => :send_to_client_on_channel, :client_id => params[:user], :channel => params[:channel] } do |page|
-            page << "new Effect.Highlight('connectiontest', { startcolor: '#99cc33', endcolor: '#1d5875', restorecolor: '#1d5875' });"
+            page << "connectionActive('#{params[:channel]}','#{params[:user]}')"
           end
-          render :nothing => true
+          render :js => "connectionTimer()"
         end
 end

@@ -90,9 +90,8 @@ class TopicsController < ApplicationController
     text = params[:chat_input]
     user = current_or_anon_login
     channel = @topic.chat_id
-    if (text =~ /\/([\w]*) /)
+    if (text.sub!(/^\/([\w]*) /,''))
       channel = $1
-      text.gsub!(/\/[\w]* /,'')
       user = "MAYHEM" if (channel == "all")
     end
     @chat = Chat.new( {

@@ -18,7 +18,7 @@
     <b><%= f.label :round %></b>
     <%= collection_select :puzzle, :round_id, Round.all,:id,:name %><br>
     <b><%= f.label :status %></b>
-    <b><%= select :puzzle, :status, "<option value=''>Select status</option>" + options_for_select(["Under Control", "Needs Insight", "Solved", "Unimportant","New"],@puzzle.status) %><br>
+    <b><%= select :puzzle, :status, "<option value=''>Select status</option>" + options_for_select(Puzzle.status_options,@puzzle.status) %><br>
     <%= f.submit 'Update' %>
   </p>
 <% end %>

@@ -1,2 +1,2 @@
-log/juggernaut-node.log
-log/redis.log
+log/juggernaut.log
+log/development.log

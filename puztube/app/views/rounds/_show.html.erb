@@ -7,7 +7,11 @@
     </div>
   </div>
   <div style="padding: 5px;">
-    <h2><%=h round.name %></h2>
+    <% if round.url.size > 0 %>
+    <h2><%= link_to round.name, url_for(round.url), :target => "_blank" %></h2> 
+    <% else %>
+    <h2><%=h round.name %></h2> 
+    <% end %>
     <b>Hint: <%=h round.hint %></b><br>
     <b>Captain: <%=h round.captain %></b><br>
     <b>Answer: <%=h round.answer %></b><br>

@@ -182,7 +182,7 @@ module ApplicationHelper
 
     # restore tag contents
     text.gsub!(/<(\d+)>/) do |m|
-      "<#{tags[m.to_i]}>"
+      "<#{tags[$1.to_i]}>"
     end
     
     #warn "texturized: $text";

@@ -2,7 +2,33 @@ class RoundsController < ApplicationController
   # GET /rounds
   # GET /rounds.xml
   def index
-    @rounds = Round.all
+    @rounds = Round.find(:all,:order => 'updated_at DESC')
+    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
+    @grouped = (current_user&&current_user.options)?current_user.options[:grouped]:false
+    statord = { "Urgent"=>0,"Needs Insight"=>1,"Needs MIT-Local"=>2,"New"=>3,"Under Control"=>4,"Solved"=>5,"Unimportant"=>6 }
+    if @grouped
+      @rounds.each do |round|
+        round.puzzles.sort!{ |p1,p2|
+        if @sorting == "status"
+          statord[p1.status] <=> statord[p2.status]
+        elsif @sorting == "name"
+          p1.name <=> p2.name
+        else
+          p1.created_at <=> p2.created_at
+        end
+      }
+      end
+    else
+      @puzzles = Puzzle.find(:all).sort!{ |p1,p2|
+        if @sorting == "status"
+          statord[p1.status] <=> statord[p2.status]
+        elsif @sorting == "name"
+          p1.name <=> p2.name
+        else
+          p1.created_at <=> p2.created_at
+        end
+      }
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,8 +40,9 @@ class RoundsController < ApplicationController
   # GET /rounds/1.xml
   def show
     @round = Round.find(params[:id])
+    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
 
-    render :partial => 'show', :locals => { :round => @round }
+    render :partial => 'show', :locals => { :round => @round, :sorting => @sorting }
   end
 
   # GET /rounds/new
@@ -49,7 +76,7 @@ class RoundsController < ApplicationController
     if @puzzle.save
       text = render_to_string :partial => 'puzzles/miniblock', :locals => { :puzzle => @puzzle }
       render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
-        page << "$('RPT#{@round.id}').insert({bottom: '#{javascript_escape text}'});"
+        page << "add_puzzle('RPT#{@round.id}','#{javascript_escape text}');"
       end
     end
     render :nothing => true
@@ -82,11 +109,12 @@ class RoundsController < ApplicationController
   # PUT /rounds/1.xml
   def update
     @round = Round.find(params[:id])
+    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
 
      if @round.update_attributes(params[:round])
       flash[:notice] = 'Round was successfully updated.'
         # DON'T update here - use juggernaut to send the request. You need the chat id!
-      txt = render_to_string :partial => "show", :locals => { :round => @round }
+      txt = render_to_string :partial => "show", :locals => { :round => @round, :sorting => @sorting  }
       render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
         page << "$('ROUND#{@round.id}').update('#{javascript_escape txt}');"
       end

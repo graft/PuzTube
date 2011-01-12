@@ -13,6 +13,8 @@ ActionController::Routing::Routes.draw do |map|
   map.rounds '/rounds', :controller => 'rounds', :action => 'index'
   map.round '/round/:id', :controller => 'rounds', :action => 'show'
 
+  map.options_user '/users/options', :controller => 'users', :action => 'options'
+
   map.resources :users
 
   #map.resources :topics
@@ -80,6 +82,7 @@ ActionController::Routing::Routes.draw do |map|
   map.delete_attachment 'workspace/delete_attachment', :controller => 'workspace', :action => 'delete_attachment'
   map.new_workspace 'workspace/new', :controller => 'workspace', :action => 'new', :conditions => { :method => :post }
   map.delete_workspace 'workspace/delete', :controller => 'workspace', :action => 'delete'
+  map.prioritize_workspace 'workspace/prioritize', :controller => 'workspace', :action => 'prioritize'
   map.edit_workspace 'workspace/edit', :controller => 'workspace', :action => 'edit'
   map.update_workspace 'workspace/update', :controller => 'workspace', :action => 'update'
 

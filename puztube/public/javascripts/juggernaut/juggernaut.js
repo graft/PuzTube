@@ -35,7 +35,7 @@ Juggernaut.fn = Juggernaut.prototype;
 Juggernaut.fn.logger = function(msg) {
   if (this.options.debug) {
     msg = "Juggernaut: " + msg + " on " + this.options.host + ':' + this.options.port;
-    this.hasLogger ? console.log(msg) : alert(msg);
+    if (this.hasLogger) console.log(msg);
   }
 };
 

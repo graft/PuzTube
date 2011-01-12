@@ -21,6 +21,10 @@
     $(rid+".id").value = pid;
     $(rid+".form").onsubmit();
   }
+
+  function add_puzzle(rpid,txt) {
+    if ($(rpid)) $(rpid).insert({bottom:txt});
+  }
 </script>
 
 <%= render :partial => "welcome/login" %> 
@@ -34,10 +38,42 @@
 
 <h1>Puzzles</h1>
 
-<%= link_to_remote 'New round', :url => new_round_path() %>
-
+<% if current_user %>
+<% if current_user.team_captain && current_user.options && current_user.options[:grouped] %>
+<%= link_to_remote 'New round', :url => new_round_path() %><br>
+<% end %>
+  <% form_tag(options_user_path, :method => :post) do %>
+  Sort by: <%= select_tag 'sortg', options_for_select([ 'status', 'creation', 'name' ], :selected => current_user.options ? current_user.options[:sorting] : nil) %> 
+  <%= hidden_field_tag 'groupd', 0 %> 
+  <%= check_box_tag 'groupd', 1, current_user.options && current_user.options[:grouped] %> Group by round
+  <%= submit_tag 'Sort' %>
+  <% end %>
+  <%= hidden_field_tag 'actual_sort', @sorting %> 
+  <%= hidden_field_tag 'actual_group', @grouped %> 
+<% end %>
 <div id="roundstable">
-<% @rounds.each do |round| %>
-  <%= render :partial => 'round', :locals => { :round => round } %>
+<% if @grouped %>
+  <% @rounds.each do |round| %>
+    <%= render :partial => 'round', :locals => { :round => round, :sorting => @sorting } %>
+  <% end %>
+<% else %>
+
+<table class="round puzzletable" style="border:1px solid #354;">
+    <tr>
+      <th>Status</th>
+      <th>Round</th>
+      <th>Name</th>
+      <th>Url</th>
+      <th>Hint</th>
+      <th>Captain</th>
+      <th>Meta</th>
+      <th>Answer</th>
+    </tr>
+  <% @puzzles.each do |puzzle| %>
+      <tr id="<%= puzzle.t_id %>">
+        <%= render :partial => 'puzzles/miniinfo', :locals => { :puzzle => puzzle } %>
+      </tr>
+  <% end %>
+</table>
 <% end %>
 </div>

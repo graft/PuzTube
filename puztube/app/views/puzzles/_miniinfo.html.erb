@@ -1,11 +1,16 @@
 <td style="background-color: <%= puzzle.status_color %>;" id="<%= puzzle.t_id %>.status"><%=h puzzle.status %></td>
+<% if current_user && current_user.options && !current_user.options[:grouped] %>
+<td><%=h puzzle.round.name %></td>
+<% end %>
 <td><%= link_to puzzle.name, puzzle, :target => '_blank' %></td>
 <td><%= sanitize(auto_link(puzzle.url,:html=>{:target =>'_blank'}),:tags => %w(a), :attributes => %w(href target)) %></td>
 <td><%=h puzzle.hint %></td>
 <td><%=h puzzle.captain %></td>
 <td><%= puzzle.meta ? "Yes" : "" %></td>
 <td><%=h puzzle.answer %></td>
+<% if current_user && current_user.options && current_user.options[:grouped] %>
 <td><%= link_to_remote 'Edit', :url => { :action => 'edit', :controller => 'puzzles', :id => puzzle.id, :type => 'mini' }, :update => "PZR"+puzzle.id.to_s %></td>
+<% end %>
 <% if current_user && current_user.team_captain %>
 <td><%= link_to_remote 'Destroy', :url => { :id => puzzle.id, :controller => 'puzzles', :action => :destroy}, :confirm => 'Are you sure?' %></td>
 <% end %>

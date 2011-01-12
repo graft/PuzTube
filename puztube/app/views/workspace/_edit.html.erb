@@ -1,10 +1,23 @@
-<% form_remote_for(workspace, :url => update_workspace_path(:id => workspace.id), :method => :put, :html => { :id => workspace.form_id } ) do |f| %>
-  <div class="rounded_title">
-      [<%= link_to_function 'Update', 'javascript: $("'+workspace.form_id+'").onsubmit();' %> ]
+  <div class="prio<%= workspace.priority %>_title rounded_title">
+      <div style="float:left;">[<%= link_to_function 'Update', '$("'+workspace.form_id+'").onsubmit();' %> ]</div> <div style="float:left;" id="<%= workspace.div_id %>.conflict"></div>
   </div>
-  <div class="rounded_content" id="<%= workspace.div_id %>.content">
+  <div class="prio<%= workspace.priority %>_body rounded_content locked" id="<%= workspace.div_id %>.editing">
+    <% if !yourtext.nil? %>
+      <font style='font-weight:bold; color:red'>ATTENTION! Someone has edited this comment since you started editing it.</font><br>
+	Please review the changes (your text is below) and update accordingly.<br>
+        <p>Diff:</p>
+        <code><%= h(diff_html workspace.content, yourtext).sub("\n","<br>") %></code>
+    <% end %>
+<% form_remote_for(workspace, :url => update_workspace_path(:id => workspace.id), :update => workspace.div_id, :method => :put, :html => { :id => workspace.form_id } ) do |f| %>
     <p>
+    Title:<br>
+    <%= f.text_field :title %><br>
     <%= f.text_area :content %>
+    <%= hidden_field_tag :locktime, Time.now.to_i %>
     </p>
-  </div>
 <% end %>
+    <% if !yourtext.nil? %>
+      <b> Your text: </b> <br>
+      <%= text_area_tag :yourtext, yourtext, :cols => 40, :rows => 20 %>
+    <% end %>
+  </div>

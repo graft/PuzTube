@@ -41,6 +41,7 @@ class UsersController < ApplicationController
   # POST /users.xml
   def create
     @user = User.new(params[:user])
+    @user.options = { :sorting => 'priority',:grouped => true }
 
     respond_to do |format|
       if @user.save
@@ -70,6 +71,17 @@ class UsersController < ApplicationController
         format.xml  { render :xml => @user.errors, :status => :unprocessable_entity }
       end
     end
+  end
+
+  def options
+    ouser = current_user
+    if ouser
+      ouser.options ||= {}
+      ouser.options[:sorting] = params[:sortg]
+      ouser.options[:grouped] = (params[:groupd] != "0")
+      ouser.save
+    end
+    redirect_to rounds_path
   end
 
   # DELETE /users/1

@@ -1,4 +1,4 @@
-  <td><%= select_tag @puzzle.t_id+".status", "<option value=''>Select status</option>" + options_for_select(["Under Control", "Needs Insight", "Solved", "Unimportant","New"],@puzzle.status) %></td>
+  <td><%= select_tag @puzzle.t_id+".status", "<option value=''>Select status</option>" + options_for_select(Puzzle.status_options,@puzzle.status) %></td>
   <td><%= text_field_tag @puzzle.t_id+".name", @puzzle.name, :size => 10 %></td>
   <td><%= text_field_tag @puzzle.t_id+".url", @puzzle.url, :size => 10  %></td>
   <td><%= text_field_tag @puzzle.t_id+".hint", @puzzle.hint, :size => 10  %></td>

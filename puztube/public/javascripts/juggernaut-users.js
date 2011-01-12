@@ -19,10 +19,6 @@
     }
   }
 
-  function create_workspace(txt) {
-    $('comments').insert({ top: txt });
-  }
-
   function jug_chat_update(txt) {
     if ($('chatpane')) {
       $('chatpane')
@@ -30,10 +26,6 @@
       .insert({ bottom: txt});
       $('chatpane').scrollTop = $('chatpane').scrollHeight;
     }
-  }
-  
-  function jug_ws_update(dv,txt) {
-    $(dv).update(txt);
   }
   
   function startup() {
@@ -58,4 +50,41 @@
 //     $(document).observe('juggernaut:reconnect', function(){ alert('Reconnect.') }); 
 //     $(document).observe('juggernaut:connect', function(){ alert('Trying to connect.') }); 
 //     $(document).observe('juggernaut:connected', function(){ alert('Connected.') }); 
+  }
+
+  var connectiontimer;
+  var testTimer;
+  var activetime;
+
+  function connectionActive(channel,user) {
+    // don't worry about clearing connectiontimer, just set the active time
+    activetime = (new Date()).getTime();
+    //window.console.log("Connection active. active time is "+activetime);
+    new Effect.Highlight('connectiontest', { startcolor: '#99cc33', endcolor: '#1d5875', restorecolor: '#1d5875' });
+    // test the connection every 25 seconds to be safe
+    if (!testTimer) testTimer = setTimeout('testConnection(\''+channel+'\',\''+user+'\')',60000)
+  }
+
+  function testConnection(channel,user) {
+    new Ajax.Request('/welcome/test?channel='+channel+'&amp;user='+user, {asynchronous:true, evalScripts:true});
+    testTimer = null;
+  }
+
+  function reconnectJug() {
+    var currenttime = (new Date()).getTime();
+    //window.console.log("Reconnecting. currenttime is "+currenttime, " activetime is "+activetime);
+    if ((activetime+10000) > currenttime) {
+      connectiontimer = null;
+      return;
+    }
+    jug_swf.disconnect();
+    jug_swf.reconnect();
+    connectiontimer = null;
+    new Effect.Highlight('connectiontest', { startcolor: '#cc3333', endcolor: '#1d5875', restorecolor: '#1d5875' });
+  }
+
+  function connectionTimer() {
+    if (!connectiontimer) {
+    	connectiontimer = setTimeout('reconnectJug()',5000);
+    }
   }

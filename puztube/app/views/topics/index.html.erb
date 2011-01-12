@@ -9,7 +9,7 @@
   <tr>
     <td><%=h topic.name %></td>
     <td><%= link_to 'Show', topic_path(topic.name) %></td>
-    <td><%= link_to 'Edit', edit_topic_path(topic.name) %></td>
+    <!-- <td><%= link_to 'Edit', edit_topic_path(topic.name) %></td> -->
     <td><%= link_to 'Destroy', topic_path(topic.name), :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

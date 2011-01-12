@@ -33,3 +33,42 @@ function delete_asset(divid,assetid) {
     $(divid+'.asset'+assetid).remove()
   }
 }
+
+  function create_workspace(txt) {
+    if ($('comments')) $('comments').insert({ top: txt });
+    sortWorkspaces();
+  }
+
+  function jug_ws_update(dv,txt) {
+    if ($(dv)) {
+      if ($(dv+'.editing')) {
+        if ($(dv+'.conflict')) $(dv+'.conflict').update('<font style="color:red;font-weight:bold;">Edit Conflict!</font>');
+      } else
+        $(dv).update(txt);
+      sortWorkspaces();
+    }
+  }
+  
+function sortWorkspaces() {
+  workspaces = $$('div.workspace');
+  high = []
+  normal = []
+  useless = []
+  other = []
+  workspaces.each(function(ws) {
+    fd = ws.firstDescendant();
+    if (fd) {
+      if (fd.hasClassName('prioHigh_title')) high.push(ws);
+      else if (fd.hasClassName('prioNormal_title')) normal.push(ws);
+      else if (fd.hasClassName('prioUseless_title')) useless.push(ws);
+      else other.push(ws);
+    }
+  });
+  if ($('comments')) {
+    $('comments').update();
+    useless.each(function(ws) { $('comments').insert({top:ws}); });
+    other.each(function(ws) { $('comments').insert({top:ws}); });
+    normal.each(function(ws) { $('comments').insert({top:ws}); });
+    high.each(function(ws) { $('comments').insert({top:ws}); });
+  }
+}
