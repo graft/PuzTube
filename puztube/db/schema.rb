@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110112070254) do
+ActiveRecord::Schema.define(:version => 20110114024449) do
 
   create_table "assets", :force => true do |t|
     t.datetime "created_at"
@@ -41,6 +41,8 @@ ActiveRecord::Schema.define(:version => 20110112070254) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "wrong_answer"
+    t.string   "priority"
+    t.string   "workers"
   end
 
   create_table "rounds", :force => true do |t|
@@ -49,6 +51,26 @@ ActiveRecord::Schema.define(:version => 20110112070254) do
     t.string   "captain"
     t.string   "answer"
     t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "hidden"
+  end
+
+  create_table "table_cells", :force => true do |t|
+    t.string   "contents"
+    t.integer  "table_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tables", :force => true do |t|
+    t.string   "priority"
+    t.string   "title"
+    t.string   "editor"
+    t.integer  "rows"
+    t.integer  "cols"
+    t.integer  "thread_id"
+    t.string   "thread_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -84,6 +106,7 @@ ActiveRecord::Schema.define(:version => 20110112070254) do
     t.datetime "updated_at"
     t.string   "priority"
     t.string   "title"
+    t.string   "editor"
   end
 
 end

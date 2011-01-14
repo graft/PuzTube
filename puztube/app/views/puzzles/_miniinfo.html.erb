@@ -1,11 +1,13 @@
-<td style="background-color: <%= puzzle.status_color %>;" id="<%= puzzle.t_id %>.status"><%=h puzzle.status %></td>
+<td style="background-color: <%= puzzle.priority_color %>;"><%=h puzzle.priority %></td>
+<td style="background-color: <%= puzzle.status_color %>;"><%=h puzzle.status %></td>
 <% if current_user && current_user.options && !current_user.options[:grouped] %>
 <td><%=h puzzle.round.name %></td>
 <% end %>
 <td><%= link_to puzzle.name, puzzle, :target => '_blank' %></td>
-<td><%= sanitize(auto_link(puzzle.url,:html=>{:target =>'_blank'}),:tags => %w(a), :attributes => %w(href target)) %></td>
+<td><%= sanitize(link_to(puzzle.url[0,50],puzzle.url,:target =>'_blank'),:tags => %w(a), :attributes => %w(href target)) %></td>
 <td><%=h puzzle.hint %></td>
 <td><%=h puzzle.captain %></td>
+<td><%= puzzle.workers ? puzzle.workers.size.to_s : '' %></td>
 <td><%= puzzle.meta ? "Yes" : "" %></td>
 <td><%=h puzzle.answer %></td>
 <% if current_user && current_user.options && current_user.options[:grouped] %>

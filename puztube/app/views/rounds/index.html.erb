@@ -37,13 +37,13 @@
  -->
 
 <h1>Puzzles</h1>
-
+<div id="editables" class="hidden">
 <% if current_user %>
 <% if current_user.team_captain && current_user.options && current_user.options[:grouped] %>
 <%= link_to_remote 'New round', :url => new_round_path() %><br>
 <% end %>
   <% form_tag(options_user_path, :method => :post) do %>
-  Sort by: <%= select_tag 'sortg', options_for_select([ 'status', 'creation', 'name' ], :selected => current_user.options ? current_user.options[:sorting] : nil) %> 
+  Sort by: <%= select_tag 'sortg', options_for_select([ 'priority', 'status', 'creation', 'name' ], :selected => current_user.options ? current_user.options[:sorting] : nil) %> 
   <%= hidden_field_tag 'groupd', 0 %> 
   <%= check_box_tag 'groupd', 1, current_user.options && current_user.options[:grouped] %> Group by round
   <%= submit_tag 'Sort' %>
@@ -52,7 +52,7 @@
   <%= hidden_field_tag 'actual_group', @grouped %> 
 <% end %>
 <div id="roundstable">
-<% if @grouped %>
+<% if @grouped || !current_user %>
   <% @rounds.each do |round| %>
     <%= render :partial => 'round', :locals => { :round => round, :sorting => @sorting } %>
   <% end %>
@@ -70,10 +70,13 @@
       <th>Answer</th>
     </tr>
   <% @puzzles.each do |puzzle| %>
+    <% if puzzle.round && !puzzle.round.hidden %>
       <tr id="<%= puzzle.t_id %>">
         <%= render :partial => 'puzzles/miniinfo', :locals => { :puzzle => puzzle } %>
       </tr>
+    <% end %>
   <% end %>
 </table>
 <% end %>
+</div>
 </div>

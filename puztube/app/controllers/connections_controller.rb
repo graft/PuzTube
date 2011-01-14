@@ -7,9 +7,9 @@ class ConnectionsController < ApplicationController
           render :juggernaut => { :type => :send_to_channel, :channel => channel } do |page|
             page << "subscribe_user('#{h params[:client_id]}');"
           end
-          render :juggernaut => { :type => :send_to_client_on_channel, :channel => channel, :client_id => params[:client_id] } do |page|
-            page << "connectionActive('#{channel}','#{params[:client_id]}'); $('chatform').enable();"
-          end
+        end
+        render :juggernaut => { :type => :send_to_client_on_channel, :channel => channel, :client_id => params[:client_id] } do |page|
+          page << "connectionActive('#{channel}','#{params[:client_id]}'); jug_connected();"
         end
       end
     end

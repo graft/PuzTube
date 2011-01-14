@@ -27,6 +27,11 @@ class WorkspaceController < ApplicationController
     render :partial => 'edit', :locals => { :workspace => @workspace, :yourtext => nil }
   end
 
+  def show
+    @workspace = Workspace.find(params[:id])
+    render :partial => 'show', :locals => { :workspace => @workspace, :yourtext => nil }
+  end
+
   def prioritize
     @workspace = Workspace.find(params[:id])
     return false if (params[:workspace][:priority] == @workspace.priority)

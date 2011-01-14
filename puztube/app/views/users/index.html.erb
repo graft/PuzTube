@@ -4,21 +4,22 @@
 
 <h1><%= @users.size %> Hunters!</h1>
 
+<p><%= link_to 'New user', new_user_path %></p>
+
 <table class="puzzletable">
   <tr>
     <th>Login</th>
     <th>Name</th>
-    <th>Email</th>
+    <th>Email/Phone</th>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
     <td><%= "<b>" if user.team_captain %><%= user.login %><%= "</b>" if user.team_captain %></td>
-    <td><%= user.name %></td>
+    <td><%= link_to user.name, user %></td>
     <td><%= user.email %></td>
     <td><%= user.info %></td>
     <td><%= image_tag(user.photo.url(:thumb)) if user.photo? %></td>
-    <td><%= link_to 'Show', user %></td>
     <td><%= link_to 'Edit', edit_user_path(user) %></td>
 <% if current_user && current_user.team_captain %>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
@@ -28,5 +29,3 @@
 </table>
 
 <br />
-
-<%= link_to 'New user', new_user_path %>

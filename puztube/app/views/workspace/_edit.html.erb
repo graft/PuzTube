@@ -1,7 +1,10 @@
   <div class="prio<%= workspace.priority %>_title rounded_title">
-      <div style="float:left;">[<%= link_to_function 'Update', '$("'+workspace.form_id+'").onsubmit();' %> ]</div> <div style="float:left;" id="<%= workspace.div_id %>.conflict"></div>
+      <div style="float:left;">[<%= link_to_function 'Update', '$("'+workspace.form_id+'").onsubmit();' %> ]
+  [<%= link_to_remote 'Cancel', :url => show_workspace_path(:id => workspace.id), :method => 'get', :update => workspace.div_id %>]</div>
+<div style="float:left;" id="<%= workspace.div_id %>.conflict"></div>
+
   </div>
-  <div class="prio<%= workspace.priority %>_body rounded_content locked" id="<%= workspace.div_id %>.editing">
+  <div class="prio<%= workspace.priority %>_body rounded_content" id="<%= workspace.div_id %>.editing">
     <% if !yourtext.nil? %>
       <font style='font-weight:bold; color:red'>ATTENTION! Someone has edited this comment since you started editing it.</font><br>
 	Please review the changes (your text is below) and update accordingly.<br>
@@ -12,7 +15,8 @@
     <p>
     Title:<br>
     <%= f.text_field :title %><br>
-    <%= f.text_area :content %>
+    <%= f.text_area :content, :rows => 20, :cols => 80 %>
+    <%= hidden_field_tag 'workspace[editor]', current_or_anon_login %>
     <%= hidden_field_tag :locktime, Time.now.to_i %>
     </p>
 <% end %>

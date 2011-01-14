@@ -1,0 +1,99 @@
+[Thu Jan 13 14:20:19 2011] [error] [client 74.201.102.80] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/users/980190985
+[Thu Jan 13 15:39:25 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:39:25 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:39:51 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:39:51 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:30 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:30 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:30 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:30 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:30 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:30 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:31 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:31 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:31 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:31 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:31 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:31 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:34 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:34 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:34 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:34 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:34 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:34 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:35 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:35 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:35 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:35 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:35 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:35 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:35 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:35 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:35 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:35 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:35 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:35 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:42 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:42 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:42 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:42 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:42 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:42 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:50 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:50 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:50 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Thu Jan 13 15:40:50 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:50 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:50 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:51 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:51 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:51 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Thu Jan 13 15:40:51 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 15:40:51 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Thu Jan 13 15:40:51 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Thu Jan 13 16:09:54 2011] [error] [client 76.21.12.82] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Thu Jan 13 16:33:06 2011] [error] [client 98.216.66.67] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
+[Thu Jan 13 16:33:06 2011] [error] [client 98.216.66.67] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/
+[Thu Jan 13 17:24:53 2011] [error] [client 18.238.0.104] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1
+[Thu Jan 13 17:24:53 2011] [error] [client 18.238.0.104] proxy: Error reading from remote server returned by /connections/subscribe
+[Thu Jan 13 17:50:41 2011] [error] [client 76.89.208.107] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
+[Thu Jan 13 17:50:41 2011] [error] [client 76.89.208.107] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/
+[Thu Jan 13 18:10:51 2011] [error] [client 76.21.12.82] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Thu Jan 13 18:10:51 2011] [error] [client 76.21.12.82] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Thu Jan 13 18:51:03 2011] [error] [client 76.21.12.82] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
+[Thu Jan 13 18:51:03 2011] [error] [client 76.21.12.82] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/
+[Thu Jan 13 19:49:59 2011] [error] [client 76.21.12.82] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Thu Jan 13 19:49:59 2011] [error] [client 76.21.12.82] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/rounds
+[Thu Jan 13 22:14:27 2011] [error] [client 108.41.22.18] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
+[Thu Jan 13 22:36:15 2011] [error] [client 76.21.12.82] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
+[Thu Jan 13 22:36:15 2011] [error] [client 76.21.12.82] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/

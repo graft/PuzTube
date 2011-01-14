@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
     end
     return false
   end
-  
+
+  def recent_broadcasts
+    return Chat.find(:all, :conditions => { :chat_id => "all" }, :order => "created_at DESC", :limit => 2)  
+  end
 
 end

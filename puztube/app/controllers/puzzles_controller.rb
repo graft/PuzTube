@@ -15,6 +15,7 @@ class PuzzlesController < ApplicationController
   # GET /puzzles/1.xml
   def show
     @puzzle = Puzzle.find(params[:id])
+    @broadcasts = recent_broadcasts
     @round = Round.find(@puzzle.round_id)
     @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 10)
     @chatusers = Juggernaut.show_clients_for_channel(@puzzle.chat_id)
@@ -40,37 +41,15 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     text = params[:chat_input]
     user = current_or_anon_login
+    set_worker(@puzzle,user) if current_user
     channel = @puzzle.chat_id
-    if (text.sub!(/^\/([\w]*) /,''))
-      channel = $1
-      user = "MAYHEM" if (channel == "all") 
-    end
-    @chat = Chat.new( {
-                       :user => user,
-                       :text => text,
-                       :chat_id => channel
-                      } )
-    if (@chat.save)
-      # how do we render this?
-      render :juggernaut => { :type => (channel == "all" ? :send_to_all : :send_to_channel ), :channel => channel } do |page|
-        page << "jug_chat_update('<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{javascript_escape sanitize_text @chat.text }</li>');"
-      end
-    end
+    send_chat(user,channel,text)
     render :nothing => true
   end
 
   def edit_row
     @puzzle = Puzzle.find(params[:puzzle][:id])
-    @round = Round.find(@puzzle.round_id)
-    if ((params[:puzzle][:answer] =~ /[A-Za-z]/ || params[:puzzle][:status] == "Solved") && @puzzle.status != "Solved")
-      params[:puzzle][:status] = "Solved"
-      broad = true
-    else
-      broad = false
-    end
-    if @puzzle.update_attributes(params[:puzzle])
-      broadcast_puzzle_edit(@puzzle,broad)
-    end
+    broadcast_puzzle_edit(@puzzle,params[:puzzle])
     render :nothing => true
   end  
   
@@ -116,15 +95,14 @@ class PuzzlesController < ApplicationController
   # PUT /puzzles/1.xml
   def update
     @puzzle = Puzzle.find(params[:id])
-    if ((params[:puzzle][:answer] =~ /[A-Za-z]/ || params[:puzzle][:status] == "Solved") && @puzzle.status != "Solved")
-      params[:puzzle][:status] = "Solved"
-      broad = true
-    else
-      broad = false
-    end
-    if @puzzle.update_attributes(params[:puzzle])
-      broadcast_puzzle_edit(@puzzle,broad)
-    end
+    broadcast_puzzle_edit(@puzzle,params[:puzzle])
+    render :nothing => true
+  end
+
+  def worker
+    @puzzle = Puzzle.find(params[:id])
+    set_worker(@puzzle,params[:worker])
+    broadcast_puzzle_edit(@puzzle,{})
     render :nothing => true
   end
 

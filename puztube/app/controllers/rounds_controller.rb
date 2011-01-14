@@ -2,32 +2,27 @@ class RoundsController < ApplicationController
   # GET /rounds
   # GET /rounds.xml
   def index
-    @rounds = Round.find(:all,:order => 'updated_at DESC')
+    @rounds = Round.find(:all,:conditions => {:hidden => nil}, :order => 'updated_at DESC')
+    @broadcasts = recent_broadcasts
     @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
     @grouped = (current_user&&current_user.options)?current_user.options[:grouped]:false
-    statord = { "Urgent"=>0,"Needs Insight"=>1,"Needs MIT-Local"=>2,"New"=>3,"Under Control"=>4,"Solved"=>5,"Unimportant"=>6 }
+    sorter = Proc.new { |p1,p2|
+        if @sorting == "status"
+          p1.status_order <=> p2.status_order
+        elsif @sorting == "priority"
+          p1.priority_order <=> p2.priority_order
+        elsif @sorting == "name"
+          p1.name <=> p2.name
+        else
+          p1.created_at <=> p2.created_at
+        end
+      }
     if @grouped
       @rounds.each do |round|
-        round.puzzles.sort!{ |p1,p2|
-        if @sorting == "status"
-          statord[p1.status] <=> statord[p2.status]
-        elsif @sorting == "name"
-          p1.name <=> p2.name
-        else
-          p1.created_at <=> p2.created_at
-        end
-      }
+        round.puzzles.sort! &sorter
       end
     else
-      @puzzles = Puzzle.find(:all).sort!{ |p1,p2|
-        if @sorting == "status"
-          statord[p1.status] <=> statord[p2.status]
-        elsif @sorting == "name"
-          p1.name <=> p2.name
-        else
-          p1.created_at <=> p2.created_at
-        end
-      }
+      @puzzles = Puzzle.find(:all).sort! &sorter
     end
 
     respond_to do |format|
@@ -72,6 +67,7 @@ class RoundsController < ApplicationController
     @puzzle = @round.puzzles.build
     @puzzle.name = "New Puzzle"
     @puzzle.status = "New"
+    @puzzle.priority = "Normal"
     
     if @puzzle.save
       text = render_to_string :partial => 'puzzles/miniblock', :locals => { :puzzle => @puzzle }
@@ -130,7 +126,8 @@ class RoundsController < ApplicationController
     render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
       page << "$('ROUND#{@round.id}').remove();"
     end
-    @round.destroy
+    @round.hidden = true
+    @round.save
     render :nothing => true
   end
 end

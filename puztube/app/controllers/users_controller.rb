@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   # GET /users.xml
   def index
     @users = User.all
+    @broadcasts = recent_broadcasts
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +15,7 @@ class UsersController < ApplicationController
   # GET /users/1.xml
   def show
     @user = User.find(params[:id])
+    @chats = Chat.find(:all, :conditions => {:chat_id => "private_to_"+@user.login})
 
     respond_to do |format|
       format.html # show.html.erb

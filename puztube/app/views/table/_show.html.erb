@@ -1,0 +1,22 @@
+<div class="prio<%= table.priority %>_title rounded_<%= table.priority == "Useless" ? "box": "title" %>">
+  <div style="padding:2px; float:left;">
+    [<%= link_to_remote 'Edit', :url => edit_table_path(:id => table.id), :method => 'get', :update => table.div_id %> ]
+    <% if current_user && current_user.team_captain %>
+    [<%= link_to_remote 'Destroy', :url => delete_table_path(:id => table.id), :confirm => "Are you sure?", :method => :delete %> ]
+    <% end %>
+    <b> <%= h table.title %> </b>
+  </div>
+  <div style="float:right">
+    Updated <%= relative_time table.updated_at %> by <%= table.editor %>
+    <% form_remote_for table, :url => prioritize_table_path(:id => table.id), :html => { :class => 'iform', :id => table.div_id + '.prio', :autocomplete => 'off' } do %>
+      <%= select :table, :priority, options_for_select(Table.priorities,table.priority),{ :id => table.div_id + '.priobox' }, {:onchange => "$('#{table.div_id}.prio').onsubmit()"} %>
+    <% end %>
+  </div>
+</div>
+<% if table.priority != "Useless" %>
+<div class="prio<%= table.priority %>_body rounded_content">
+  <div id="<%= table.div_id %>.content" style="padding: 4px;">
+   I am a table!
+  </div>
+</div>
+<%end%>

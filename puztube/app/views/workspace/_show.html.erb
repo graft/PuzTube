@@ -7,6 +7,7 @@
     <b> <%= h workspace.title %> </b>
   </div>
   <div style="float:right">
+    Updated <%= relative_time workspace.updated_at %> by <%= workspace.editor %>
     <% form_remote_for workspace, :url => prioritize_workspace_path(:id => workspace.id), :html => { :class => 'iform', :id => workspace.div_id + '.prio', :autocomplete => 'off' } do %>
       <%= select :workspace, :priority, options_for_select(Workspace.priorities,workspace.priority),{ :id => workspace.div_id + '.priobox' }, {:onchange => "$('#{workspace.div_id}.prio').onsubmit()"} %>
     <% end %>

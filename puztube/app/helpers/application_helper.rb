@@ -2,12 +2,53 @@
 require 'digest/sha1'
 
 module ApplicationHelper
+
+  def send_chat(user,channel,text)
+    @chat = Chat.new( { :user => user } )
+    jc = { :type => :send_to_channel, :channel => channel }
+    msg = "<b>#{user}:</b> #{ text }"
+    sus = "subscribe_user('#{user}')"
+    if (text.sub!(/^\/msg ([\w]*) /,''))
+      # echo it
+      jc[:type] = :send_to_client_on_channel
+      jc[:client_id] = user
+      msg = "<b style='color:red;'>PRIVATE to #{$1}:</b> #{ text }"
+      render :juggernaut => jc do |page|
+        page << "jug_chat_update('<li>#{javascript_escape sanitize_text msg}</li>');"
+      end
+      msg = "<b style='color:red;'>PRIVATE from #{user}:</b> #{ text }"
+      jc[:type] = :send_to_client
+      jc[:client_id] = $1
+      channel = "private_to_#{$1}"
+      sus = ''
+    elsif (text.sub!(/^\/([\w]*) /,''))
+      if $1 == "all"
+        jc[:type] = :send_to_all
+        msg = "<b style='color:red;'>BROADCAST from #{user}:</b> #{ text }"
+      else
+        jc[:type] = :send_to_channel
+        msg = "<b style='color:red;'>OOC{#{channel}} #{user}:</b> #{ text }"
+      end
+      sus = ''
+      channel = $1
+      jc[:channel] = channel
+    end
+    @chat.text = text
+    @chat.chat_id = channel
+    if (@chat.save)
+      # how do we render this?
+      render :juggernaut => jc do |page|
+        page << "jug_chat_update('<li>#{@chat.dateformat} #{javascript_escape sanitize_text msg}</li>'); #{sus}"
+      end
+    end
+  end
+
   def javascript_escape(str)
     str.gsub(/\\|'/) { |c| "\\#{c}" }.gsub(/\n/,' ')
   end
   
   def sanitize_text(str)
-    sanitize(auto_link(str, :html => { :target => '_blank' }), :tags => %w(a), :attributes => %w(href target) )
+    sanitize(auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
   end
   
   
@@ -65,21 +106,32 @@ module ApplicationHelper
     lines.each_index do |i|
       # lines starting with > -> <div class="quotation">
       if options[:quote] && lines[i].gsub!(/^>/,'')
-        (i+1...lines.length).each do |j|
-          break if lines[j].gsub(/^>/,'').nil?
-        end
+        if i+1==lines.length
+          content = lines.slice!(i,1).join("\n")
+          content = "<div class=\"quotation\">\n#{content}\n</div>"
+          lines.push(content)
+        else
+          (i+1...lines.length).each do |j|
+            break if lines[j].gsub(/^>/,'').nil?
+          end
         
-        content = lines.slice!(i,j-i).join("\n")
+          content = lines.slice!(i,j-i).join("\n")
 #         content = texturize(content, { wiki => 0, http => 0 } );
-        content = "<div class=\"quotation\">\n#{content}\n</div>"
-        lines.insert(i+1, content);
+          content = "<div class=\"quotation\">\n#{content}\n</div>"
+          lines.insert(i+1, content);
+        end
         # lines starting with space or tab -> <pre>
       elsif options[:pre] && !lines[i].gsub!(/\A[ \t]/,'').nil?
-        (i+1...lines.length).each do |j|
-          break if lines[j].gsub!(/\A[ \t]/,'').nil?
+        if i+1==lines.length
+          content = lines.slice!(i, 1).join("\n")
+          lines.push("<pre><pre#{pre.length}></pre>")
+        else
+          (i+1...lines.length).each do |j|
+            break if lines[j].gsub!(/\A[ \t]/,'').nil?
+          end
+          content = lines.slice!(i, j - i).join("\n")
+          lines.insert(i+1,"<pre><pre#{pre.length}></pre>")
         end
-        content = lines.slice!(i, j - i).join("\n")
-        lines.insert(i+1,"<pre><pre#{pre.length}></pre>")
         pre.push(content)
         # tables
       elsif options[:tab] && lines[i] =~ /^TAB/
@@ -151,12 +203,12 @@ module ApplicationHelper
         
     # bold
     if options[:b]
-      text.gsub!(/[^\w]?\*(\S[^*]*\S|\S)\*(?!\w)/,"<b>\\1</b>")
+      text.gsub!(/([^\w]?)\*(\S[^*]*\S|\S)\*(?!\w)/,"\\1<b>\\2</b>")
     end
     
     # italic
     if options[:i]
-      text.gsub!(/[^\w]?_(\S[^_]*\S|\S)_(?!\w)/,"<i>\\1</i>")
+      text.gsub!(/([^\w]?)_(\S[^_]*\S|\S)_(?!\w)/,"\\1<i>\\2</i>")
     end
         
     # emdash
@@ -168,12 +220,13 @@ module ApplicationHelper
 
     # restore pre contents
     text.gsub!(/<pre(\d+)>/) do |c|
-      pre[c.to_i]
+      logger.info "Restoring >>#{$1}<<"
+      pre[$1.to_i]
     end if options[:pre]
 
     # http links
     if options[:http]
-      text.gsub!(/\b((https?|ftp|irc):\/\/\S+)/i) do |m|
+      text.gsub!(/\b((https?|ftp|irc):\/\/[^\s\<]+)/i) do |m|
         tags.push("a href=\"#{m}\">#{m}</a")
         "<#{(tags.size-1).to_s}>"
       end

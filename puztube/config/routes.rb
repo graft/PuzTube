@@ -4,6 +4,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_puzzle '/puzzles/edit/:id', :controller => 'puzzles', :action => 'edit'
   map.update_puzzle '/puzzles/update/:id', :controller => 'puzzles', :action => 'update'
   map.new_puzzle '/puzzles/new/:id', :controller => 'puzzles', :action => 'new'
+  map.worker_puzzle '/puzzles/worker/:id', :controller => 'puzzles', :action => 'worker'
   map.puzzle '/puzzles/:id', :controller => 'puzzles', :action => 'show'
 
   map.create_rpuzzle '/rounds/create_puzzle', :controller => 'rounds', :action => 'create_puzzle'
@@ -80,11 +81,20 @@ ActionController::Routing::Routes.draw do |map|
 
   map.new_attachment 'workspace/new_attachment', :controller => 'workspace', :action => 'new_attachment', :conditions => { :method => :post }
   map.delete_attachment 'workspace/delete_attachment', :controller => 'workspace', :action => 'delete_attachment'
+
   map.new_workspace 'workspace/new', :controller => 'workspace', :action => 'new', :conditions => { :method => :post }
   map.delete_workspace 'workspace/delete', :controller => 'workspace', :action => 'delete'
   map.prioritize_workspace 'workspace/prioritize', :controller => 'workspace', :action => 'prioritize'
   map.edit_workspace 'workspace/edit', :controller => 'workspace', :action => 'edit'
+  map.show_workspace 'workspace/show', :controller => 'workspace', :action => 'show'
   map.update_workspace 'workspace/update', :controller => 'workspace', :action => 'update'
+
+  map.new_table 'table/new', :controller => 'table', :action => 'new', :conditions => { :method => :post }
+  map.delete_table 'table/delete', :controller => 'table', :action => 'delete'
+  map.prioritize_table 'table/prioritize', :controller => 'table', :action => 'prioritize'
+  map.edit_table 'table/edit', :controller => 'table', :action => 'edit'
+  map.show_table 'table/show', :controller => 'table', :action => 'show'
+  map.update_table 'table/update', :controller => 'table', :action => 'update'
 
   #map.connect ':controller/:id/:action'
   map.connect ':controller/:action/:id'

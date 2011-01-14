@@ -5,8 +5,8 @@
     <%= f.text_field :name %><br>
     <b><%= f.label :url %></b>
     <%= f.text_field :url %><br>
-    <b><%= f.label :hint %></b>
-    <%= f.text_field :hint %><br>
+    <b><%= f.label :hint %></b><br>
+    <%= f.text_area :hint, :rows => 5, :cols => 60 %><br>
     <b><%= f.label :captain %></b>
     <%= collection_select(:puzzle,:captain,User.all,:login,:login,{:prompt=>true}) %><br>
     <b><%= f.label :meta %></b>
@@ -19,6 +19,8 @@
     <%= collection_select :puzzle, :round_id, Round.all,:id,:name %><br>
     <b><%= f.label :status %></b>
     <b><%= select :puzzle, :status, "<option value=''>Select status</option>" + options_for_select(Puzzle.status_options,@puzzle.status) %><br>
+    <b><%= f.label :priority %></b>
+    <b><%= select :puzzle, :priority, "<option value=''>Select priority</option>" + options_for_select(Puzzle.priority_options,@puzzle.priority) %><br>
     <%= f.submit 'Update' %>
   </p>
 <% end %>

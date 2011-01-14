@@ -66,9 +66,9 @@ function sortWorkspaces() {
   });
   if ($('comments')) {
     $('comments').update();
-    useless.each(function(ws) { $('comments').insert({top:ws}); });
-    other.each(function(ws) { $('comments').insert({top:ws}); });
-    normal.each(function(ws) { $('comments').insert({top:ws}); });
-    high.each(function(ws) { $('comments').insert({top:ws}); });
+    high.each(function(ws) { $('comments').insert({bottom:ws}); });
+    normal.each(function(ws) { $('comments').insert({bottom:ws}); });
+    other.each(function(ws) { $('comments').insert({bottom:ws}); });
+    useless.each(function(ws) { $('comments').insert({bottom:ws}); });
   }
 }

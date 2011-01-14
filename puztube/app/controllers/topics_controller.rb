@@ -3,6 +3,7 @@ class TopicsController < ApplicationController
   # GET /topics.xml
   def index
     @topics = Topic.all
+    @broadcasts = recent_broadcasts
 
     respond_to do |format|
       format.html # index.html.erb
@@ -14,6 +15,7 @@ class TopicsController < ApplicationController
   # GET /topics/1.xml
   def show
     @topic = Topic.find_by_name(params[:name])
+    @broadcasts = recent_broadcasts
     @chats = Chat.find(:all, :conditions => {:chat_id => @topic.chat_id}, :order => "created_at DESC", :limit => 10)
     @chatusers = Juggernaut.show_clients_for_channel(@topic.chat_id)
     
@@ -90,21 +92,8 @@ class TopicsController < ApplicationController
     text = params[:chat_input]
     user = current_or_anon_login
     channel = @topic.chat_id
-    if (text.sub!(/^\/([\w]*) /,''))
-      channel = $1
-      user = "MAYHEM" if (channel == "all")
-    end
-    @chat = Chat.new( {
-                       :user => user,
-                       :text => text,
-                       :chat_id => channel
-                      } )
-    if (@chat.save)
-      # how do we render this?
-      render :juggernaut => { :type => (channel == "all" ? :send_to_all : :send_to_channel ), :channel => channel } do |page|
-        page << "jug_chat_update('<li>#{h @chat.dateformat} <b>#{h @chat.user}:</b> #{javascript_escape sanitize_text @chat.text }</li>');"
-      end
-    end
+    send_chat(user,channel,text)
+
     render :nothing => true
   end
 end

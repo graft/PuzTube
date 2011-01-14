@@ -1,4 +1,5 @@
-<div id="navbar" class="rounded" style="width: 74%; padding: 8px; background-color:#f93;">
+<div id="navbar" class="rounded" style="width: 75%; background-color:#f93;">
+<div style="padding:8px;">
 <b style="color:#531; font-size:14pt;">PuzTube</b> |
 <%= link_to 'Home', root_url %> |
 <%= link_to 'Puzzles', { :action => 'index', :controller => 'rounds' } %> |
@@ -16,5 +17,12 @@
     <%= select :user, :login, "<option value='' selected>Please select</option>" + options_from_collection_for_select(User.all,:login,:login),{ }, {:onchange => "$('login_form').onsubmit()"} %>
     or <%= link_to 'sign up', { :action => 'new', :controller => 'users' }, :target => '_blank' %>
   <% end %>
+<% end %>
+</div>
+</div>
+
+<div id="broadcasts" class="broadcasts">
+<% @broadcasts.each do |chat| %>
+ <b style="color:red"><%= chat.user %>:</b> <%= sanitize_text chat.text%> <br>
 <% end %>
 </div>

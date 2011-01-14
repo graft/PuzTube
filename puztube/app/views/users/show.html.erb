@@ -26,5 +26,22 @@
 </p>
 <% end %>
 
+<% if @user == current_user && @chats %>
+<script language="javascript">
+function showChats() {
+   $('chats').removeClassName('hidden');
+}
+</script>
+<p><b> PRIVATE CHATS </b> - Please don't read these if they're not for you.<br>
+<%= link_to_function '[Show]', 'showChats()' %></p>
+<div id="chats" class="hidden">
+<ul>
+<% @chats.each do |chat| %>
+  <li><%=h chat.dateformat%> <b><%=h chat.user%>:</b> <%=sanitize_text chat.text %></li>
+<% end %>
+</ul>
+</div>
+<% end %>
+
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>

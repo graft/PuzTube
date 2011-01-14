@@ -24,3 +24,28 @@
 >> Maximum connections set to 1024
 >> Listening on 0.0.0.0:3000, CTRL+C to stop
 >> Exiting!
+>> Writing PID to /home/graft/rails/PuzTube/puztube/tmp/pids/thin.3000.pid
+>> Using rails adapter
+>> Thin web server (v1.2.2 codename I Find Your Lack of Sauce Disturbing)
+>> Maximum connections set to 1024
+>> Listening on 0.0.0.0:3000, CTRL+C to stop
+7.93720415 minutes ago
+0.020427 seconds ago
+27.4110874666667 minutes ago
+9.20765083333333 minutes ago
+7.1799811 minutes ago
+1.51360658333333 minutes ago
+109.071774933333 hours ago
+23.34749705 minutes ago
+>> Waiting for 12 connection(s) to finish, can take up to 30 sec, CTRL+C to stop now
+>> Writing PID to /home/graft/rails/PuzTube/puztube/tmp/pids/thin.3000.pid
+>> Using rails adapter
+>> Thin web server (v1.2.2 codename I Find Your Lack of Sauce Disturbing)
+>> Maximum connections set to 1024
+>> Listening on 0.0.0.0:3000, CTRL+C to stop
+>> Exiting!
+>> Writing PID to /home/graft/rails/PuzTube/puztube/tmp/pids/thin.3000.pid
+>> Using rails adapter
+>> Thin web server (v1.2.2 codename I Find Your Lack of Sauce Disturbing)
+>> Maximum connections set to 1024
+>> Listening on 0.0.0.0:3000, CTRL+C to stop

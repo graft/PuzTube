@@ -21,11 +21,13 @@
 
 <%= link_to 'Back', topics_path %><br>
 
+<div id="editables" class="hidden">
 <%= link_to_remote 'New Comment', :url => new_workspace_path(:type => 'topic', :name => @topic.name), :method => :post %>
 <div id="comments">
 <% @topic.workspaces.each do |ws| %>
   <%= render :partial => 'workspace/block', :locals => { :workspace => ws } %>
 <% end %>
+</div>
 </div>
 
 <%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @topic } %>

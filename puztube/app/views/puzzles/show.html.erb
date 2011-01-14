@@ -18,11 +18,20 @@
 <div id="info">
 <%= render :partial => 'info', :locals => { :puzzle => @puzzle } %>
 </div>
+<div id="editables" class="hidden">
 <%= link_to_remote 'New Comment', :url => new_workspace_path(:type => 'puzzle', :id => @puzzle.id), :method => :post %>
-<div id="comments">
-<% @puzzle.workspaces.each do |ws| %>
-  <%= render :partial => 'workspace/block', :locals => { :workspace => ws } %>
+<% if current_or_anon_login == "graft" %>
+<%= link_to_remote 'New Table', :url => new_table_path(:type => 'puzzle', :id => @puzzle.id), :method => :post %>
 <% end %>
+<div id="comments">
+<% @puzzle.comments.each do |comment| %>
+  <% if comment.class == Workspace %>
+  <%= render :partial => 'workspace/block', :locals => { :workspace => comment } %>
+  <% else %>
+  <%= render :partial => 'table/block', :locals => { :table => comment } %>
+  <% end %>
+<% end %>
+</div>
 </div>
 
 <%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @puzzle } %>
