@@ -97,3 +97,373 @@
 [Thu Jan 13 22:14:27 2011] [error] [client 108.41.22.18] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
 [Thu Jan 13 22:36:15 2011] [error] [client 76.21.12.82] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
 [Thu Jan 13 22:36:15 2011] [error] [client 76.21.12.82] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/
+[Fri Jan 14 04:12:33 2011] [error] [client 18.238.0.104] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1
+[Fri Jan 14 04:12:33 2011] [error] [client 18.238.0.104] proxy: Error reading from remote server returned by /connections/unsubscribe
+[Fri Jan 14 05:56:11 2011] [error] [client 69.12.135.164] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 05:56:11 2011] [error] [client 69.12.135.164] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 05:59:21 2011] [error] [client 18.238.0.104] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1
+[Fri Jan 14 05:59:21 2011] [error] [client 18.238.0.104] proxy: Error reading from remote server returned by /connections/subscribe
+[Fri Jan 14 08:37:56 2011] [error] [client 96.237.126.216] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 09:01:41 2011] [error] [client 69.12.135.164] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 09:01:41 2011] [error] [client 69.12.135.164] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 09:47:15 2011] [error] [client 98.216.66.67] user Brandon not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 09:47:23 2011] [error] [client 18.238.0.104] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1
+[Fri Jan 14 09:47:23 2011] [error] [client 18.238.0.104] proxy: Error reading from remote server returned by /connections/unsubscribe
+[Fri Jan 14 09:48:32 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/controls.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:48:33 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/effects.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:48:33 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/stylesheets/scaffold.css": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:48:33 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/stylesheets/rounded.css": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:48:33 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/prototype.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:48:33 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/dragdrop.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:14 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/application.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:14 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/juggernaut/juggernaut.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:14 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/juggernaut-users.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:14 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/juggernaut/swfobject.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:15 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/workspaces.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:15 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/javascripts/resize.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:49:17 2011] [error] [client 96.237.126.216] user mayhem: authentication failure for "/images/icon_txt.png": Password Mismatch, referer: http://mayhem.mit.edu/topic/Bugs%20and%20Feature%20Requests
+[Fri Jan 14 09:51:15 2011] [error] [client 69.12.135.164] client denied by server configuration: /home/graft/rails/PuzTube/puztube/public/.htaccess
+[Fri Jan 14 09:52:29 2011] [error] [client 24.19.34.225] user mayhem: authentication failure for "/javascripts/prototype.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:37 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/stylesheets/scaffold.css": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:37 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/controls.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:37 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/dragdrop.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:37 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/juggernaut/swfobject.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:37 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/stylesheets/rounded.css": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:37 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/prototype.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:40 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/effects.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:40 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/juggernaut/juggernaut.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:40 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/juggernaut-users.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:40 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/workspaces.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:40 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/resize.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:40 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/application.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:51 2011] [error] [client 38.105.200.252] user mayhem: authentication failure for "/javascripts/controls.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:52:53 2011] [error] [client 38.105.200.252] user  not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/workspaces.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut-users.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:05 2011] [error] [client 38.105.200.252] user  not found: /javascripts/resize.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 09:53:07 2011] [error] [client 69.12.135.164] user mayhem: authentication failure for "/javascripts/workspaces.js": Password Mismatch, referer: http://mayhem.mit.edu/topic/Project%20Electric%20Mayhem
+[Fri Jan 14 10:26:59 2011] [error] [client 98.229.46.47] user  not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:26:59 2011] [error] [client 98.229.46.47] user  not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:26:59 2011] [error] [client 98.229.46.47] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:27:09 2011] [error] [client 98.229.46.47] user  not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:27:09 2011] [error] [client 98.229.46.47] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:27:09 2011] [error] [client 98.229.46.47] user  not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:27:35 2011] [error] [client 98.229.46.47] user may not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:27:35 2011] [error] [client 98.229.46.47] user may not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:27:35 2011] [error] [client 98.229.46.47] user may not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 10:51:59 2011] [error] [client 98.229.46.47] user  not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 11:12:07 2011] [error] [client 208.54.40.43] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 11:35:11 2011] [error] [client 18.150.1.76] user may not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 11:35:42 2011] [error] [client 18.150.1.76] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 11:35:50 2011] [error] [client 18.150.1.76] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:02:32 2011] [error] [client 18.111.82.157] user ntmadden not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:55 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:55 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:55 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:55 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:55 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/juggernaut-users.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:55 2011] [error] [client 216.186.42.218] user daBomb619 not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:59 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/resize.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:59 2011] [error] [client 216.186.42.218] user daBomb619 not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:59 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:59 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:59 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/workspaces.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:15:59 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:16:00 2011] [error] [client 216.186.42.218] user daBomb619 not found: /favicon.ico
+[Fri Jan 14 12:16:32 2011] [error] [client 216.186.42.218] user daBomb619 not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:16:32 2011] [error] [client 216.186.42.218] user daBomb619 not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:16:32 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:16:32 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:16:32 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:16:32 2011] [error] [client 216.186.42.218] user daBomb619 not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:22:21 2011] [error] [client 192.54.222.3] user mayhem: authentication failure for "/javascripts/juggernaut-users.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:24:57 2011] [error] [client 18.111.25.136] user robert not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:25:00 2011] [error] [client 18.111.25.136] user robert not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:26:55 2011] [error] [client 192.54.222.3] user mayhem: authentication failure for "/javascripts/workspaces.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:39:43 2011] [error] [client 193.88.209.90] user  not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:39:43 2011] [error] [client 193.88.209.90] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:39:43 2011] [error] [client 193.88.209.90] user  not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:39:43 2011] [error] [client 193.88.209.90] user  not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/workspaces.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/resize.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/juggernaut-users.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:41:32 2011] [error] [client 193.88.209.90] user robert-paulson not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 12:44:35 2011] [error] [client 65.213.216.226] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 13:06:20 2011] [error] [client 64.119.153.34] user mayhem: authentication failure for "/stylesheets/scaffold.css": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 13:20:41 2011] [error] [client 18.189.30.214] user  not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 13:20:49 2011] [error] [client 18.189.30.214] user sdf not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 13:21:26 2011] [error] [client 18.189.30.214] user mayhem: authentication failure for "/javascripts/juggernaut/swfobject.js": Password Mismatch, referer: http://mayhem.mit.edu/
+[Fri Jan 14 13:43:59 2011] [error] proxy: pass request body failed to 127.0.0.1:3001 (127.0.0.1) from 18.111.18.154 ()
+[Fri Jan 14 13:44:09 2011] [error] [client 18.111.9.190] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/puzzles/49
+[Fri Jan 14 13:44:09 2011] [error] [client 18.111.9.190] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/puzzles/49
+[Fri Jan 14 14:03:35 2011] [error] [client 18.111.20.224] user may not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:03:43 2011] [error] [client 18.111.20.224] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:09:10 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:09:10 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:09:31 2011] [error] [client 18.111.18.54] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:09:36 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:09:36 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] [client 18.111.9.190] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 14:10:07 2011] [error] [client 18.111.9.190] proxy: Error reading from remote server returned by /welcome/test, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:07 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:07 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:08 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:08 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:08 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:08 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:08 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:08 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:08 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:08 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:08 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:08 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:08 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:08 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:10 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:10 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:10 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:10 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:10 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:10 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:12 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:12 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:13 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:13 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:13 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:13 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:13 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:13 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:13 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:13 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:13 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:13 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:13 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:13 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:14 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:14 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:15 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:15 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:15 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:15 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:15 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:15 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:15 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:15 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:15 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:15 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:15 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:15 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:16 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:16 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:17 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:17 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3002 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3000 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:10:18 2011] [error] (111)Connection refused: proxy: HTTP: attempt to connect to 127.0.0.1:3001 (127.0.0.1) failed
+[Fri Jan 14 14:10:18 2011] [error] ap_proxy_connect_backend disabling worker for (127.0.0.1)
+[Fri Jan 14 14:16:30 2011] [error] [client 18.111.118.222] user ntmadden not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:16:31 2011] [error] [client 18.111.118.222] user ntmadden not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:16:31 2011] [error] [client 18.111.118.222] user ntmadden not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:24:54 2011] [error] [client 18.150.1.76] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/puzzles/36
+[Fri Jan 14 14:52:11 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:52:11 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:52:11 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:52:12 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:52:12 2011] [error] [client 38.105.200.252] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 14:52:44 2011] [error] [client 38.105.200.252] user  not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:01:14 2011] [error] [client 18.189.30.214] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/users/980191029
+[Fri Jan 14 15:01:38 2011] [error] [client 18.111.2.199] user  not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:01:53 2011] [error] [client 18.111.2.199] user  not found: /javascripts/resize.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:11:28 2011] [error] [client 38.105.200.252] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:24 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:24 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:24 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:24 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:24 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:24 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/juggernaut-users.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/resize.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /javascripts/workspaces.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:32:41 2011] [error] [client 76.119.239.83] user robert-paulsen not found: /uploads/IMAG0166_12_thumb.jpg, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:45:44 2011] [error] [client 98.119.76.47] user  not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:45:44 2011] [error] [client 98.119.76.47] user  not found: /uploads/IMAG0166_12_thumb.jpg, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:50:32 2011] [error] [client 18.111.7.223] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 15:50:32 2011] [error] [client 18.111.7.223] (70014)End of file found: proxy: error reading status line from remote server 127.0.0.1, referer: http://mayhem.mit.edu/rounds
+[Fri Jan 14 15:53:56 2011] [error] [client 18.111.27.133] user  not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:54:33 2011] [error] [client 208.54.36.73] user Mayhem not found: /stylesheets/scaffold.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:54:33 2011] [error] [client 208.54.36.73] user Mayhem not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:54:33 2011] [error] [client 208.54.36.57] user Mayhem not found: /stylesheets/rounded.css, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/prototype.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/dragdrop.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/effects.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/controls.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/juggernaut/swfobject.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/juggernaut/juggernaut.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/application.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/juggernaut-users.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/resize.js, referer: http://mayhem.mit.edu/
+[Fri Jan 14 15:57:45 2011] [error] [client 18.111.27.133] user  not found: /javascripts/workspaces.js, referer: http://mayhem.mit.edu/

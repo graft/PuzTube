@@ -2,10 +2,13 @@ class WorkspaceController < ApplicationController
   def new
     if (params[:type] == "topic")
       @thread = Topic.find_by_name(params[:name])
+    elsif (params[:type] == "round")
+      @thread = Round.find(params[:id])
     else
       @thread = Puzzle.find(params[:id])
     end
     @workspace = @thread.workspaces.build({:priority=>"Normal"})
+    @workspace.editor = current_or_anon_login
     if @workspace.save
       text = render_to_string :partial => 'block', :locals => { :workspace => @workspace }
       # again, use juggernaut to do this.

@@ -1,50 +1,29 @@
-<p>
-  <b>Name:</b>
-  <%=h @round.name %>
-</p>
+<%= javascript_include_tag :defaults, :juggernaut %>
+<%= javascript_include_tag "juggernaut-users" %>
+<%= javascript_include_tag "resize" %>
+<%= javascript_include_tag "workspaces" %>
 
-<p>
-  <b>Hint:</b>
-  <%=h @round.hint %>
-</p>
+<%= juggernaut :channels => [@round.chat_id], :client_id => current_or_anon_login, :debug => true %>
+<% content_for :title, "#{@round.name}" %>
 
-<p>
-  <b>Captain:</b>
-  <%=h @round.captain %>
-</p>
+<script type="text/javascript" charset="utf-8">
+  var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
+  document.observe("dom:loaded", startup);
+  document.observe("dom:loaded", update_tables);
+</script>
+<%= render :partial => "welcome/login" %> 
+<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @round.chat_id } %> 
 
-<p>
-  <b>Answer:</b>
-  <%=h @round.answer %>
-</p>
-
-<% if @round.puzzles.size > 0 %>
-<table>
-  <tr>
-    <th>Round</th>
-    <th>Number</th>
-    <th>Name</th>
-    <th>Url</th>
-    <th>Answer</th>
-    <th>Status</th>
-  </tr>
-
-<% @round.puzzles.each do |puzzle| %>
-  <tr>
-    <td><%=h puzzle.round_id %></td>
-    <td><%=h puzzle.name %></td>
-    <td><%=h puzzle.url %></td>
-    <td><%=h puzzle.answer %></td>
-    <td><%=h puzzle.status %></td>
-    <td><%= link_to 'Show', puzzle %></td>
-    <td><%= link_to 'Edit', edit_puzzle_path(puzzle) %></td>
-    <td><%= link_to 'Destroy', puzzle, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
+<div id="info">
+<%= render :partial => 'info', :locals => { :round => @round } %>
+</div>
+<div id="editables" class="hidden">
+<%= link_to_remote 'New Comment', :url => new_workspace_path(:type => 'round', :id => @round.id), :method => :post %>
+<div id="comments">
+<% @round.workspaces.each do |ws| %>
+  <%= render :partial => 'workspace/block', :locals => { :workspace => ws } %>
 <% end %>
+</div>
+</div>
 
-</table>
-<% end %>
-
-<%= link_to 'Add puzzle', :action => 'new_puzzle', :id => @round.id %> <br>
-<%= link_to 'Edit', edit_round_path(@round) %> |
-<%= link_to 'Back', rounds_path %>
+<%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @round } %>

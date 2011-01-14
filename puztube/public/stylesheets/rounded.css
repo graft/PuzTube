@@ -162,3 +162,61 @@ ul.userlist li:before {
  content:'\ffed';
  margin-right:0.1em;
 }
+
+.pzt_head {
+  margin: 0px;
+  padding: 0px;
+  width: 60px;
+  height: 20px;
+}
+
+.pzt_row {
+  margin: 0px;
+  padding: 0px;
+  width: 60px;
+  height: 20px;
+}
+
+.pzt_head textarea, .pzt_head input
+{
+  color: #715;
+  background-color: transparent;
+  border: 0px solid #715;
+  padding:0px;
+  margin:0px;
+  width: 75%;
+  height: 100%;
+}
+
+.pzt_row textarea, .pzt_row input
+{
+  color: #715;
+  background-color: transparent;
+  border: 0px solid #715;
+  width: 100%;
+  height: 100%;
+}
+
+.sorter {
+  display:inline;
+  font-size: 18pt;
+  border: 0px solid #000;
+  margin: 0px;
+  padding: 0px;
+}
+
+.inp {
+}
+
+.calc {
+}
+
+.pzt_table {
+}
+
+.med input {
+  color: #715;
+  border: 1px solid #715;
+  width: 100%;
+  height: 100%;
+}

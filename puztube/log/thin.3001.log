@@ -40,3 +40,9 @@
 >> Thin web server (v1.2.2 codename I Find Your Lack of Sauce Disturbing)
 >> Maximum connections set to 1024
 >> Listening on 0.0.0.0:3001, CTRL+C to stop
+>> Waiting for 27 connection(s) to finish, can take up to 30 sec, CTRL+C to stop now
+>> Writing PID to /home/graft/rails/PuzTube/puztube/tmp/pids/thin.3001.pid
+>> Using rails adapter
+>> Thin web server (v1.2.2 codename I Find Your Lack of Sauce Disturbing)
+>> Maximum connections set to 1024
+>> Listening on 0.0.0.0:3001, CTRL+C to stop

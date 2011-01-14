@@ -39,6 +39,11 @@ function delete_asset(divid,assetid) {
     sortWorkspaces();
   }
 
+function jug_table_update(dv,txt,tid) {
+  jug_ws_update(dv,txt);
+  init_table(tid);
+}
+
   function jug_ws_update(dv,txt) {
     if ($(dv)) {
       if ($(dv+'.editing')) {
@@ -70,5 +75,106 @@ function sortWorkspaces() {
     normal.each(function(ws) { $('comments').insert({bottom:ws}); });
     other.each(function(ws) { $('comments').insert({bottom:ws}); });
     useless.each(function(ws) { $('comments').insert({bottom:ws}); });
+  }
+}
+
+function fakemod(i,m) {
+  if (i%m) return i%m;
+  return m;
+}
+function getField(r,c,tinf,V,C) {
+  if (V.match(/\d+/)) return V;
+  V = V.charCodeAt(0) - 65+1;
+  if (V < 1 || V >= tinf.heads.length) return null;
+  if (tinf.heads[V].match(/^=/))
+  V = tinf.rows[r][V].calc.innerHTML;
+  else
+  V = tinf.rows[r][V].value;
+  if (C == ":L")  V = String.fromCharCode(fakemod(parseInt(V),26)+65);
+  if (C == ":l")  V = String.fromCharCode(fakemod(parseInt(V),26)+97);
+  if (C == ":I")  { if (V.match(/[A-Z]/)) V = (V.charCodeAt(0)-65+1).toString(); else V=(V.charCodeAt(0)-97+1).toString();}
+  return V;
+}
+
+function formulaElement(r,c,tinf) {
+    tinf.rows[r][c].inp.hide();
+    tinf.rows[r][c].calc.show();
+    var formula = tinf.heads[c].substr(1);
+    if (formula.match(/([A-Z]|\d+)(:[LIl])?([\+\-\*\/\%\@\[])([A-Z]|\d+)(:[LIl])?(\])?/)) {
+       var LV=RegExp.$1;
+       var LC=RegExp.$2;
+       var OP=RegExp.$3;
+       var RV=RegExp.$4;
+       var RC=RegExp.$5;
+       LV = getField(r,c,tinf,LV,LC);
+       RV = getField(r,c,tinf,RV,RC);
+       if (LV == null || RV == null) { tinf.rows[r][c].calc.update(); return; }
+       switch(OP) {
+         case "+": LV = parseInt(LV)+parseInt(RV); break;
+         case "-": LV = parseInt(LV)-parseInt(RV); break;
+         case "*": LV = parseInt(LV)*parseInt(RV); break;
+         case "/": LV = parseInt(LV)/parseInt(RV); break;
+         case "%": LV = parseInt(LV)%parseInt(RV); break;
+         case "@":
+		if (LV.match(/[A-Z]/))
+			 LV = String.fromCharCode(fakemod(LV.charCodeAt(0)-65+1+parseInt(RV),26)+65);
+		else 
+			LV = String.fromCharCode(fakemod(LV.charCodeAt(0)-97+1+parseInt(RV),26)+97);
+		break;
+         case "[":
+		LV = LV.substr(RV-1,1);
+                break;
+       }
+       tinf.rows[r][c].calc.update(LV);
+       return;
+    }
+    if (formula.match(/([A-Z]|\d+)(:[LIl])/)) {
+       tinf.rows[r][c].calc.update(getField(r,c,tinf,RegExp.$1,RegExp.$2));
+    }
+}
+
+function normalElement(r,c,tinf) {
+    tinf.rows[r][c].calc.hide();
+    tinf.rows[r][c].inp.show();
+}
+
+function init_table(table) {
+  TableKit.Sortable.init(table, {});
+  TableKit.Resizable.init(table, {});
+}
+
+function update_tables() {
+ tables=$$('.pzt_table');
+ tables.each(function(tid) { update_table(tid); });
+}
+
+function update_table(tid) {
+  if ($(tid)) {
+    var t=$(tid);
+    var tinf={}
+    tinf.heads = t.select('th');
+    tinf.cols=[];
+    tinf.heads.each(function(h,i) {
+      if (!i) tinf.heads[i] = 0;
+      else
+      tinf.heads[i] = h.select('input')[0].value;
+    });
+    cells = t.select('td');
+    tinf.rows=[];
+    cells.each(function(cell,i) {
+      var c=i%tinf.heads.length;
+      var r=parseInt(i/tinf.heads.length);
+      if (!tinf.rows[r]) tinf.rows[r] = [];
+      tinf.rows[r][c] = { };
+      if (!c) return;
+      tinf.rows[r][c].value = cell.select('input')[0].value;
+      tinf.rows[r][c].calc = cell.select('.calc')[0];
+      tinf.rows[r][c].inp = cell.select('.inp')[0];
+      if (tinf.heads[c].match(/^\=/)) {
+         formulaElement(r,c,tinf);
+      } else {
+         normalElement(r,c,tinf);
+      }
+    });
   }
 }

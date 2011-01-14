@@ -35,9 +35,14 @@ class RoundsController < ApplicationController
   # GET /rounds/1.xml
   def show
     @round = Round.find(params[:id])
-    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
+    @broadcasts = recent_broadcasts
+    @chats = Chat.find(:all, :conditions => {:chat_id => @round.chat_id}, :order => "created_at DESC", :limit => 10)
+    @chatusers = Juggernaut.show_clients_for_channel(@round.chat_id)
 
-    render :partial => 'show', :locals => { :round => @round, :sorting => @sorting }
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @rounds }
+    end
   end
 
   # GET /rounds/new

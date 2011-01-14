@@ -1,12 +1,13 @@
 <p>
   <h1><%=h puzzle.name %> </h1> 
   <b>Hint:</b>  <%=h puzzle.hint %> <br>
+  <b>Round Hint:</b>  <%=h puzzle.round.hint %> <br>
   <b>Captain:</b> <%=h puzzle.captain %> <br>
   <b>Url:</b> <%=auto_link puzzle.url, :html => { :target => '_blank' } %> <br>
   <b>Answer:</b>   <%=h puzzle.answer %> <br>
   <b>Wrong Answer:</b>   <%=h puzzle.wrong_answer %> <br>
   <b>Meta:</b>  <%=h puzzle.meta %> <br>
-  <b>Round:</b>  <%=link_to puzzle.round.name, puzzle.round.url, :html => { :target => '_blank' } %> <br>
+  <b>Round:</b>  <%=link_to puzzle.round.name, puzzle.round, :html => { :target => '_blank' } %> <br>
   <b>Status:</b>  <%=h puzzle.status %> <br>
   <b>Priority:</b>  <%=h puzzle.priority %> <br>
 <% if puzzle.workers %>
@@ -25,7 +26,7 @@
 <tr><th>Name</th><th>Answer</th><th>Captain</th><th>Hint</th></tr>
   <% puzzle.round.puzzles.each do |p| %>
 	<% if !p.meta %>
-<tr><td><%= link_to p.name, p.url, :html => { :target => '_blank' } %></td><td><%= p.answer %></td><td><%= p.captain %></td><td><%= p.hint %></td></tr>
+<tr><td><%= link_to p.name, p, :html => { :target => '_blank' } %></td><td><%= p.answer %></td><td><%= p.captain %></td><td><%= p.hint %></td></tr>
 	<% end %>
   <% end %>
 </table>

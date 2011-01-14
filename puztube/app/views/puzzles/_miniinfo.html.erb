@@ -4,7 +4,7 @@
 <td><%=h puzzle.round.name %></td>
 <% end %>
 <td><%= link_to puzzle.name, puzzle, :target => '_blank' %></td>
-<td><%= sanitize(link_to(puzzle.url[0,50],puzzle.url,:target =>'_blank'),:tags => %w(a), :attributes => %w(href target)) %></td>
+<td><%= sanitize(link_to(puzzle.url,puzzle.url,:target =>'_blank'),:tags => %w(a), :attributes => %w(href target)) %></td>
 <td><%=h puzzle.hint %></td>
 <td><%=h puzzle.captain %></td>
 <td><%= puzzle.workers ? puzzle.workers.size.to_s : '' %></td>

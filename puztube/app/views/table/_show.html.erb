@@ -15,8 +15,20 @@
 </div>
 <% if table.priority != "Useless" %>
 <div class="prio<%= table.priority %>_body rounded_content">
-  <div id="<%= table.div_id %>.content" style="padding: 4px;">
-   I am a table!
+  <div id="<%= table.div_id %>.content" class="pzt_table" style="padding: 4px;">
+  <table id="<%= table.t_id %>" class="sortable resizable" style="width:100%;">
+  <% table.rows.each_with_index do |row,i| %>
+    <tr>
+    <% if i>0 %> <td style="width:8px;" class="pzt_row"><%=i%></td> <% else %> <th style="width:8px;" class="pzt_head">#<span class="sorter">&diams;</span></th> <% end %>
+    <% row.each do |cell_id| %>
+    <% if i>0 %> <td class="pzt_row"><span class="inp"><% else %> <th class="pzt_head"><% end %>
+    <input class="inpi" autocomplete="off" onchange="<%= remote_function(:url => update_cell_path(:id => cell_id, :channel => table.thread.chat_id), :with => "'text='+$('TC#{cell_id}').value") %>" id="TC<%=cell_id%>" type="text" value="<%= table.getcell(cell_id).contents %>"><% if i>0 %></span><span class="calc hidden"></span></td><% else %><span class="sorter">&diams;</span></th> <% end %>
+    <% end %>
+    </tr>
+  <% end %>
+  </table>
+    <%= link_to_remote 'Add row', :url => rc_table_path(:id => table.id,:type=>'row'), :method => 'get' %> 
+    <%= link_to_remote 'Add col', :url => rc_table_path(:id => table.id,:type=>'col'), :method => 'get' %> 
   </div>
 </div>
 <%end%>

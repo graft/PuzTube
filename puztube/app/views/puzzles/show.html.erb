@@ -3,14 +3,17 @@
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
 <%= javascript_include_tag "workspaces" %>
+<%= javascript_include_tag "fastinit" %>
+<%= javascript_include_tag "tablekit" %>
 
 
-<%= juggernaut :channels => [@puzzle.chat_id], :client_id => current_or_anon_login, :debug => false %>
+<%= juggernaut :channels => [@puzzle.chat_id], :client_id => current_or_anon_login, :debug => true %>
 <% content_for :title, "#{@puzzle.name}" %>
 
 <script type="text/javascript" charset="utf-8">
   var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
   document.observe("dom:loaded", startup);
+  document.observe("dom:loaded", update_tables);
 </script>
 <%= render :partial => "welcome/login" %> 
 <%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @puzzle.chat_id } %> 
@@ -20,9 +23,7 @@
 </div>
 <div id="editables" class="hidden">
 <%= link_to_remote 'New Comment', :url => new_workspace_path(:type => 'puzzle', :id => @puzzle.id), :method => :post %>
-<% if current_or_anon_login == "graft" %>
 <%= link_to_remote 'New Table', :url => new_table_path(:type => 'puzzle', :id => @puzzle.id), :method => :post %>
-<% end %>
 <div id="comments">
 <% @puzzle.comments.each do |comment| %>
   <% if comment.class == Workspace %>

@@ -6,6 +6,8 @@
 <%= link_to 'Topics', { :action => 'index', :controller => 'topics' } %> |
 <%= link_to 'Hunters', { :action => 'index', :controller => 'users' } %> |
 <%= link_to 'Help', { :action => 'show', :controller => 'topics', :name => 'Help' } %> |
+<%= link_to 'Puzzle Tools', { :action => 'show', :controller => 'topics', :name => 'Puzzle Tools' } %> |
+<%= link_to 'Things to Try', { :action => 'show', :controller => 'topics', :name => 'Things to Try' } %> |
 
 <% if current_user %>
   <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :class => 'iform', :id => 'login_form', :autocomplete => 'off' } do %>

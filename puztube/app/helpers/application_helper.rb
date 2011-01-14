@@ -227,7 +227,7 @@ module ApplicationHelper
     # http links
     if options[:http]
       text.gsub!(/\b((https?|ftp|irc):\/\/[^\s\<]+)/i) do |m|
-        tags.push("a href=\"#{m}\">#{m}</a")
+        tags.push("a href=\"#{m}\" target=\"_blank\">#{m}</a")
         "<#{(tags.size-1).to_s}>"
       end
     end

@@ -95,6 +95,8 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_table 'table/edit', :controller => 'table', :action => 'edit'
   map.show_table 'table/show', :controller => 'table', :action => 'show'
   map.update_table 'table/update', :controller => 'table', :action => 'update'
+  map.update_cell 'table/update_cell', :controller => 'table', :action => 'update_cell'
+  map.rc_table 'table/rc', :controller => 'table', :action => 'get_rc'
 
   #map.connect ':controller/:id/:action'
   map.connect ':controller/:action/:id'

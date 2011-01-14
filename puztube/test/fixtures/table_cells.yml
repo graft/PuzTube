@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  contents: MyString
+  cell_id: 1
+  table_id: 1
+
+two:
+  contents: MyString
+  cell_id: 1
+  table_id: 1
