@@ -1,0 +1,32 @@
+
+<%= javascript_include_tag :defaults, :juggernaut %>
+<%= javascript_include_tag "juggernaut-users" %>
+<%= javascript_include_tag "resize" %>
+<%= javascript_include_tag "workspaces" %>
+
+<%= juggernaut :channels => [@topic.chat_id], :client_id => current_or_anon_login, :debug => true %>
+<% content_for :title, "#{@topic.name}" %>
+
+<script type="text/javascript" charset="utf-8">
+  var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
+  document.observe("dom:loaded", startup);
+  
+</script>
+
+<%= render :partial => "welcome/login" %> 
+<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @topic.chat_id } %> 
+
+<h1><%=h @topic.name %></h1>
+
+<%= link_to 'Back', topics_path %><br>
+
+<div id="editables" class="hidden">
+<%= link_to_remote 'New Comment', :url => new_workspace_path(:type => 'topic', :name => @topic.name), :method => :post %>
+<div id="comments">
+<% @topic.workspaces.each do |ws| %>
+  <%= render :partial => 'workspace/block', :locals => { :workspace => ws } %>
+<% end %>
+</div>
+</div>
+
+<%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @topic } %>

@@ -1,0 +1,35 @@
+--- 
+- !ruby/object:User 
+  attributes: 
+    name: Saurabh Asthana
+    created_at: 2011-01-05 21:53:01
+    photo_file_size: 
+    updated_at: 2011-01-07 02:18:45
+    photo_file_name: 
+    activity: never
+    photo_content_type: 
+    id: "298486374"
+    info: I love coffee beans
+    lastactive: 2011-01-05 13:49:41
+    login: stack
+    image: none
+    email: rednblack@alum.mit.edu
+  attributes_cache: {}
+
+- !ruby/object:User 
+  attributes: 
+    name: Saurabh Asthana
+    created_at: 2011-01-05 21:53:01
+    photo_file_size: "15753"
+    updated_at: 2011-01-09 02:52:03
+    photo_file_name: me.jpg
+    activity: never
+    photo_content_type: image/jpeg
+    id: "980190962"
+    info: I am a hamster-dancer
+    lastactive: 2011-01-05 13:49:41
+    login: graft
+    image: none
+    email: faplap@gmail.com
+  attributes_cache: {}
+

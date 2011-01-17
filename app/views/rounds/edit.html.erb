@@ -1,0 +1,28 @@
+<h1>Editing round</h1>
+
+<% form_for(@round) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :hint %><br />
+    <%= f.text_field :hint %>
+  </p>
+  <p>
+    <%= f.label :captain %><br />
+    <%= collection_select(:round,:captain,User.all,:login,:login,{:prompt=>true}) %>
+  </p>
+  <p>
+    <%= f.label :answer %><br />
+    <%= f.text_field :answer %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @round %> |
+<%= link_to 'Back', rounds_path %>

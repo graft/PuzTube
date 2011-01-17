@@ -1,6 +1,0 @@
-AuthUserFile /home/graft/rails/PuzTube/puztube/.htpasswd
-AuthGroupFile /dev/null
-AuthName "Mayhem Website"
-AuthType Basic
-
-require valid-user

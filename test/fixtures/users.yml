@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  login: graft
+  email: faplap@gmail.com
+  image: none
+  info: "I am a hamster-dancer"
+  activity: never
+  lastactive: 2011-01-05 13:49:41
+
+two:
+  login: stack
+  email: rednblack@alum.mit.edu
+  image: none
+  info: "I love coffee beans"
+  activity: never
+  lastactive: 2011-01-05 13:49:41

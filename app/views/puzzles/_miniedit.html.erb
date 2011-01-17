@@ -1,0 +1,12 @@
+  <td class="med"><%= select_tag @puzzle.t_id+".priority", "<option value=''>Select priority</option>" + options_for_select(Puzzle.priority_options,@puzzle.priority) %></td>
+  <td class="med"><%= select_tag @puzzle.t_id+".status", "<option value=''>Select status</option>" + options_for_select(Puzzle.status_options,@puzzle.status) %></td>
+  <td class="med"><%= @puzzle.round.name %></td>
+  <td class="med"><%= text_field_tag @puzzle.t_id+".name", @puzzle.name %></td>
+  <td class="med"><%= text_field_tag @puzzle.t_id+".url", @puzzle.url  %></td>
+  <td class="med"><%= text_field_tag @puzzle.t_id+".hint", @puzzle.hint %></td>
+  <td class="med"><%= select_tag @puzzle.t_id+".captain", "<option value=''>Select captain</option>" + options_from_collection_for_select(User.all, 'login','login', @puzzle.captain) %></td>
+  <td class="med"></td>
+  <td class="med"><%= check_box_tag @puzzle.t_id+".meta", '1', @puzzle.meta %></td>
+  <td class="med"><%= text_field_tag @puzzle.t_id+".answer", @puzzle.answer %></td>
+  <td class="med"><%= link_to_function 'Update', "javascript: update_and_submit('#{@puzzle.t_id}','#{@puzzle.id}','r#{@puzzle.round_id}','name,url,hint,captain,meta,answer,status,priority')" %></td>
+  <td class="med"><%= link_to_remote 'Cancel', :url => { :action => 'info', :controller => 'puzzles', :id => @puzzle.id, :type => 'mini' }, :update => @puzzle.t_id %></td>

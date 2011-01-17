@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  priority: MyString
+  title: MyString
+  editor: MyString
+
+two:
+  priority: MyString
+  title: MyString
+  editor: MyString

@@ -1,0 +1,42 @@
+<div style="padding: 5px;">
+    <h2><%=h round.name %></h2> 
+    <b>Url: <%=auto_link round.url, :html => { :target => '_blank' } %></b><br>
+    <b>Hint: <%=h round.hint %></b><br>
+    <b>Captain: <%=h round.captain %></b><br>
+    <b>Priority: <%=h round.priority %></b><br>
+    <b>Answer: <%=h round.answer %></b><br>
+  <% form_remote_tag(
+                  :url => { :action => 'edit_row', :controller => 'puzzles' },
+                  :method => :put,
+                  :html => { :id => "r#{round.id}.form" } ) do %>
+    <%= hidden_field_tag "puzzle[id]", nil, :id =>"r#{round.id}.id" %>
+    <%= hidden_field_tag "puzzle[name]", nil, :id =>"r#{round.id}.name" %>
+    <%= hidden_field_tag "puzzle[url]", nil, :id =>"r#{round.id}.url" %>
+    <%= hidden_field_tag "puzzle[hint]", nil, :id =>"r#{round.id}.hint" %>
+    <%= hidden_field_tag "puzzle[captain]", nil, :id =>"r#{round.id}.captain" %>
+    <%= hidden_field_tag "puzzle[meta]", nil, :id =>"r#{round.id}.meta" %>
+    <%= hidden_field_tag "puzzle[answer]", nil, :id =>"r#{round.id}.answer" %>
+    <%= hidden_field_tag "puzzle[status]", nil, :id =>"r#{round.id}.status" %>
+    <%= hidden_field_tag "puzzle[priority]", nil, :id =>"r#{round.id}.priority" %>
+  <% end %>
+
+  <table id="RPT<%= round.id %>" class="puzzletable" style="width:75%;">
+    <tr>
+      <th>Priority</th>
+      <th>Status</th>
+      <th>Name</th>
+      <th>Url</th>
+      <th>Hint</th>
+      <th>Captain</th>
+      <th>Workers</th>
+      <th>Meta</th>
+      <th>Answer</th>
+    </tr>
+
+    <% round.puzzles.each do |puzzle| %>
+      <tr id="<%= puzzle.t_id %>">
+        <%= render :partial => 'puzzles/miniinfo', :locals => { :puzzle => puzzle } %>
+      </tr>
+    <% end %>
+  </table>
+</div>

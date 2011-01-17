@@ -1,0 +1,82 @@
+<%= stylesheet_link_tag "rounded" %>
+
+<%= javascript_include_tag :defaults, :juggernaut %>
+<%= javascript_include_tag "juggernaut-users" %>
+<%= javascript_include_tag "resize" %>
+
+<%= juggernaut :channels => ["ROUNDS"], :client_id => current_user ? current_user.login : "anon", :debug => false %>
+
+<script type="text/javascript" charset="utf-8">
+  function update_and_submit(pzr,pid,rid,flds) {
+    var fields = flds.split(',');
+    fields.each(function(t) {
+      if (t == "meta") {
+        if ($(pzr+"."+t).checked)
+          $(rid+"."+t).value = 1;
+        else
+          $(rid+"."+t).value = 0;
+      } else
+        $(rid+"."+t).value = $(pzr+"."+t).value;
+    });
+    $(rid+".id").value = pid;
+    $(rid+".form").onsubmit();
+  }
+
+  function add_puzzle(rpid,txt) {
+    if ($(rpid)) $(rpid).insert({bottom:txt});
+  }
+</script>
+
+<%= render :partial => "welcome/login" %> 
+<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => "ROUNDS" } %> 
+
+<!-- This page renders puzzle info - it has the following functions:
+    * Show puzzles in round order
+    * Provide sort options - either by round, priority, or status
+    * You should never have to leave this page once the hunt starts. It should populate itself with new fields and update rounds as needed.
+ -->
+
+<h1>Puzzles</h1>
+<div id="editables" class="hidden">
+<% if current_user %>
+<% if current_user.team_captain && current_user.options && current_user.options[:grouped] %>
+<%= link_to_remote 'New round', :url => new_round_path() %><br>
+<% end %>
+  <% form_tag(options_user_path, :method => :post) do %>
+  Sort by: <%= select_tag 'sortg', options_for_select([ 'priority', 'status', 'creation', 'name' ], :selected => current_user.options ? current_user.options[:sorting] : nil) %> 
+  <%= hidden_field_tag 'groupd', 0 %> 
+  <%= check_box_tag 'groupd', 1, current_user.options && current_user.options[:grouped] %> Group by round
+  <%= submit_tag 'Sort' %>
+  <% end %>
+  <%= hidden_field_tag 'actual_sort', @sorting %> 
+  <%= hidden_field_tag 'actual_group', @grouped %> 
+<% end %>
+<div id="roundstable">
+<% if @grouped || !current_user %>
+  <% @rounds.each do |round| %>
+    <%= render :partial => 'round', :locals => { :round => round, :sorting => @sorting } %>
+  <% end %>
+<% else %>
+
+<table class="round puzzletable" style="border:1px solid #354;">
+    <tr>
+      <th>Status</th>
+      <th>Round</th>
+      <th>Name</th>
+      <th>Url</th>
+      <th>Hint</th>
+      <th>Captain</th>
+      <th>Meta</th>
+      <th>Answer</th>
+    </tr>
+  <% @puzzles.each do |puzzle| %>
+    <% if puzzle.round && !puzzle.round.hidden %>
+      <tr id="<%= puzzle.t_id %>">
+        <%= render :partial => 'puzzles/miniinfo', :locals => { :puzzle => puzzle } %>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+<% end %>
+</div>
+</div>
