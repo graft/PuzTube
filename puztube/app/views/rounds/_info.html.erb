@@ -3,6 +3,7 @@
     <b>Url: <%=auto_link round.url, :html => { :target => '_blank' } %></b><br>
     <b>Hint: <%=h round.hint %></b><br>
     <b>Captain: <%=h round.captain %></b><br>
+    <b>Priority: <%=h round.priority %></b><br>
     <b>Answer: <%=h round.answer %></b><br>
   <% form_remote_tag(
                   :url => { :action => 'edit_row', :controller => 'puzzles' },

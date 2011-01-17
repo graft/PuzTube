@@ -1,6 +1,6 @@
 <div id="roundtitle" class="rounded_title">
     <div style="padding: 2px;">
-    <b><%= link_to_remote 'Show', :url => round_path(round), :update => 'ROUND'+round.id.to_s %></b> |
+    <b><%= link_to_remote 'Show', :url => info_round_path(:id=>round.id), :update => 'ROUND'+round.id.to_s %></b> |
     <b><%= link_to_function 'Update', "javascript: $('r#{round.id}.update').onsubmit();" %></b>
     </div>
   </div>
@@ -15,6 +15,8 @@
     <%= f.text_field :url %><br>
     <b><%= f.label :hint %></b>
     <%= f.text_field :hint %><br>
+    <b><%= f.label :priority %></b>
+    <b><%= select :round, :priority, "<option value=''>Select priority</option>" + options_for_select(Round.priority_options,round.priority) %><br>
     <b><%= f.label :captain %></b>
     <%= collection_select(:round,:captain,User.all,:login,:login,{:prompt=>true}) %><br>
     <b><%= f.label :answer %></b>

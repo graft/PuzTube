@@ -22,7 +22,7 @@
     <% if i>0 %> <td style="width:8px;" class="pzt_row"><%=i%></td> <% else %> <th style="width:8px;" class="pzt_head">#<span class="sorter">&diams;</span></th> <% end %>
     <% row.each do |cell_id| %>
     <% if i>0 %> <td class="pzt_row"><span class="inp"><% else %> <th class="pzt_head"><% end %>
-    <input class="inpi" autocomplete="off" onchange="<%= remote_function(:url => update_cell_path(:id => cell_id, :channel => table.thread.chat_id), :with => "'text='+$('TC#{cell_id}').value") %>" id="TC<%=cell_id%>" type="text" value="<%= table.getcell(cell_id).contents %>"><% if i>0 %></span><span class="calc hidden"></span></td><% else %><span class="sorter">&diams;</span></th> <% end %>
+    <input name="text" class="inpi" autocomplete="off" onchange="<%= remote_function(:url => update_cell_path(:id => cell_id, :channel => table.thread.chat_id), :with => "Form.Element.serialize($('TC#{cell_id}'))") %>" id="TC<%=cell_id%>" type="text" value="<%= table.getcell(cell_id).contents %>"><% if i>0 %></span><span class="calc hidden"></span></td><% else %><span class="sorter">&diams;</span></th> <% end %>
     <% end %>
     </tr>
   <% end %>

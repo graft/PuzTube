@@ -84,6 +84,15 @@ Object.extend(TableKit, {
 	},
 	getCellText : function(cell, refresh) {
 		if(!cell) { return ""; }
+                if (cell.select('.calc')) {
+			if (!cell.select('.calc')[0].hasClassName("hidden"))
+				return cell.select('.calc')[0].innerHTML;
+                }
+		if (cell.select('.inpi')) {
+		   /* if (window.console && window.console.log)
+			window.console.log("Using inpi for value"+cell.select('.inpi')[0].value); */
+                   return cell.select('.inpi')[0].value;
+                }
 		var data = TableKit.getCellData(cell);
 		if(refresh || data.refresh || !data.textContent) {
 			data.textContent = cell.textContent ? cell.textContent : cell.innerText;
@@ -623,6 +632,8 @@ TableKit.Resizable = {
 	},
 	resize : function(table, index, w) {
 		var cell;
+		if (window.console && window.console.log)
+			window.console.log("W:"+w);
 		if(typeof index === 'number') {
 			if(!table || (table.tagName && table.tagName !== "TABLE")) {return;}
 			table = $(table);
@@ -638,6 +649,8 @@ TableKit.Resizable = {
 		var pad = parseInt(cell.getStyle('paddingLeft'),10) + parseInt(cell.getStyle('paddingRight'),10);
 		w = Math.max(w-pad, TableKit.option('minWidth', table.id)[0]);
 		
+		if (window.console && window.console.log)
+			window.console.log("FW:"+w);
 		cell.setStyle({'width' : w + 'px'});
 	},
 	initDetect : function(e) {
@@ -690,6 +703,8 @@ TableKit.Resizable = {
 	endResize : function(e) {
 		e = TableKit.e(e);
 		var cell = TableKit.Resizable._cell;
+		if (window.console && window.console.log)
+			window.console.log("E:"+Event.pointerX(e)+" "+cell.cumulativeOffset()[0]);
 		TableKit.Resizable.resize(null, cell, (Event.pointerX(e) - cell.cumulativeOffset()[0]));
 		Event.stopObserving(document, 'mousemove', TableKit.Resizable.drag);
 		Event.stopObserving(document, 'mouseup', TableKit.Resizable.endResize);

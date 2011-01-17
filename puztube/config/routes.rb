@@ -12,6 +12,7 @@ ActionController::Routing::Routes.draw do |map|
   map.delete_round '/rounds/delete/:id', :controller => 'rounds', :action => 'destroy', :method => :delete
   map.edit_round '/rounds/edit/:id', :controller => 'rounds', :action => 'edit'
   map.rounds '/rounds', :controller => 'rounds', :action => 'index'
+  map.info_round '/round/info', :controller => 'rounds', :action => 'info'
   map.round '/round/:id', :controller => 'rounds', :action => 'show'
 
   map.options_user '/users/options', :controller => 'users', :action => 'options'

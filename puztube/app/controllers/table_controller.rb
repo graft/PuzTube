@@ -41,7 +41,7 @@ class TableController < ApplicationController
     @tablecell.contents = params[:text]
     @tablecell.save
     render :juggernaut => { :type => :send_to_channel, :channel => params[:channel] } do |page|
-        page << "if $('#{@tablecell.t_id}') $('#{@tablecell.t_id}').value='#{javascript_escape @tablecell.contents}'; update_table('#{@tablecell.table.div_id}');"
+        page << "if ($('#{@tablecell.t_id}')) $('#{@tablecell.t_id}').value='#{javascript_escape @tablecell.contents}'; update_table('TB#{@tablecell.table_id}');"
     end
     render :nothing => true
   end

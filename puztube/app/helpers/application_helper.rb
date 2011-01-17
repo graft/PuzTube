@@ -159,7 +159,7 @@ module ApplicationHelper
     if options[:list]
       old = []
       lines.each_index do |i|
-        if !lines[i].gsub!(/\A([\-\#]*)/,'').nil?
+        if !lines[i].nil? && !lines[i].gsub!(/\A([\-\#]*)/,'').nil?
           #warn "\n$1$lines[$i]\n" if $1;
           lines[i] = "<li> #{lines[i]} </li>" if $1.size > 0
           new = $1.split(//)

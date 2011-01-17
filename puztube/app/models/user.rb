@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   serialize :options
   validates_uniqueness_of :login
+  belongs_to :puzzle
   has_attached_file :photo, :styles => {
 	  		:thumb => "60x60>"
   		},

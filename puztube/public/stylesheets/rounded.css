@@ -209,6 +209,7 @@ ul.userlist li:before {
 }
 
 .calc {
+  padding-left: 2px;
 }
 
 .pzt_table {

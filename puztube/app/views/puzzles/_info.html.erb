@@ -10,6 +10,7 @@
   <b>Round:</b>  <%=link_to puzzle.round.name, puzzle.round, :html => { :target => '_blank' } %> <br>
   <b>Status:</b>  <%=h puzzle.status %> <br>
   <b>Priority:</b>  <%=h puzzle.priority %> <br>
+  <b>Active workers:</b> <%= puzzle.users.map{|u| u.login}.join(", ") %><br>
 <% if puzzle.workers %>
   <b>Worked on by:</b> <%= puzzle.workers.keys.join(", ") %> <br>
 <%end%>

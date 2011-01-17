@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110114045752) do
+ActiveRecord::Schema.define(:version => 20110115041135) do
 
   create_table "assets", :force => true do |t|
     t.datetime "created_at"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(:version => 20110114045752) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "hidden"
+    t.string   "priority"
   end
 
   create_table "table_cells", :force => true do |t|
@@ -97,6 +98,7 @@ ActiveRecord::Schema.define(:version => 20110114045752) do
     t.integer  "photo_file_size"
     t.boolean  "team_captain"
     t.string   "options"
+    t.integer  "puzzle_id"
   end
 
   create_table "workspaces", :force => true do |t|

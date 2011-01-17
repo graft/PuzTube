@@ -2,6 +2,7 @@ class Puzzle < ActiveRecord::Base
   belongs_to :round
   has_many :workspaces, :as => :thread, :order => 'priority'
   has_many :tables, :as => :thread, :order => 'priority'
+  has_many :users
   serialize :workers
 
   def comments
@@ -42,7 +43,7 @@ class Puzzle < ActiveRecord::Base
   end
 
   def self.status_options
-    [ "Needs Insight", "Needs MIT-Local", "New", "Under Control", "Solved", "Unimportant" ]
+    [ "Needs Insight", "Needs MIT-Local", "Needs Research", "New", "Under Control", "Solved", "Unimportant" ]
   end
 
   def priority_color

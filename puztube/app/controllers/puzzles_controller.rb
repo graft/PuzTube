@@ -41,7 +41,7 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     text = params[:chat_input]
     user = current_or_anon_login
-    set_worker(@puzzle,user) if current_user
+    set_worker(@puzzle,current_user) if current_user
     channel = @puzzle.chat_id
     send_chat(user,channel,text)
     render :nothing => true
@@ -101,7 +101,7 @@ class PuzzlesController < ApplicationController
 
   def worker
     @puzzle = Puzzle.find(params[:id])
-    set_worker(@puzzle,params[:worker])
+    set_worker(@puzzle,current_user) if current_user
     broadcast_puzzle_edit(@puzzle,{})
     render :nothing => true
   end

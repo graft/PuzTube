@@ -27,7 +27,9 @@ module PuzzlesHelper
   def set_worker(puzzle,worker)
     return if worker.nil?
     puzzle.workers ||= {}
-    puzzle.workers[worker] = 1;
+    puzzle.workers[worker.login] = 1
     puzzle.save
+    worker.puzzle_id = puzzle.id
+    worker.save
   end
 end

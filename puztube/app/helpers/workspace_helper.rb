@@ -44,14 +44,14 @@ module WorkspaceHelper
   end
 
   def relative_time(start_time)
-    diff_seconds = (Time.now - start_time).to_i
+    diff_seconds = (Time.now.getutc - start_time.getutc).to_i
     case diff_seconds
       when 0 .. 59
         "#{diff_seconds} seconds ago"
       when 60 .. (3600-1)
         "#{diff_seconds/60} minutes ago"
       when 3600 .. (3600*24-1)
-        "#{diff_seconds/360} hours ago"
+        "#{diff_seconds/3600} hours ago"
       when (3600*24) .. (3600*24*30) 
         "#{diff_seconds/(3600*24)} days ago"
       else

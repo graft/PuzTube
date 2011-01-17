@@ -1,3 +1,13 @@
+String.prototype.reverse = function() {
+    var s = "";
+    var i = this.length;
+    while (i>0) {
+        s += this.substring(i-1,i);
+        i--;
+    }
+    return s;
+}
+
 Element.addMethods({
     show : function(element) {
         element = $(element);
@@ -90,9 +100,11 @@ function getField(r,c,tinf,V,C) {
   V = tinf.rows[r][V].calc.innerHTML;
   else
   V = tinf.rows[r][V].value;
-  if (C == ":L")  V = String.fromCharCode(fakemod(parseInt(V),26)+65);
-  if (C == ":l")  V = String.fromCharCode(fakemod(parseInt(V),26)+97);
+  if (C == ":L")  V = String.fromCharCode(fakemod(parseInt(V),26)+64);
+  if (C == ":l")  V = String.fromCharCode(fakemod(parseInt(V),26)+96);
   if (C == ":I")  { if (V.match(/[A-Z]/)) V = (V.charCodeAt(0)-65+1).toString(); else V=(V.charCodeAt(0)-97+1).toString();}
+  if (C == ":b")  { V = parseInt(V,2).toString(); }
+  if (C == ":B")  { V = parseInt(V.reverse(),2).toString(); }
   return V;
 }
 
@@ -100,7 +112,7 @@ function formulaElement(r,c,tinf) {
     tinf.rows[r][c].inp.hide();
     tinf.rows[r][c].calc.show();
     var formula = tinf.heads[c].substr(1);
-    if (formula.match(/([A-Z]|\d+)(:[LIl])?([\+\-\*\/\%\@\[])([A-Z]|\d+)(:[LIl])?(\])?/)) {
+    if (formula.match(/([A-Z]|\d+)(:[LbBIl])?([\+\-\*\/\%\@\[])([A-Z]|\d+)(:[LbBIl])?(\])?/)) {
        var LV=RegExp.$1;
        var LC=RegExp.$2;
        var OP=RegExp.$3;
@@ -122,13 +134,13 @@ function formulaElement(r,c,tinf) {
 			LV = String.fromCharCode(fakemod(LV.charCodeAt(0)-97+1+parseInt(RV),26)+97);
 		break;
          case "[":
-		LV = LV.substr(RV-1,1);
+		LV = LV.replace(/[^A-Za-z]/g,'').substr(parseInt(RV)-1,1);
                 break;
        }
        tinf.rows[r][c].calc.update(LV);
        return;
     }
-    if (formula.match(/([A-Z]|\d+)(:[LIl])/)) {
+    if (formula.match(/([A-Z]|\d+)(:[LbBIl])/)) {
        tinf.rows[r][c].calc.update(getField(r,c,tinf,RegExp.$1,RegExp.$2));
     }
 }
@@ -170,6 +182,11 @@ function update_table(tid) {
       tinf.rows[r][c].value = cell.select('input')[0].value;
       tinf.rows[r][c].calc = cell.select('.calc')[0];
       tinf.rows[r][c].inp = cell.select('.inp')[0];
+    });
+    cells.each(function(cell,i) {
+      var c=i%tinf.heads.length;
+      var r=parseInt(i/tinf.heads.length);
+      if (!c) return;
       if (tinf.heads[c].match(/^\=/)) {
          formulaElement(r,c,tinf);
       } else {

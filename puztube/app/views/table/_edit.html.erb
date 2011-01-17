@@ -10,7 +10,7 @@
     Title:<br>
     <%= f.text_field :title %><br>
     <%= check_box_tag :useraw, 1 %>
-    <%= text_area_tag :raw, raw_text(table) %>
+    <%= text_area_tag :raw, raw_text(table), :rows=>10,:cols=>80 %>
     <%= hidden_field_tag 'workspace[editor]', current_or_anon_login %>
     </p>
 <% end %>
