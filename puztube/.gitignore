@@ -1,2 +1,6 @@
 log/juggernaut.log
 log/development.log
+log/production.log
+db/development.sqlite3
+public/uploads
+db/schema.rb
