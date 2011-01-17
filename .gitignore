@@ -1,0 +1,4 @@
+log/*.log
+db/development.sqlite3
+public/uploads
+db/schema.rb
