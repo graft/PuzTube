@@ -50,7 +50,7 @@ class HuntsController < ApplicationController
   end
   
   def new_round
-    @hunt = Hunt.find(:id)
+    @hunt = Hunt.find(params[:id])
     @round = @hunt.rounds.build
     @round.name = "New Round"
     
