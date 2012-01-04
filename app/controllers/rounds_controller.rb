@@ -50,18 +50,7 @@ class RoundsController < ApplicationController
   # GET /rounds/new
   # GET /rounds/new.xml
   def new
-    @round = Round.new
-    @round.name = "New Round"
     
-    if @round.save
-      text = render_to_string :partial => 'round', :locals => { :round => @round}
-      # again, use juggernaut to do this.
-      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
-        page << "$('roundstable').insert({bottom: '#{javascript_escape text}'});"
-      end
-    else
-      render :nothing => true
-    end
   end
   
   def new_puzzle
@@ -78,7 +67,7 @@ class RoundsController < ApplicationController
     
     if @puzzle.save
       text = render_to_string :partial => 'puzzles/miniblock', :locals => { :puzzle => @puzzle }
-      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+      render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
         page << "add_puzzle('RPT#{@round.id}','#{javascript_escape text}');"
       end
     end
@@ -118,7 +107,7 @@ class RoundsController < ApplicationController
       flash[:notice] = 'Round was successfully updated.'
         # DON'T update here - use juggernaut to send the request. You need the chat id!
       txt = render_to_string :partial => "show", :locals => { :round => @round, :sorting => @sorting  }
-      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+      render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
         page << "$('ROUND#{@round.id}').update('#{javascript_escape txt}');"
       end
     end
@@ -130,7 +119,7 @@ class RoundsController < ApplicationController
   def destroy
     @round = Round.find(params[:id])
     
-    render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+    render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
       page << "$('ROUND#{@round.id}').remove();"
     end
     @round.hidden = true

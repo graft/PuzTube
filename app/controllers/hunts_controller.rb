@@ -48,6 +48,22 @@ class HuntsController < ApplicationController
       format.xml  { render :xml => @hunt }
     end
   end
+  
+  def new_round
+    @hunt = Hunt.find(:id)
+    @round = @hunt.rounds.build
+    @round.name = "New Round"
+    
+    if @round.save
+      text = render_to_string :partial => 'round', :locals => { :round => @round}
+      # again, use juggernaut to do this.
+      render :juggernaut => { :type => :send_to_channel, :channel => @hunt.chat_id } do |page|
+        page << "$('roundstable').insert({bottom: '#{javascript_escape text}'});"
+      end
+    else
+      render :nothing => true
+    end
+  end
 
   # GET /hunts/1/edit
   def edit

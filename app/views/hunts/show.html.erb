@@ -4,7 +4,7 @@
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
 
-<%= juggernaut :channels => ["hunt_#{@hunt.id}"], :client_id => current_user ? current_user.login : "anon", :debug => false %>
+<%= juggernaut :channels => ["HUNT#{@hunt.id}"], :client_id => current_user ? current_user.login : "anon", :debug => false %>
 
 <script type="text/javascript" charset="utf-8">
   function update_and_submit(pzr,pid,rid,flds) {
@@ -39,7 +39,7 @@
 <h1><%= @hunt.name %></h1>
 <div id="editables" class="hidden">
 <% if current_user.team_captain && @grouped %>
-<%= link_to_remote 'New round', :url => new_round_path() %><br>
+<%= link_to_remote 'New round', :url => new_round_path(@hunt.id) %><br>
 <% end %>
 <% form_tag(options_user_path, :method => :post) do %>
   Sort by: <%= select_tag 'sortg', options_for_select([ 'priority', 'status', 'creation', 'name' ], :selected => @sorting) %> 

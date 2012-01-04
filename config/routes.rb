@@ -10,7 +10,7 @@ ActionController::Routing::Routes.draw do |map|
   map.puzzle '/puzzles/:id', :controller => 'puzzles', :action => 'show'
 
   map.create_rpuzzle '/rounds/create_puzzle', :controller => 'rounds', :action => 'create_puzzle'
-  map.new_round '/rounds/new', :controller => 'rounds', :action => 'new'
+  map.new_round '/hunts/new_round/:id', :controller => 'hunts', :action => 'new_round'
   map.delete_round '/rounds/delete/:id', :controller => 'rounds', :action => 'destroy', :method => :delete
   map.edit_round '/rounds/edit/:id', :controller => 'rounds', :action => 'edit'
   map.rounds '/rounds', :controller => 'rounds', :action => 'index'

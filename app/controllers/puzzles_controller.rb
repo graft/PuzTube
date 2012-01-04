@@ -102,7 +102,7 @@ class PuzzlesController < ApplicationController
   def destroy
     @puzzle = Puzzle.find(params[:id])
 
-    render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+    render :juggernaut => { :type => :send_to_channel, :channel => @puzzle.round.hunt.chat_id } do |page|
       page << "$('#{@puzzle.t_id}').remove();"
     end
     
