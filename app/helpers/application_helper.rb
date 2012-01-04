@@ -38,13 +38,13 @@ module ApplicationHelper
     if (@chat.save)
       # how do we render this?
       render :juggernaut => jc do |page|
-        page << "jug_chat_update('<li>#{@chat.dateformat} #{javascript_escape sanitize_text msg}</li>'); #{sus}"
+        page << "jug_chat_update('<li>#{@chat.timeformat} #{javascript_escape sanitize_text msg}</li>'); #{sus}"
       end
     end
   end
 
   def javascript_escape(str)
-    str.gsub(/\\|'/) { |c| "\\#{c}" }.gsub(/\n/,' ')
+    str.gsub(/\\|'/) { |c| "\\#{c}" }#.gsub(/\n/,' ')
   end
   
   def sanitize_text(str)
@@ -86,10 +86,7 @@ module ApplicationHelper
     #warn "texturize: $text";
 
     # standardize newlines and collapse
-    text.gsub!(/\r\n/,"\n")
-    text.gsub!(/\A\n+/,'')
-    text.sub!(/\n+\z/,'')
-    text.gsub!(/\n\n+/,"\n\n")
+    text = text.gsub(/\r\n/,"\n").gsub(/\A\n+/,'').sub(/\n+\z/,'').gsub(/\n\n+/,"\n\n")
 
     tags = []
     
@@ -103,104 +100,68 @@ module ApplicationHelper
     # protected <pre> blocks
     pre = []
     j = 0
-    lines.each_index do |i|
-      # lines starting with > -> <div class="quotation">
-      if options[:quote] && lines[i].gsub!(/^>/,'')
-        if i+1==lines.length
-          content = lines.slice!(i,1).join("\n")
-          content = "<div class=\"quotation\">\n#{content}\n</div>"
-          lines.push(content)
-        else
-          (i+1...lines.length).each do |j|
-            break if lines[j].gsub(/^>/,'').nil?
-          end
-        
-          content = lines.slice!(i,j-i).join("\n")
-#         content = texturize(content, { wiki => 0, http => 0 } );
-          content = "<div class=\"quotation\">\n#{content}\n</div>"
-          lines.insert(i+1, content);
-        end
-        # lines starting with space or tab -> <pre>
-      elsif options[:pre] && !lines[i].gsub!(/\A[ \t]/,'').nil?
-        if i+1==lines.length
-          content = lines.slice!(i, 1).join("\n")
-          lines.push("<pre><pre#{pre.length}></pre>")
-        else
-          (i+1...lines.length).each do |j|
-            break if lines[j].gsub!(/\A[ \t]/,'').nil?
-          end
-          content = lines.slice!(i, j - i).join("\n")
-          lines.insert(i+1,"<pre><pre#{pre.length}></pre>")
-        end
-        pre.push(content)
-        # tables
-      elsif options[:tab] && lines[i] =~ /^TAB/
-        (i+1...lines.length).each do |j|
-          break if lines[j] =~ /^ENDTAB/
-        end
-        content = lines.slice!(i + 1, j - i - 1).join("\n")+"\n"
-        content = tsv_html(options,content)
-        lines.slice!(i,2)
-        lines.insert(i+1,content)
-        # tables
-      elsif options[:comma] && lines[i] =~ /^COMMA/
-        (i+1...lines.length).each do |j|
-          break if lines[j] =~ /^ENDCOMMA/
-        end
-        content = lines.slice!(i + 1, j - i - 1).join("\n") + "\n"
-        #warn "comma: $content";
-        content = csv_html(options,content)
-        lines.slice!(i,2)
-        lines.insert(i, content)
-      end
-    end
+    
+    # fuck this stuff
 
+   
+    #quote blocks
+    text.gsub!(/^>(.*?)(?=(^[^>]|\z))/m) do |match|
+      "<div class='quotation'>\n#{$1.sub(/^>/,"")}\n</div>\n"
+    end if options[:quote]
+    
+    #pre blocks
+    text.gsub!(/^[ \t](.*?)(?=(^[^ \t]|\z))/m) do |match|
+      pre.push $1.gsub(/^[ \t]/,"")
+      "<pre><pre#{pre.length-1}></pre>\n"
+    end if options[:pre]
+    
+    text.gsub!(/^TAB\n(.*?)^ENDTAB$/m) do |match|
+      tsv_html(options,$1)
+    end if options[:tab]
+    
+    text.gsub!(/^COMMA\n(.*?)^ENDCOMMA($|\z)/m) do |match|
+      csv_html(options,$1)
+    end if options[:comma]
+    
+    
     # lists
     if options[:list]
-      old = []
-      lines.each_index do |i|
-        if !lines[i].nil? && !lines[i].gsub!(/\A([\-\#]*)/,'').nil?
-          #warn "\n$1$lines[$i]\n" if $1;
-          lines[i] = "<li> #{lines[i]} </li>" if $1.size > 0
-          new = $1.split(//)
-          #warn "old " . join('',@old)  . " new " . join('',@new) .  "\n";
+      text.gsub!(/^([#-]+.*?)(?=^[^#-]|\z)/m) do |match|
+        #warn "\n$1$lines[$i]\n" if $1;
+        old = ""
+        match.gsub!(/^([#-]+)(.*?)$/) do |m|
+          line = "<li> #{$2} </li>" #if $2.size > 0
+          new = $1
           changes = ''
           diff = 0
-          old.each_index do |diff|
-            break if (new[diff] != old[diff])
+          [old.length,new.length].max.times do |d|
+            diff = d
+            break if (new[d] != old[d])
           end
-          diff = diff+1 if (new[diff] == old[diff])
-          #warn "diff $diff\n";
+          diff = diff+1 if new == old
           (diff...old.length).each do |j|
             changes = (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j]] + "\n" + changes
           end
           (diff...new.length).each do |j|
             changes += (' ' * j) + ApplicationHelper::LIST_OPEN_TAGS[new[j]] + "\n"
           end
-          lines[i] = changes + (' ' * new.size) + lines[i]
           old = new
+          changes + (' ' * new.size) + line
         end
-      end
 
-      old.each_index do |j|
-        lines.push((' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j]])
+        old.length.times do |j|
+          match << (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j]]
+        end
+        match
       end
     end 
-
-    # paragraphs
+    
+     # paragraphs
     if options[:p]
-      lines.each_index do |i|
-        if lines[i] == ""
-          lines[i] = "</p>\n\n<p>"
-        end
-      end
-
-      lines.unshift("<p>\n")
-      lines.push("</p>\n")
+      text.gsub!(/^$/,"</p>\n\n<p>") if options[:p]
+      text = "<p>\n#{text}</p>\n"
     end
 
-    text = lines.join("\n")
-        
     # bold
     if options[:b]
       text.gsub!(/([^\w]?)\*(\S[^*]*\S|\S)\*(?!\w)/,"\\1<b>\\2</b>")
@@ -216,7 +177,7 @@ module ApplicationHelper
       text.gsub!(/--/,"&#8212;")
     end
 
-    logger.info "Text is >>#{text}<<"
+    #logger.info "Text is >>#{text}<<"
 
     # restore pre contents
     text.gsub!(/<pre(\d+)>/) do |c|
@@ -280,12 +241,12 @@ module ApplicationHelper
   end
 
   def array_table(rows)
-    return "<table border=\"1\">\n<tr>\n" +
-        rows.map { |c|
-                   "  <td>" + 
-                 c.join("</td>\n  <td>") +
-                 "</td>\n"
-                 }.join("</tr>\n<tr>\n") + "</tr>\n</table>\n"
+    max = rows.map{|r|r.length}.max
+    rows.map!{|r| r + [''] * (max-r.length)}
+      
+    return "<table class='neattable' border=\"1\">\n<tr>\n#{
+        rows.map { |c| "<td>#{ c.join("</td>\n<td>") }</td>\n" }.join("</tr>\n<tr>\n")
+        }</tr>\n</table>\n"
   end
   
   def cell_csv(cell)
@@ -307,7 +268,7 @@ module ApplicationHelper
   
 
   def array_html(options,array)
-    html = array_table(array)
+    html = array_table array
 
     if csv_link = options[:csvlink]
       encoded = array_csv(array)
@@ -330,12 +291,15 @@ module ApplicationHelper
 
         
   def csv_html(options,csv)
-    return array_html(options, csv_array(csv))
+    #return "%%#{csv}$$"
+    return array_html options, csv_array(csv)
   end
   
   def tsv_html(options,tsv)
     return array_html(options, tsv_array(tsv))
   end
 
-
+  def recent_broadcasts
+    @recent_broadcasts ||= Chat.find(:all, :conditions => { :chat_id => "all" }, :order => "created_at DESC", :limit => 2)  
+  end
 end

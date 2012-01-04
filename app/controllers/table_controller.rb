@@ -1,4 +1,5 @@
 class TableController < ApplicationController
+  before_filter :require_user
   include TableHelper
   def new
     if (params[:type] == "topic")

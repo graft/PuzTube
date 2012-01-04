@@ -1,27 +1,31 @@
-  <div class="prio<%= workspace.priority %>_title rounded_title">
-      <div style="float:left;">[<%= link_to_function 'Update', '$("'+workspace.form_id+'").onsubmit();' %> ]
-  [<%= link_to_remote 'Cancel', :url => show_workspace_path(:id => workspace.id), :method => 'get', :update => workspace.div_id %>]</div>
-<div style="float:left;" id="<%= workspace.div_id %>.conflict"></div>
-
+<div class=" priority_<%= workspace.priority %>">
+  <div class="rounded_title">
+    <div class="title_left">
+      <%= link_to_remote 'Show', :url => show_workspace_path(:id => workspace.id), :method => 'get', :update => workspace.div_id %> |
+      <%= link_to_function 'Update', '$("'+workspace.form_id+'").onsubmit();' %> 
+    </div>
+    <div class="title_left" id="<%= workspace.div_id %>.conflict"></div>
   </div>
-  <div class="prio<%= workspace.priority %>_body rounded_content" id="<%= workspace.div_id %>.editing">
-    <% if !yourtext.nil? %>
+<% form_remote_for(workspace, :url => update_workspace_path(:id => workspace.id), :update => workspace.div_id, :method => :put, :html => { :id => workspace.form_id } ) do |f| %>
+  <div class="rounded_content" id="<%= workspace.div_id %>.editing">
+  <% if !yourtext.nil? %>
       <font style='font-weight:bold; color:red'>ATTENTION! Someone has edited this comment since you started editing it.</font><br>
-	Please review the changes (your text is below) and update accordingly.<br>
+  Please review the changes (your text is below) and update accordingly.<br>
         <p>Diff:</p>
         <code><%= h(diff_html workspace.content, yourtext).sub("\n","<br>") %></code>
     <% end %>
-<% form_remote_for(workspace, :url => update_workspace_path(:id => workspace.id), :update => workspace.div_id, :method => :put, :html => { :id => workspace.form_id } ) do |f| %>
-    <p>
+    <br>
     Title:<br>
     <%= f.text_field :title %><br>
     <%= f.text_area :content, :rows => 20, :cols => 80 %>
     <%= hidden_field_tag 'workspace[editor]', current_or_anon_login %>
     <%= hidden_field_tag :locktime, Time.now.to_i %>
-    </p>
-<% end %>
+    <br>
+    <br>
     <% if !yourtext.nil? %>
       <b> Your text: </b> <br>
       <%= text_area_tag :yourtext, yourtext, :cols => 40, :rows => 20 %>
     <% end %>
   </div>
+<% end %>
+</div>

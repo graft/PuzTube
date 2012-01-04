@@ -1,8 +1,9 @@
-<div id="navbar" class="rounded" style="width: 75%; background-color:#f93;">
+<div id="navbar" class="rounded" style="background-color:#f93;">
 <div style="padding:8px;">
 <b style="color:#531; font-size:14pt;">PuzTube</b> |
 <%= link_to 'Home', root_url %> |
-<%= link_to 'Puzzles', { :action => 'index', :controller => 'rounds' } %> |
+<%= link_to 'Current Hunt', { :action => 'index', :controller => 'rounds' } %> |
+<%= link_to 'Archive', { :action => 'index', :controller => 'hunts' } %> |
 <%= link_to 'Topics', { :action => 'index', :controller => 'topics' } %> |
 <%= link_to 'Hunters', { :action => 'index', :controller => 'users' } %> |
 <%= link_to 'Help', { :action => 'show', :controller => 'topics', :name => 'Help' } %> |
@@ -10,21 +11,13 @@
 <%= link_to 'Things to Try', { :action => 'show', :controller => 'topics', :name => 'Things to Try' } %> |
 
 <% if current_user %>
-  <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :class => 'iform', :id => 'login_form', :autocomplete => 'off' } do %>
-    <%= collection_select(:user,:login,User.all,:login,:login,{ :selected => current_user.login }, {:onchange => "$('login_form').onsubmit()"}) %> 
-     <%= link_to_remote 'Logout', :url => { :action => 'logout', :controller => 'welcome' } %>
-  <% end %>
-<% else %>
-  <% form_remote_tag :url => { :action => 'login', :controller => 'welcome' }, :html => { :class => 'iform', :id => 'login_form', :autocomplete => 'off' } do %>
-    <%= select :user, :login, "<option value='' selected>Please select</option>" + options_from_collection_for_select(User.all,:login,:login),{ }, {:onchange => "$('login_form').onsubmit()"} %>
-    or <%= link_to 'sign up', { :action => 'new', :controller => 'users' }, :target => '_blank' %>
-  <% end %>
+    <%= current_user.login %> (<%= link_to_remote 'logout', :url => { :action => 'logout', :controller => 'welcome' } %>)
 <% end %>
 </div>
 </div>
 
 <div id="broadcasts" class="broadcasts">
-<% @broadcasts.each do |chat| %>
+<% recent_broadcasts.each do |chat| %>
  <b style="color:red"><%= chat.user %>:</b> <%= sanitize_text chat.text%> <br>
 <% end %>
 </div>

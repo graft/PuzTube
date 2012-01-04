@@ -12,6 +12,7 @@
   document.observe("dom:loaded", startup);
   
 </script>
+<div id="mainpage" style="width:72%">
 
 <%= render :partial => "welcome/login" %> 
 <%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @topic.chat_id } %> 
@@ -28,5 +29,5 @@
 <% end %>
 </div>
 </div>
-
+</div>
 <%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @topic } %>

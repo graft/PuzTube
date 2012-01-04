@@ -13,9 +13,16 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= (cookies[:user] ? User.find_by_login(cookies[:user]) : false)
   end
-
-  def recent_broadcasts
-    return Chat.find(:all, :conditions => { :chat_id => "all" }, :order => "created_at DESC", :limit => 2)  
+  
+  def require_user
+    unless current_user
+      flash[:notice] = "You must be logged in to access this page"
+      redirect_to login_path
+      return false
+    end
   end
+
+
+
 
 end

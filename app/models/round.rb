@@ -1,6 +1,10 @@
 class Round < ActiveRecord::Base
   has_many :puzzles
   has_many :workspaces, :as => :thread, :order => 'priority'
+  belongs_to :hunt
+
+  SORTING = { 'priority' => :priority_order, 'status' => :status_order, 'creation' => :created_at, 'name' => :name }
+  PRIORITY_OPTIONS = { "High" => 0, "Normal" => 1, "Low" => 2 }
 
   def chat_id
     "RND"+id.to_s
@@ -21,13 +25,14 @@ class Round < ActiveRecord::Base
       "#fff"
     end
   end
+  
+  def hunt
+    if hunt_id && h = Hunt.find(hunt_id)
+      return h.name
+    end
+  end
 
   def priority_order
-    Round.priority_options.index(priority) || 0
+    priority.blank? ? 1: Round::PRIORITY_OPTIONS[priority]
   end
-
-  def self.priority_options
-    [ "High", "Normal", "Low" ]
-  end
-
 end

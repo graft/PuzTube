@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :require_user, :except => [ :login, :new, :create ]
   # GET /users
   # GET /users.xml
   def index
@@ -20,6 +21,13 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @user }
+    end
+  end
+  
+  def login
+    # show the login box.
+    respond_to do |format|
+      format.html
     end
   end
 

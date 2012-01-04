@@ -1,4 +1,4 @@
-<div id="roundtitle" class="rounded_title">
+<div class="rounded_title">
     <div style="padding: 2px;">
     <b><%= link_to_remote 'Edit', :url => edit_round_path(round), :update => "ROUND#{round.id}" %></b> |
 <% if current_user && current_user.team_captain %>
@@ -36,7 +36,6 @@
       <th>Status</th>
       <th>Round</th>
       <th>Name</th>
-      <th>Url</th>
       <th>Hint</th>
       <th>Captain</th>
       <th>Workers</th>

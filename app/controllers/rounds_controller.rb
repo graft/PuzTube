@@ -1,35 +1,16 @@
 class RoundsController < ApplicationController
+  before_filter :require_user
   # GET /rounds
   # GET /rounds.xml
   def index
-    @rounds = Round.find(:all,:conditions => {:hidden => nil}, :order => 'updated_at DESC')
-    @broadcasts = recent_broadcasts
-    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
-    @grouped = (current_user&&current_user.options)?current_user.options[:grouped]:false
-    sorter = Proc.new { |p1,p2|
-        if @sorting == "status"
-          p1.status_order <=> p2.status_order
-        elsif @sorting == "priority"
-          p1.priority_order <=> p2.priority_order
-        elsif @sorting == "name"
-          p1.name <=> p2.name
-        else
-          p1.created_at <=> p2.created_at
-        end
-      }
-    if @grouped
-      @rounds.sort! do |r1,r2|
-        r1.priority_order <=> r2.priority_order
-      end
-      @rounds.each do |round|
-        round.puzzles.sort! &sorter
-      end
-    else
-      @puzzles = Puzzle.find(:all).sort! &sorter
-    end
-
+    @current_hunt = DataStore.find_by_key("current_hunt")
+   
     respond_to do |format|
-      format.html # index.html.erb
+      if !@current_hunt.nil?
+        format.html { redirect_to hunt_path(@current_hunt.value.to_i) }
+      else
+        format.html # index.html.erb
+      end
       format.xml  { render :xml => @rounds }
     end
   end

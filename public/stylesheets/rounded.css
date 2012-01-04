@@ -1,28 +1,31 @@
 .rounded {
-  margin:4px; border: 3px solid #442;
+  margin:4px; border: 2px solid #442;
+  box-shadow: 0px 0px 5px #000;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
 
 .rounded_title {
-  width:100%; height:25px; border-bottom: 1px solid #000; background-color: #aa5;
+  width:100%; height:25px; border-bottom: 1px solid #444; background-color: #aa5;
   -moz-border-radius-topleft: 7px;
   -webkit-border-top-left-radius: 7px;
   -moz-border-radius-topright: 7px;
   -webkit-border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  box-shadow: 0px 3px 2px rgba(0,0,0,0.25);
+  z-index: 10;
+  position: relative;
+  left: 0px;
+  top: 0px;
 }
 
 .rounded_box {
   width:100%; height:25px; background-color: #aa5;
-  -moz-border-radius-topleft: 7px;
-  -webkit-border-top-left-radius: 7px;
-  -moz-border-radius-topright: 7px;
-  -webkit-border-top-right-radius: 7px;
-  -moz-border-radius-bottomleft: 7px;
-  -webkit-border-bottom-left-radius: 7px;
-  -moz-border-radius-bottomright: 7px;
-  -webkit-border-bottom-right-radius: 7px;
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  border-radius:7px;
 }
 
 .rounded_content {
@@ -30,42 +33,52 @@
   -webkit-border-bottom-left-radius: 7px;
   -moz-border-radius-bottomright: 7px;
   -webkit-border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius:7px;
   font-family: "Helvetica", "Free Sans", sans-serif;
 }
 
 .rounded_content text_area { width: 100%; height: 100%; margin: 0; padding:0; }
 
 .workspace {
-  width: 75%;
   background-color: #ef8; 
+}
+
+.title_left {
+ padding:2px;
+ float:left;
+}
+.title_right {
+  float:right;
+  padding:2px;
 }
 
 .round {
   width: 95%;
-  background-color: #9fc; 
+  background-color: #ccc; 
 }
 
 .round .rounded_title {
-  background-color: #6b9;
+  background-color: #aaa;
 }
 
-.prioNormal_title {
+.priority_Normal .rounded_title, .rounded_box {
   background-color: #88a;
 }
-.prioNormal_body {
+.priority_Normal .rounded_content {
   background-color: #ccf;
 }
-.prioNormal_body .asset {
+.priority_Normal .asset {
   background-color: #667;
 }
 
-.prioUseless_title {
+.priority_Useless .rounded_title, .rounded_box {
   background-color: #a8a;
 }
-.prioUseless_body {
+.priority_Useless .rounded_content {
   background-color: #fcf;
 }
-.prioUseless_body .asset {
+.priority_Useless .asset {
   background-color: #545;
 }
 
@@ -75,7 +88,6 @@
 
 .broadcasts {
   border: 3px dashed #080;
-  width: 75%;
   margin: 4px;
   padding: 4px;
   font-size: 12pt;
@@ -125,6 +137,16 @@
   padding: 2px;
 }
 
+.neattable {
+  border-collapse: collapse;
+  border: 1px solid #f00;
+}
+
+.neattable td {
+  border: 1px solid #f00;
+  padding: 2px;
+}
+
 .statusblock {
   margin: 0px;
   z-index: -1;
@@ -156,6 +178,11 @@ ul.chatlist li {
 ul.userlist li {
   display: inline;
   margin-left:5px;
+}
+
+.rounded_content ul,ol {
+  margin-left:20px;
+  padding-left:0px;
 }
 
 ul.userlist li:before {

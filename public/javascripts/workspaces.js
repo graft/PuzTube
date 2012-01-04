@@ -73,9 +73,9 @@ function sortWorkspaces() {
   workspaces.each(function(ws) {
     fd = ws.firstDescendant();
     if (fd) {
-      if (fd.hasClassName('prioHigh_title')) high.push(ws);
-      else if (fd.hasClassName('prioNormal_title')) normal.push(ws);
-      else if (fd.hasClassName('prioUseless_title')) useless.push(ws);
+      if (fd.hasClassName('priority_High')) high.push(ws);
+      else if (fd.hasClassName('priority_Normal')) normal.push(ws);
+      else if (fd.hasClassName('priority_Useless')) useless.push(ws);
       else other.push(ws);
     }
   });

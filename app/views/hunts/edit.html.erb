@@ -1,0 +1,34 @@
+<h1>Editing hunt</h1>
+<% form_for(@hunt) do |f| %>
+  <%= f.error_messages %>
+  <p>
+    <%= f.label :name %><br />
+    <%= f.text_field :name%>
+  </p>
+  <p>
+    <%= f.label :url %><br />
+    <%= f.text_field :url %>
+  </p>
+  <p>
+    <%= f.label :captain %><br />
+    <%= f.text_field :captain %>
+  </p>
+  <p>
+    <%= f.label :editor %><br />
+    <%= f.text_field :editor %>
+  </p>
+  
+  <p>
+    <%= f.label :creation %><br/>
+    <%= datetime_select(:hunt, :created_at) %>
+  </p>
+  <p>
+    <%= check_box_tag :make_current, "1" %> Make this the Current Hunt
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @hunt %> |
+<%= link_to 'Back', hunts_path %>

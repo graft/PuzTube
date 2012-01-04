@@ -13,4 +13,8 @@ class Workspace < ActiveRecord::Base
   def self.priorities
     ["High", "Normal","Useless"]
   end
+  
+  def title_class
+    "rounded_#{ priority == "Useless" ? "box": "title" }"
+  end
 end

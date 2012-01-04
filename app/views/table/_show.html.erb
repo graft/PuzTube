@@ -1,4 +1,4 @@
-<div class="prio<%= table.priority %>_title rounded_<%= table.priority == "Useless" ? "box": "title" %>">
+<div class="rounded_<%= table.priority == "Useless" ? "box": "title" %>">
   <div style="padding:2px; float:left;">
     [<%= link_to_remote 'Edit', :url => edit_table_path(:id => table.id), :method => 'get', :update => table.div_id %> ]
     <% if current_user && current_user.team_captain %>
@@ -14,7 +14,7 @@
   </div>
 </div>
 <% if table.priority != "Useless" %>
-<div class="prio<%= table.priority %>_body rounded_content">
+<div class="rounded_content">
   <div id="<%= table.div_id %>.content" class="pzt_table" style="padding: 4px;">
   <table id="<%= table.t_id %>" class="sortable resizable" style="width:100%;">
   <% table.rows.each_with_index do |row,i| %>

@@ -37,7 +37,7 @@ function showChats() {
 <div id="chats" class="hidden">
 <ul>
 <% @chats.each do |chat| %>
-  <li><%=h chat.dateformat%> <b><%=h chat.user%>:</b> <%=sanitize_text chat.text %></li>
+  <li><%=h chat.timeformat%> <b><%=h chat.user%>:</b> <%=sanitize_text chat.text %></li>
 <% end %>
 </ul>
 </div>

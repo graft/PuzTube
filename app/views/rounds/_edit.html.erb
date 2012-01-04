@@ -1,4 +1,4 @@
-<div id="roundtitle" class="rounded_title">
+<div class="rounded_title">
     <div style="padding: 2px;">
     <b><%= link_to_remote 'Show', :url => info_round_path(:id=>round.id), :update => 'ROUND'+round.id.to_s %></b> |
     <b><%= link_to_function 'Update', "javascript: $('r#{round.id}.update').onsubmit();" %></b>
@@ -11,12 +11,17 @@
                   :html => { :id => "r#{round.id}.update" } ) do |f| %>
     <b><%= f.label :name %>:</b>
     <%= f.text_field :name %><br>
+    <b><%= f.label :hunt %>:</b>
+    <%= collection_select(:round,:hunt_id,Hunt.all,:id,:name,{ :selected => round.hunt_id })
+    select :round, :hunt_id, 
+    
+    "<option value='' selected>Please select</option>" + options_from_collection_for_select(Hunt.all,:id,:name) %><br>
     <b><%= f.label :url %></b>
     <%= f.text_field :url %><br>
     <b><%= f.label :hint %></b>
     <%= f.text_field :hint %><br>
     <b><%= f.label :priority %></b>
-    <b><%= select :round, :priority, "<option value=''>Select priority</option>" + options_for_select(Round.priority_options,round.priority) %><br>
+    <b><%= select :round, :priority, "<option value=''>Select priority</option>" + options_for_select(Round::PRIORITY_OPTIONS.keys,round.priority) %><br>
     <b><%= f.label :captain %></b>
     <%= collection_select(:round,:captain,User.all,:login,:login,{:prompt=>true}) %><br>
     <b><%= f.label :answer %></b>

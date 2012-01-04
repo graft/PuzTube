@@ -1,0 +1,27 @@
+<%= javascript_include_tag :defaults %>
+
+<%= render :partial => "welcome/login" %> 
+
+<h1>Listing hunts</h1>
+
+<table>
+  <tr>
+  </tr>
+
+<% @hunts.each do |hunt| %>
+  <tr>
+    <td><%= hunt.name %>
+    <td><%= link_to 'Show', hunt %></td>
+%   if current_user.team_captain
+    <td><%= link_to 'Edit', edit_hunt_path(hunt) %></td>
+    <td><%= link_to 'Destroy', hunt, :confirm => 'Are you sure?', :method => :delete %></td>
+%   end
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+% if current_user.team_captain
+<%= link_to 'New hunt', new_hunt_path %>
+% end

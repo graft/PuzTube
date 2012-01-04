@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
-  map.connect '/puzzles/edit_row', :controller => 'puzzles', :action => 'edit_row'
+  map.resources :hunts
+
+  map.edit_puzzlerow '/puzzles/edit_row', :controller => 'puzzles', :action => 'edit_row'
   map.delete_puzzle '/puzzles/delete/:id', :controller => 'puzzles', :action => 'destroy', :method => :delete
   map.edit_puzzle '/puzzles/edit/:id', :controller => 'puzzles', :action => 'edit'
   map.update_puzzle '/puzzles/update/:id', :controller => 'puzzles', :action => 'update'
@@ -12,63 +14,19 @@ ActionController::Routing::Routes.draw do |map|
   map.delete_round '/rounds/delete/:id', :controller => 'rounds', :action => 'destroy', :method => :delete
   map.edit_round '/rounds/edit/:id', :controller => 'rounds', :action => 'edit'
   map.rounds '/rounds', :controller => 'rounds', :action => 'index'
+
   map.info_round '/round/info', :controller => 'rounds', :action => 'info'
   map.round '/round/:id', :controller => 'rounds', :action => 'show'
 
   map.options_user '/users/options', :controller => 'users', :action => 'options'
-
+  map.login '/login', :controller => 'users', :action => 'login'
+  
   map.resources :users
-
-  #map.resources :topics
-
   map.resources :chats
-
-  #map.resources :puzzles
-
   map.resources :rounds
 
-  map.connect '/connections/subscribe', :controller => 'connections', :action => 'subscribe'
-  map.connect '/connections/unsubscribe', :controller => 'connections', :action => 'unsubscribe'
-
-  # The priority is based upon order of creation: first created -> highest priority.
-
-  # Sample of regular route:
-  #   map.connect 'products/:id', :controller => 'catalog', :action => 'view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   map.purchase 'products/:id/purchase', :controller => 'catalog', :action => 'purchase'
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   map.resources :products
-
-  # Sample resource route with options:
-  #   map.resources :products, :member => { :short => :get, :toggle => :post }, :collection => { :sold => :get }
-
-  # Sample resource route with sub-resources:
-  #   map.resources :products, :has_many => [ :comments, :sales ], :has_one => :seller
-  
-  # Sample resource route with more complex sub-resources
-  #   map.resources :products do |products|
-  #     products.resources :comments
-  #     products.resources :sales, :collection => { :recent => :get }
-  #   end
-
-  # Sample resource route within a namespace:
-  #   map.namespace :admin do |admin|
-  #     # Directs /admin/products/* to Admin::ProductsController (app/controllers/admin/products_controller.rb)
-  #     admin.resources :products
-  #   end
-
-  # You can have the root of your site routed with map.root -- just remember to delete public/index.html.
-   map.root :controller => 'topics', :action => 'show', :name => 'Project Electric Mayhem'
-
-  # See how all your routes lay out with "rake routes"
-
-  # Install the default routes as the lowest priority.
-  # Note: These default routes make all actions in every controller accessible via GET requests. You should
-  # consider removing or commenting them out if you're using named routes and resources.
+  map.subscribe '/connections/subscribe', :controller => 'connections', :action => 'subscribe'
+  map.unsubscribe '/connections/unsubscribe', :controller => 'connections', :action => 'unsubscribe'
 
   map.edit_topic 'topic/:name/edit', :controller => 'topics', :action => 'edit'
   map.update_topic 'topic/:name', :controller => 'topics', :action => 'update', :conditions => { :method => :put }
@@ -98,10 +56,8 @@ ActionController::Routing::Routes.draw do |map|
   map.update_table 'table/update', :controller => 'table', :action => 'update'
   map.update_cell 'table/update_cell', :controller => 'table', :action => 'update_cell'
   map.rc_table 'table/rc', :controller => 'table', :action => 'get_rc'
+  map.root :controller => 'topics', :action => 'show', :name => 'Project Electric Mayhem'
 
-  #map.connect ':controller/:id/:action'
   map.connect ':controller/:action/:id'
   map.connect ':controller/:action'
-  #map.connect ':controller/:action/:id.:format'
-  #map.connect ':controller/:action/:id.:format'
 end
