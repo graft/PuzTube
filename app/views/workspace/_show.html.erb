@@ -15,7 +15,7 @@
   </div>
 </div>
 
-% if workspace.priority != "Useless"
+<% if workspace.priority != "Useless" %>
   <div class="rounded_content">
     <div id="<%= workspace.div_id %>.content" style="padding: 4px;">
       <%= comment_format workspace.content || '<br>' %>
@@ -40,5 +40,5 @@
       </div>
     </div>
   </div>
-% end
+<% end %>
 </div>

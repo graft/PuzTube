@@ -38,15 +38,15 @@
 
 <h1><%= @hunt.name %></h1>
 <div id="editables" class="hidden">
-% if current_user.team_captain && @grouped
+<% if current_user.team_captain && @grouped %>
 <%= link_to_remote 'New round', :url => new_round_path() %><br>
-% end
-% form_tag(options_user_path, :method => :post) do
+<% end %>
+<% form_tag(options_user_path, :method => :post) do %>
   Sort by: <%= select_tag 'sortg', options_for_select([ 'priority', 'status', 'creation', 'name' ], :selected => @sorting) %> 
   <%= hidden_field_tag 'groupd', 0 %> 
   <%= check_box_tag 'groupd', 1, @grouped %> Group by round
   <%= submit_tag 'Sort' %>
-% end
+<% end %>
   <%= hidden_field_tag 'actual_sort', @sorting %> 
   <%= hidden_field_tag 'actual_group', @grouped %> 
 <div id="roundstable">

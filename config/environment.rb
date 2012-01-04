@@ -7,7 +7,7 @@ RAILS_GEM_VERSION = '2.3.14' unless defined? RAILS_GEM_VERSION
 require File.join(File.dirname(__FILE__), 'boot')
 
 if defined?(ActionView)
-	        ActionView::Base.erb_trim_mode = '%-'
+        ActionView::Base.erb_trim_mode = '%-'
 end
 
 Rails::Initializer.run do |config|
@@ -25,6 +25,7 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   # config.gem "juggernaut"
   config.gem "differ"
+  config.gem "rake", :version => '0.8.7'
 
   # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named

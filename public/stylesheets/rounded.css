@@ -95,7 +95,7 @@
 }
 
 .testbox {
-  position: fixed; bottom: 0; right: 0; background-color: #257; border: 2px solid #000; padding: 2px;
+  position: fixed; bottom: 0; right: 0; background-color: #257; border: 2px solid #000; padding: 2px; z-index: 30;
 }
 
 .testbox a:hover {

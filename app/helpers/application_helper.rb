@@ -140,17 +140,17 @@ module ApplicationHelper
           end
           diff = diff+1 if new == old
           (diff...old.length).each do |j|
-            changes = (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j]] + "\n" + changes
+            changes = (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j].chr] + "\n" + changes
           end
           (diff...new.length).each do |j|
-            changes += (' ' * j) + ApplicationHelper::LIST_OPEN_TAGS[new[j]] + "\n"
+            changes += (' ' * j) + ApplicationHelper::LIST_OPEN_TAGS[new[j].chr] + "\n"
           end
           old = new
           changes + (' ' * new.size) + line
         end
 
         old.length.times do |j|
-          match << (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j]]
+          match << (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j].chr]
         end
         match
       end

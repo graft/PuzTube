@@ -2,14 +2,14 @@
 
 <ul>
 
-% last_date = nil
-% @chats.each do |c|
-%   if !last_date || c.day > last_date
+<% last_date = nil %>
+<% @chats.each do |c| %>
+<%   if !last_date || c.day > last_date %>
     <li> <b> <%= c.dateformat %> </b>
-%   end
+<%   end %>
     <li>  <%=h c.timeformat %> <b><%=h c.user %>:</b> <%= sanitize_text(c.text) %> </li>
-%   last_date = c.day
-% end
+<%   last_date = c.day %>
+<% end %>
 </ul>
 
 <br />

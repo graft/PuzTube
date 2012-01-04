@@ -5,14 +5,14 @@
 </div>
 <div style="padding:3px; overflow: auto" id="chatpane">
   <ul class="chatlist">
-% last_date = nil
-%   chats.reverse_each do |c|
-%     if !last_date || c.day > last_date
+<% last_date = nil %>
+<%   chats.reverse_each do |c| %>
+<%     if !last_date || c.day > last_date %>
       <li> <b> <%= c.dateformat %> </b>
-%     end
+<%     end %>
       <li>  <%=h c.timeformat %> <b><%=h c.user %>:</b> <%= sanitize_text(c.text) %> </li>
-%     last_date = c.day
-%   end
+<%     last_date = c.day %>
+<%   end %>
   </ul>
 </div>
 <div id="chatbox" style="height: 20px; padding: 3px;">
