@@ -26,12 +26,6 @@ class Round < ActiveRecord::Base
     end
   end
   
-  def hunt
-    if hunt_id && h = Hunt.find(hunt_id)
-      return h.name
-    end
-  end
-
   def priority_order
     priority.blank? ? 1: Round::PRIORITY_OPTIONS[priority]
   end

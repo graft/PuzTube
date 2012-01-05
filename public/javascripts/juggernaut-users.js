@@ -46,12 +46,16 @@
     }
   }
 
+  function scrollChat() {
+    $('chatpane').scrollTop = $('chatpane').scrollHeight;
+  }
+
   function jug_chat_update(txt) {
     if ($('chatpane')) {
       $('chatpane')
       .firstDescendant()
       .insert({ bottom: txt});
-      $('chatpane').scrollTop = $('chatpane').scrollHeight;
+      scrollChat();
       blinkTitle();
     }
   }
@@ -94,8 +98,22 @@
 
   function connectionTimer() {
     if (!connectiontimer) {
-    	connectiontimer = setTimeout('reconnectJug()',5000);
+      connectiontimer = setTimeout('reconnectJug()',5000);
     }
+  }
+
+  function hideChat() {
+    $('chatwindow').hide();
+    $('hidechat').hide();
+    $('showchat').show();
+    $('mainpage').setStyle({ width: "100%" });
+  }
+  function showChat() {
+    $('chatwindow').show();
+    $('hidechat').show();
+    $('showchat').hide();
+    scrollChat();
+    $('mainpage').setStyle({ width: "72%" });
   }
   
   function startup() {
@@ -116,6 +134,7 @@
 //     });
     $('chatwindow').setStyle({ height: (window.innerHeight-15)+'px' });
     $('chatpane').setStyle({ height: ($('chatwindow').getHeight()-170) + 'px' });
+    scrollChat();
     $('chatform').disable();
 //     $(document).observe('juggernaut:disconnected', function(){ alert('Why have you forsaken me!') }); 
 //     $(document).observe('juggernaut:initialized', function(){ alert('Initialized.') }); 

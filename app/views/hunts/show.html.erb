@@ -4,7 +4,7 @@
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
 
-<%= juggernaut :channels => ["HUNT#{@hunt.id}"], :client_id => current_user ? current_user.login : "anon", :debug => false %>
+<%= juggernaut :channels => [@hunt.chat_id], :client_id => current_user ? current_user.login : "anon", :debug => false %>
 
 <script type="text/javascript" charset="utf-8">
   function update_and_submit(pzr,pid,rid,flds) {
@@ -28,7 +28,7 @@
 </script>
 
 <%= render :partial => "welcome/login" %> 
-<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => "ROUNDS" } %> 
+<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @hunt.chat_id } %> 
 
 <!-- This page renders puzzle info - it has the following functions:
     * Show puzzles in round order
@@ -52,6 +52,7 @@
 <div id="roundstable">
 <% if @grouped %>
   <% @hunt.rounds.each do |round| %>
+    <% next if round.hidden %>
     <%= render :partial => 'rounds/round', :locals => { :round => round, :sorting => @sorting } %>
   <% end %>
 <% else %>

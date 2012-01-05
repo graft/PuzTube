@@ -16,7 +16,7 @@
   document.observe("dom:loaded", update_tables);
 </script>
 
-<div id="mainpage" style="width:72%">
+<div id="mainpage">
 <%= render :partial => "welcome/login" %> 
 <%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @puzzle.chat_id } %> 
 

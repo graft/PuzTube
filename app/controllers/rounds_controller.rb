@@ -107,7 +107,9 @@ class RoundsController < ApplicationController
       flash[:notice] = 'Round was successfully updated.'
         # DON'T update here - use juggernaut to send the request. You need the chat id!
       txt = render_to_string :partial => "show", :locals => { :round => @round, :sorting => @sorting  }
+      logger.info "Rendered channel for #{@round.hunt.chat_id}"
       render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
+        logger.info "Updating channel for #{@round.hunt.chat_id}"
         page << "$('ROUND#{@round.id}').update('#{javascript_escape txt}');"
       end
     end
@@ -123,6 +125,7 @@ class RoundsController < ApplicationController
       page << "$('ROUND#{@round.id}').remove();"
     end
     @round.hidden = true
+    @round.hunt_id = nil
     @round.save
     render :nothing => true
   end

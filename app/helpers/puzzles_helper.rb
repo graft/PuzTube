@@ -9,7 +9,7 @@ module PuzzlesHelper
     end
     if puzzle.update_attributes(params)
       txt = render_to_string :partial => 'miniinfo', :locals => { :puzzle => puzzle }
-      render :juggernaut => { :type => :send_to_channel, :channel => "ROUNDS" } do |page|
+      render :juggernaut => { :type => :send_to_channel, :channel => puzzle.round.hunt.chat_id } do |page|
         page << "$('#{puzzle.t_id}').update('#{javascript_escape txt}');"
       end
       txt = render_to_string :partial => "info", :locals => { :puzzle => puzzle }

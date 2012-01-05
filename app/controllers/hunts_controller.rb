@@ -53,16 +53,17 @@ class HuntsController < ApplicationController
     @hunt = Hunt.find(params[:id])
     @round = @hunt.rounds.build
     @round.name = "New Round"
+
     
     if @round.save
-      text = render_to_string :partial => 'round', :locals => { :round => @round}
+      text = render_to_string :partial => 'rounds/round', :locals => { :round => @round}
+	logger.info "Rendering new round, channel #{@hunt.chat_id}."
       # again, use juggernaut to do this.
       render :juggernaut => { :type => :send_to_channel, :channel => @hunt.chat_id } do |page|
         page << "$('roundstable').insert({bottom: '#{javascript_escape text}'});"
       end
-    else
-      render :nothing => true
     end
+    render :nothing => true
   end
 
   # GET /hunts/1/edit

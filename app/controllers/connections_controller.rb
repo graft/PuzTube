@@ -3,7 +3,7 @@ class ConnectionsController < ApplicationController
   def subscribe
     if (params[:channels])
       params[:channels].each do |channel|
-        if channel != "ROUNDS"
+        if channel !~ /HUNT/
           render :juggernaut => { :type => :send_to_channel, :channel => channel } do |page|
             page << "subscribe_user('#{h params[:client_id]}');"
           end
@@ -19,7 +19,7 @@ class ConnectionsController < ApplicationController
   def unsubscribe
     if (params[:channels])
       params[:channels].each do |channel|
-        if channel != "ROUNDS"
+        if channel !~ /HUNT/
           render :juggernaut => { :type => :send_to_channel, :channel => channel } do |page|
             page << "unsubscribe_user('#{h params[:client_id]}');"
           end

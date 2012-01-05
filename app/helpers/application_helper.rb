@@ -44,7 +44,7 @@ module ApplicationHelper
   end
 
   def javascript_escape(str)
-    str.gsub(/\\|'/) { |c| "\\#{c}" }#.gsub(/\n/,' ')
+    str.gsub(/\\|'/) { |c| "\\#{c}" }.gsub(/\n/,'\n')
   end
   
   def sanitize_text(str)
@@ -76,6 +76,7 @@ module ApplicationHelper
                     :tab => true,
                     :comma => true,
                     :b => true,
+                    :s => true,
                     :i => true,
                     :emdash => true,
                     :http => true,
@@ -165,6 +166,11 @@ module ApplicationHelper
     # bold
     if options[:b]
       text.gsub!(/([^\w]?)\*(\S[^*]*\S|\S)\*(?!\w)/,"\\1<b>\\2</b>")
+    end
+    
+    # strike
+    if options[:s]
+      text.gsub!(/([^\w]?)\@(\S[^@]*?\S|\S)\@(?!\w)/,"\\1<strike>\\2</strike>")
     end
     
     # italic
