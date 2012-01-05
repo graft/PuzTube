@@ -37,7 +37,6 @@ class RoundsController < ApplicationController
   # GET /rounds/1.xml
   def show
     @round = Round.find(params[:id])
-    @broadcasts = recent_broadcasts
     @chats = Chat.find(:all, :conditions => {:chat_id => @round.chat_id}, :order => "created_at DESC", :limit => 10)
     @chatusers = Juggernaut.show_clients_for_channel(@round.chat_id)
 

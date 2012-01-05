@@ -1,0 +1,74 @@
+<%= javascript_include_tag "RGraph/libraries/RGraph.common.core" %>
+<%= javascript_include_tag "RGraph/libraries/RGraph.line.js" %>
+<%= javascript_include_tag "RGraph/libraries/RGraph.common.key.js" %>
+
+<script type="text/javascript">
+function hideGraph() {
+  $('hide_graph').hide();
+  $('solving_graph').hide();
+  $('show_graph').show();
+}
+function showGraph() {
+  $('hide_graph').show();
+  $('solving_graph').show();
+  $('show_graph').hide();
+}
+</script>
+
+<div class="rounded" style="position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;">
+<span id="hide_graph" class="button" style="position: absolute; right:5px; top: 3px; padding:2px;"><%= link_to_function 'Hide', "hideGraph();" %></a></span>
+<span id="show_graph" class="button" style="position: absolute; right:5px; top: 3px; padding:2px;display:none"><%= link_to_function 'Show', "showGraph();" %></span>
+<canvas id="solving_graph" width="700" height="175">No canvas element!</canvas>
+</div>
+<script type="text/javascript">
+<%
+  # okay, you want to get all the stuff for the puzzles in this hunt.
+  solved = []
+  total = []
+  num = 20
+  solved_bins = [0]*num
+  total_bins = [0]*num
+  mx = nil
+  mn = hunt.created_at
+  hunt.puzzles.each do |p|
+    if p.status == "Solved"
+      solved.push p.updated_at
+      mx = solved[solved.size-1] if !mx || solved[solved.size-1] > mx
+    end
+    total.push p.created_at
+    mx = total[total.size-1] if !mx || total[total.size-1] > mx
+    
+  end
+  # how big an interval should it be?
+  # you should round to the nearest half-day, at least. And there should be 5 intervals. If you are on the scale of years, round to the nearest month.
+  gap = (mx-mn)/5
+  fmt = gap > 60*60*24*10 ? "%m/%d/%y" : "%a %H:%M"
+  interval = (0..5).to_a.map{|a| (mn + a*gap).strftime(fmt) }
+  #[mn.strftime("%m/%d/%y %H:%M"),mx.to_s]
+  total.each do |t|
+    bin = (num*([0,t-mn].max / (mx-mn+1))).to_i
+    total_bins[bin] += 1
+  end
+  solved.each do |s|
+    bin = (num*([0,s-mn].max / (mx-mn+1))).to_i
+    puts "Solved at #{s} was put in bin #{bin} based on #{s-mn}"
+    solved_bins[bin] += 1
+  end
+  (1...num).each do |i|
+    solved_bins[i] += solved_bins[i-1]
+    total_bins[i] += total_bins[i-1]
+  end
+%>
+            var line = new RGraph.Line('solving_graph', [<%= total_bins.join(",") %>],[<%= solved_bins.join(",") %>]);
+            line.Set('chart.gutter.left', 35);
+            line.Set('chart.colors', ['red','black']);
+            line.Set('chart.key', ['total', 'solved']);
+            line.Set('chart.key.colors', ['red', 'black']);
+            line.Set('chart.key.position.x', line.Get('chart.gutter.left') + 10);
+            line.Set('chart.linewidth', 5);
+            line.Set('chart.shadow', true);
+            line.Set('chart.shadow.blur', 5);
+            line.Set('chart.title', 'Solving rate');
+            line.Set('chart.labels', [<%= interval.map{|a| "'#{a}'"}.join(",") %>]);
+            line.Draw();
+</script> 

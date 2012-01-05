@@ -37,6 +37,7 @@
  -->
 
 <h1><%= @hunt.name %></h1>
+<%= render :partial => "solving", :locals => { :hunt => @hunt } %>
 <div id="editables" class="hidden">
 <% if current_user.team_captain && @grouped %>
 <%= link_to_remote 'New round', :url => new_round_path(@hunt.id) %><br>

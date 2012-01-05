@@ -16,7 +16,7 @@
 <%     if !last_date || c.day > last_date %>
       <li> <b> <%= c.dateformat %> </b>
 <%     end %>
-      <li>  <%=h c.timeformat %> <b><%=h c.user %>:</b> <%= sanitize_text(c.text) %> </li>
+      <li>  <%=h c.timeformat %> <b><%= link_to c.user, user_path(c.user), :target => "_blank", :style => "text-decoration:none;" %>:</b> <%= sanitize_text(c.text) %> </li>
 <%     last_date = c.day %>
 <%   end %>
     </ul>

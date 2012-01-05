@@ -15,7 +15,6 @@ class HuntsController < ApplicationController
   def show
     @hunt = Hunt.find(params[:id])
     
-    @broadcasts = recent_broadcasts
     @sorting = current_user.options[:sorting]
     sort_key = Round::SORTING[@sorting]
     @grouped = current_user.options[:grouped]

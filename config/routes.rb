@@ -21,6 +21,7 @@ ActionController::Routing::Routes.draw do |map|
   map.options_user '/users/options', :controller => 'users', :action => 'options'
   map.login '/login', :controller => 'users', :action => 'login'
   
+  map.connect '/users/:name', :controller => 'users', :action => 'show'
   map.resources :users
   map.resources :chats
   map.resources :rounds

@@ -6,8 +6,7 @@ class PuzzlesController < ApplicationController
   # GET /puzzles/1.xml
   def show
     @puzzle = Puzzle.find(params[:id])
-    @broadcasts = recent_broadcasts
-    @round = Round.find(@puzzle.round_id)
+    @round = @puzzle.round
     @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 25)
     @chatusers = Juggernaut.show_clients_for_channel(@puzzle.chat_id)
     

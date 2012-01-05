@@ -4,7 +4,6 @@ class TopicsController < ApplicationController
   # GET /topics.xml
   def index
     @topics = Topic.all
-    @broadcasts = recent_broadcasts
 
     respond_to do |format|
       format.html # index.html.erb
@@ -16,7 +15,6 @@ class TopicsController < ApplicationController
   # GET /topics/1.xml
   def show
     @topic = Topic.find_by_name(params[:name])
-    @broadcasts = recent_broadcasts
     @chats = Chat.find(:all, :conditions => {:chat_id => @topic.chat_id}, :order => "created_at DESC", :limit => 35)
     @chatusers = Juggernaut.show_clients_for_channel(@topic.chat_id)
     
