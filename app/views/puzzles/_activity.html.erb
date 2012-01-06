@@ -1,0 +1,41 @@
+<%
+  # A tiny activities graph for puzzles
+  acts = []
+  puzzle.activities.each do |act|
+    acts.push act.created_at
+  end
+  mx = Time.now
+  mn = puzzle.created_at
+  num = 20
+  act_bins = [0] * num
+  acts.each do |a|
+    bin = (num*([0,a-mn].max / (mx-mn+1))).to_i
+    act_bins[bin] += 1
+  end
+%>
+<canvas id="<%= puzzle.act_id %>" width=150 height=30> </canvas> 
+
+<script type="text/javascript">
+            var line = new RGraph.Line('<%= puzzle.act_id %>', [<%= act_bins.join(",") %>]);
+            line.Set('chart.gutter.left', 30);
+            line.Set('chart.gutter.top', 5);
+            line.Set('chart.gutter.right', 0);
+            line.Set('chart.gutter.bottom', 0);
+            line.Set('chart.text.size',8);
+            line.Set('chart.background.barcolor1','#020');
+            line.Set('chart.background.barcolor2','#020');
+            line.Set('chart.background.grid',false);
+            line.Set('chart.ylabels.count',1);
+            line.Set('chart.noaxes',true);
+            line.Set('chart.title',"<%= time_diff mx-mn %>");
+            line.Set('chart.title.color',"#f00");
+            line.Set('chart.title.vpos',2.2);
+            line.Set('chart.title.hpos',0.3);
+            line.Set('chart.title.bold',false);
+            line.Set('chart.title.size',8);
+            line.Set('chart.text.color', '#f00');
+            line.Set('chart.colors', ['#0f0']);
+            line.Set('chart.linewidth', 2);
+            line.Draw();
+
+</script>

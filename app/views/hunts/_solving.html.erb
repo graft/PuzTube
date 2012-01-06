@@ -1,25 +1,20 @@
-<%= javascript_include_tag "RGraph/libraries/RGraph.common.core" %>
-<%= javascript_include_tag "RGraph/libraries/RGraph.line.js" %>
-<%= javascript_include_tag "RGraph/libraries/RGraph.common.key.js" %>
 
-<script type="text/javascript">
-function hideGraph() {
-  $('hide_graph').hide();
-  $('solving_graph').hide();
-  $('show_graph').show();
-}
-function showGraph() {
-  $('hide_graph').show();
-  $('solving_graph').show();
-  $('show_graph').hide();
-}
-</script>
 
-<div class="rounded" style="position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;">
-<span id="hide_graph" class="button" style="position: absolute; right:5px; top: 3px; padding:2px;"><%= link_to_function 'Hide', "hideGraph();" %></a></span>
-<span id="show_graph" class="button" style="position: absolute; right:5px; top: 3px; padding:2px;display:none"><%= link_to_function 'Show', "showGraph();" %></span>
+
+<span id="hide_graph" class="button graphbutton" style="<%= shown ? "" : "display:none" %>"><%= link_to_function 'Hide', "hideGraph();" %></a></span>
+<span id="reload_graph" class="button graphbutton" style="right:45px; <%= shown ? "" : "display:none" %>"><%= link_to_remote '&#8634;',
+  :url => stats_path(:id=>hunt.id), :method => 'get', :update => "statbox" %></span>
+<span id="show_graph" class="button graphbutton" style="<%= shown ? "display:none" : "" %>"><%= link_to_function 'Show', "showGraph();" %></span>
+
+<div id="graphs" style="<%= shown ? "" : "display:none" %>">
 <canvas id="solving_graph" width="700" height="175">No canvas element!</canvas>
+<canvas id="activity_graph" width="700" height="125">No canvas element!</canvas>
 </div>
+<div id="stats">
+Statistics
+</div>
+
+
 <script type="text/javascript">
 <%
   # okay, you want to get all the stuff for the puzzles in this hunt.
@@ -43,7 +38,7 @@ function showGraph() {
   # you should round to the nearest half-day, at least. And there should be 5 intervals. If you are on the scale of years, round to the nearest month.
   gap = (mx-mn)/5
   fmt = gap > 60*60*24*10 ? "%m/%d/%y" : "%a %H:%M"
-  interval = (0..5).to_a.map{|a| (mn + a*gap).strftime(fmt) }
+  interval = (0..5).to_a.map{|a| "'#{(mn + a*gap).strftime(fmt)}'" }
   #[mn.strftime("%m/%d/%y %H:%M"),mx.to_s]
   total.each do |t|
     bin = (num*([0,t-mn].max / (mx-mn+1))).to_i
@@ -51,7 +46,6 @@ function showGraph() {
   end
   solved.each do |s|
     bin = (num*([0,s-mn].max / (mx-mn+1))).to_i
-    puts "Solved at #{s} was put in bin #{bin} based on #{s-mn}"
     solved_bins[bin] += 1
   end
   (1...num).each do |i|
@@ -61,14 +55,50 @@ function showGraph() {
 %>
             var line = new RGraph.Line('solving_graph', [<%= total_bins.join(",") %>],[<%= solved_bins.join(",") %>]);
             line.Set('chart.gutter.left', 35);
-            line.Set('chart.colors', ['red','black']);
+            line.Set('chart.colors', ['red','green']);
             line.Set('chart.key', ['total', 'solved']);
-            line.Set('chart.key.colors', ['red', 'black']);
+            line.Set('chart.key.colors', ['red', 'green']);
             line.Set('chart.key.position.x', line.Get('chart.gutter.left') + 10);
-            line.Set('chart.linewidth', 5);
+            line.Set('chart.linewidth', 3);
             line.Set('chart.shadow', true);
             line.Set('chart.shadow.blur', 5);
             line.Set('chart.title', 'Solving rate');
-            line.Set('chart.labels', [<%= interval.map{|a| "'#{a}'"}.join(",") %>]);
+            line.Set('chart.labels', [<%= interval.join(",") %>]);
             line.Draw();
-</script> 
+            
+<%
+  # Okay, now the activities graph:
+  acts = []
+  mx = nil
+  @hunt.activities.each do |act|
+    acts.push act.created_at
+    mx = act.created_at if !mx || act.created_at > mx
+  end
+  mx = Time.now if !mx
+  mn = hunt.created_at
+  num = 50
+  
+  gap = (mx-mn)/5
+  fmt = gap > 60*60*24*10 ? "%m/%d/%y" : "%a %H:%M"
+  interval = (0..5).to_a.map{|a| "'#{(mn + a*gap).strftime(fmt)}'" }
+  
+  act_bins = [0] * num
+  acts.each do |a|
+    bin = (num*([0,a-mn].max / (mx-mn+1))).to_i
+    act_bins[bin] += 1
+  end
+%>
+            var line2 = new RGraph.Line('activity_graph', [<%= act_bins.join(",") %>]);
+            line2.Set('chart.gutter.left', 35);
+            line2.Set('chart.background.barcolor1','#020');
+            line2.Set('chart.background.barcolor2','#020');
+            line2.Set('chart.background.grid.color','#0a0');
+            line2.Set('chart.background.grid.autofit.numhlines',4);
+            line2.Set('chart.axis.color','#020');
+            line2.Set('chart.colors', ['#0f0']);
+            line2.Set('chart.linewidth', 2);
+            line2.Set('chart.title', 'Activity');
+            line2.Set('chart.labels', [<%= interval.join(",") %>]);
+            line2.Draw();
+
+</script>

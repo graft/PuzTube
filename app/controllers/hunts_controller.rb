@@ -65,6 +65,10 @@ class HuntsController < ApplicationController
     render :nothing => true
   end
 
+  def stats
+    @hunt = Hunt.find(params[:id])
+    render :partial => "solving", :locals => { :hunt => @hunt, :shown => true }
+  end
   # GET /hunts/1/edit
   def edit
     @hunt = Hunt.find(params[:id])

@@ -1,8 +1,9 @@
 <div class=" priority_<%= workspace.priority %>">
   <div class="rounded_title">
     <div class="title_left">
-      <%= link_to_remote 'Show', :url => show_workspace_path(:id => workspace.id), :method => 'get', :update => workspace.div_id %> |
-      <%= link_to_function 'Update', '$("'+workspace.form_id+'").onsubmit();' %> 
+        <%= render :partial => 'layouts/cancel_controls',   :locals => {        :show_path => show_workspace_path(:id => workspace.id),
+        :update_id => workspace.div_id,
+        :form_id => workspace.form_id    } %>
     </div>
     <div class="title_left" id="<%= workspace.div_id %>.conflict"></div>
   </div>

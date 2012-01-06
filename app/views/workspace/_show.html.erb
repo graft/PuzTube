@@ -1,11 +1,11 @@
 <div class=" priority_<%= workspace.priority %>">
  <div class="<%= workspace.title_class %>">
   <div class="title_left">
-    <%= link_to_remote 'Edit', :url => edit_workspace_path(:id => workspace.id), :method => 'get', :update => workspace.div_id %>
-    <% if current_user && current_user.team_captain %>
-    | <%= link_to_remote 'Destroy', :url => delete_workspace_path(:id => workspace.id), :confirm => "Are you sure?", :method => :delete %>
-     <% end %>
-    <b> <%= h workspace.title %> </b>
+    <%= render :partial => 'layouts/edit_controls',   :locals => {        :edit_path => edit_workspace_path(:id => workspace.id), 
+        :show_path => show_workspace_path(:id => workspace.id),
+        :update_id => workspace.div_id,
+        :delete_path => delete_workspace_path(:id => workspace.id),
+        :title => workspace.title } %>
   </div>
   <div class="title_right">
     Updated <%= relative_time workspace.updated_at %> by <%= workspace.editor %>

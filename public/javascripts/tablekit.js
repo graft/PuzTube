@@ -83,16 +83,13 @@ Object.extend(TableKit, {
 		return $A(row.parentNode.rows).indexOf(row);
 	},
 	getCellText : function(cell, refresh) {
-		if(!cell) { return ""; }
-                if (cell.select('.calc')) {
-			if (!cell.select('.calc')[0].hasClassName("hidden"))
-				return cell.select('.calc')[0].innerHTML;
-                }
-		if (cell.select('.inpi')) {
-		   /* if (window.console && window.console.log)
-			window.console.log("Using inpi for value"+cell.select('.inpi')[0].value); */
-                   return cell.select('.inpi')[0].value;
-                }
+    if(!cell) { return ""; }
+    if (cell.select('.calc').length) {
+      if (!cell.select('.calc')[0].hasClassName("hidden")) return cell.select('.calc')[0].innerHTML;
+    }
+		if (cell.select('.inpi').length) {
+      return cell.select('.inpi')[0].value;
+    }
 		var data = TableKit.getCellData(cell);
 		if(refresh || data.refresh || !data.textContent) {
 			data.textContent = cell.textContent ? cell.textContent : cell.innerText;
@@ -381,15 +378,15 @@ TableKit.Sortable = {
 		var rows = TableKit.getBodyRows(table);
 
 		if(cell.hasClassName(op.ascendingClass) || cell.hasClassName(op.descendingClass)) {
-			rows.reverse(); // if it was already sorted we just need to reverse it.
+// 			rows.reverse(); // data could have changed, we just change the order
 			order = cell.hasClassName(op.descendingClass) ? 1 : -1;
-		} else {
+		}
 			var datatype = TableKit.Sortable.getDataType(cell,index,table);
 			var tkst = TableKit.Sortable.types;
 			rows.sort(function(a,b) {
 				return order * tkst[datatype].compare(TableKit.getCellText(a.cells[index]),TableKit.getCellText(b.cells[index]));
 			});
-		}
+		
 		var tb = table.tBodies[0];
 		var tkr = TableKit.Rows;
 		rows.each(function(r,i) {
@@ -632,8 +629,7 @@ TableKit.Resizable = {
 	},
 	resize : function(table, index, w) {
 		var cell;
-		if (window.console && window.console.log)
-			window.console.log("W:"+w);
+		
 		if(typeof index === 'number') {
 			if(!table || (table.tagName && table.tagName !== "TABLE")) {return;}
 			table = $(table);
@@ -644,6 +640,8 @@ TableKit.Resizable = {
 		} else {
 			cell = $(index);
 			table = table ? $(table) : cell.up('table');
+      if (window.console && window.console.log)
+      window.console.log("W:"+w+" TW:"+table.getWidth());
 			index = TableKit.getCellIndex(cell);
 		}
 		var pad = parseInt(cell.getStyle('paddingLeft'),10) + parseInt(cell.getStyle('paddingRight'),10);
@@ -651,7 +649,7 @@ TableKit.Resizable = {
 		
 		if (window.console && window.console.log)
 			window.console.log("FW:"+w);
-		cell.setStyle({'width' : w + 'px'});
+		cell.setStyle({'width' : parseInt(100*w/table.getWidth()) + '%'});
 	},
 	initDetect : function(e) {
 		e = TableKit.e(e);

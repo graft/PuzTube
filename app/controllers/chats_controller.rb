@@ -44,7 +44,6 @@ class ChatsController < ApplicationController
 
     respond_to do |format|
       if @chat.save
-        flash[:notice] = 'Chat was successfully created.'
         format.html { redirect_to(@chat) }
         format.xml  { render :xml => @chat, :status => :created, :location => @chat }
       else
@@ -61,7 +60,6 @@ class ChatsController < ApplicationController
 
     respond_to do |format|
       if @chat.update_attributes(params[:chat])
-        flash[:notice] = 'Chat was successfully updated.'
         format.html { redirect_to(@chat) }
         format.xml  { head :ok }
       else

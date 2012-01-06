@@ -1,5 +1,3 @@
-<%= stylesheet_link_tag "rounded" %>
-
 <%= javascript_include_tag :defaults, :juggernaut %>
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
@@ -36,8 +34,19 @@
     * You should never have to leave this page once the hunt starts. It should populate itself with new fields and update rounds as needed.
  -->
 
+<%= javascript_include_tag "RGraph/libraries/RGraph.common.core" %>
+<%= javascript_include_tag "RGraph/libraries/RGraph.line.js" %>
+<%= javascript_include_tag "RGraph/libraries/RGraph.common.key.js" %>
+<%= javascript_include_tag "stats" %>
+
 <h1><%= @hunt.name %></h1>
-<%= render :partial => "solving", :locals => { :hunt => @hunt } %>
+<div id="statbox" class="rounded">
+<span id="show_graph" class="button graphbutton"><%= link_to_remote 'Show',
+  :url => stats_path(:id=>@hunt.id), :method => 'get', :update => "statbox" %></span>
+<div id="stats">
+Statistics
+</div>
+</div>
 <div id="editables" class="hidden">
 <% if current_user.team_captain && @grouped %>
 <%= link_to_remote 'New round', :url => new_round_path(@hunt.id) %><br>

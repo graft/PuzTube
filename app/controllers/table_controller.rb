@@ -11,6 +11,7 @@ class TableController < ApplicationController
     @table.editor = current_or_anon_login
     create_table(@table,5,2)
     if @table.save
+      emit_activity(@thread, "created a table") if params[:type] == "puzzle"
       text = render_to_string :partial => 'block', :locals => { :table => @table }
       # again, use juggernaut to do this.
       Juggernaut.send_to_channel( "create_workspace('#{javascript_escape text}'); init_table('#{@table.t_id}');", @table.thread.chat_id )
@@ -33,7 +34,7 @@ class TableController < ApplicationController
 
   def show
     @table = Table.find(params[:id])
-    render :partial => 'show', :locals => { :table => @table, :yourtext => nil }
+    render :partial => 'show', :locals => { :table => @table, :yourtext => nil, :update => true }
   end
 
   def update_cell
@@ -41,6 +42,8 @@ class TableController < ApplicationController
     @tablecell = TableCell.find(params[:id])
     @tablecell.contents = params[:text]
     @tablecell.save
+    emit_activity(@tablecell.table.thread,"edited workspace #{@tablecell.table.title}") if @tablecell.table.thread_type == "Puzzle"
+
     render :juggernaut => { :type => :send_to_channel, :channel => params[:channel] } do |page|
         page << "if ($('#{@tablecell.t_id}')) $('#{@tablecell.t_id}').value='#{javascript_escape @tablecell.contents}'; update_table('TB#{@tablecell.table_id}');"
     end
@@ -82,7 +85,7 @@ class TableController < ApplicationController
       add_column(@table)
     end
     if @table.save
-      text = render_to_string :partial => 'show', :locals => { :table => @table }
+      text = render_to_string :partial => 'show', :locals => { :table => @table, :update => true }
       # again, use juggernaut to do this.
       Juggernaut.send_to_channel( "jug_table_update('#{@table.div_id}','#{javascript_escape text}','#{@table.t_id}');", @table.thread.chat_id )
     end

@@ -118,28 +118,14 @@
   
   function startup() {
     userlist.each(function(u) {
-    subscribe_user(u,true);
+      subscribe_user(u,true);
     });
     update_users();
-    //new Draggable('chatwindow',{handle: 'chattitle'});
-//     new Resizeable('chatwindow',{
-//       minHeight: '100',
-//       //minWidth: '250',
-//       resize:function(el) {
-//         hgt = $('chatwindow').getHeight() - $('chatusers').getHeight() - $('chatbox').getHeight() - 70;
-//         $('chatpane').style.height = hgt+'px';
-//         //hgt += 30;        $('chatbox').style.top = hgt+'px';
-//         //hgt += 30;        $('chatusers').style.top = hgt+'px';
-//       }
-//     });
+    
     $('chatwindow').setStyle({ height: (window.innerHeight-15)+'px' });
     $('chatpane').setStyle({ height: ($('chatwindow').getHeight()-170) + 'px' });
-    scrollChat();
     $('chatform').disable();
-//     $(document).observe('juggernaut:disconnected', function(){ alert('Why have you forsaken me!') }); 
-//     $(document).observe('juggernaut:initialized', function(){ alert('Initialized.') }); 
-//     $(document).observe('juggernaut:reconnect', function(){ alert('Reconnect.') }); 
-//     $(document).observe('juggernaut:connect', function(){ alert('Trying to connect.') }); 
-    //$(document).observe('juggernaut:connected', jug_connected); 
+    scrollChat();
+    
     window.onfocus = unmarkTitle;
   }

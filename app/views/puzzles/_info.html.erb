@@ -10,13 +10,8 @@
   <b>Round:</b>  <%=link_to puzzle.round.name, puzzle.round, :html => { :target => '_blank' } %> <br>
   <b>Status:</b>  <%=h puzzle.status %> <br>
   <b>Priority:</b>  <%=h puzzle.priority %> <br>
-  <b>Active workers:</b> <%= puzzle.users.map{|u| u.login}.join(", ") %><br>
-<% if puzzle.workers %>
-  <b>Worked on by:</b> <%= puzzle.workers.keys.join(", ") %> <br>
-<%end%>
-<% if current_user %>
+  <b>Activity:</b> <br>
 <%= button_to_remote "I'm working on this", :url => worker_puzzle_path(:id => puzzle.id, :worker => current_user.login ) %><br>
-<% end %>
 
 <%= link_to_remote 'Edit', :url => { :action => 'edit', :id => puzzle.id }, :method => 'get', :update => 'info' %>
 

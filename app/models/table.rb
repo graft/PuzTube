@@ -18,7 +18,10 @@ class Table < ActiveRecord::Base
   def self.priorities
     ["High", "Normal","Useless"]
   end
-
+  
+  def title_class
+    "rounded_#{ priority == "Useless" ? "box": "title" }"
+  end
   def getcell(cell_id)
     # find the cell_id of the appropriate cell
     table_cells.detect { |cell| cell.id == cell_id }

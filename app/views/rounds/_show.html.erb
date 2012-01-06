@@ -1,9 +1,10 @@
 <div class="rounded_title">
-    <div style="padding: 2px;">
-    <b><%= link_to_remote 'Edit', :url => edit_round_path(round), :update => "ROUND#{round.id}" %></b> |
-<% if current_user && current_user.team_captain %>
-    <b><%= link_to_remote 'Destroy', :url => delete_round_path(round), :confirm => 'Are you sure?' %></b>
-<% end %>
+    <div class="title_left">
+        <%= render :partial => 'layouts/edit_controls',   :locals => {        :edit_path => edit_round_path(round), 
+        :show_path => info_round_path(:id=>round.id),
+        :update_id => round.div_id,
+        :delete_path => delete_round_path(round),
+        :title => nil } %>
     </div>
   </div>
   <div style="padding: 5px;">
@@ -38,7 +39,7 @@
       <th>Name</th>
       <th>Hint</th>
       <th>Captain</th>
-      <th>Workers</th>
+      <th>Activity</th>
       <th>Meta</th>
       <th>Answer</th>
     </tr>

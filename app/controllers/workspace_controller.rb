@@ -11,6 +11,7 @@ class WorkspaceController < ApplicationController
     @workspace.editor = current_or_anon_login
     if @workspace.save
       text = render_to_string :partial => 'block', :locals => { :workspace => @workspace }
+      emit_activity(@thread, "created a workspace") if params[:type] == "puzzle"
       # again, use juggernaut to do this.
       Juggernaut.send_to_channel( "create_workspace('#{javascript_escape text}');", @workspace.thread.chat_id )
     end
@@ -52,9 +53,8 @@ class WorkspaceController < ApplicationController
       render :partial => 'edit', :locals => { :workspace => @workspace, :yourtext => params[:workspace][:content] }
       return false
     elsif @workspace.update_attributes(params[:workspace])
-      flash[:notice] = 'Workspace was successfully updated.'
-      logger.info "Successfully updated, dunno what the deal is..."
-        # DON'T update here - use juggernaut to send the request. You need the chat id!
+      emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
+      # DON'T update here - use juggernaut to send the request. You need the chat id!
       txt = render_to_string :partial => "show", :locals => { :workspace => @workspace }
       Juggernaut.send_to_channel("jug_ws_update('#{@workspace.div_id}','#{javascript_escape txt}');", @workspace.thread.chat_id)
       #render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|

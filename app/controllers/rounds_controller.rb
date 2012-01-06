@@ -86,7 +86,6 @@ class RoundsController < ApplicationController
 
     respond_to do |format|
       if @round.save
-        flash[:notice] = 'Round was successfully created.'
         format.html { redirect_to(@round) }
         format.xml  { render :xml => @round, :status => :created, :location => @round }
       else
@@ -103,7 +102,6 @@ class RoundsController < ApplicationController
     @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
 
      if @round.update_attributes(params[:round])
-      flash[:notice] = 'Round was successfully updated.'
         # DON'T update here - use juggernaut to send the request. You need the chat id!
       txt = render_to_string :partial => "show", :locals => { :round => @round, :sorting => @sorting  }
       logger.info "Rendered channel for #{@round.hunt.chat_id}"

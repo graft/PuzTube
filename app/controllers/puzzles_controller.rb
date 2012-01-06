@@ -31,7 +31,7 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     text = params[:chat_input]
     user = current_or_anon_login
-    set_worker(@puzzle,current_user) if current_user
+    emit_activity(@puzzle, "spoke in chat")
     channel = @puzzle.chat_id
     send_chat(user,channel,text)
     render :nothing => true
@@ -71,7 +71,6 @@ class PuzzlesController < ApplicationController
 
     respond_to do |format|
       if @puzzle.save
-        flash[:notice] = 'Puzzle was successfully created.'
         format.html { redirect_to(@puzzle) }
         format.xml  { render :xml => @puzzle, :status => :created, :location => @puzzle }
       else
@@ -91,8 +90,8 @@ class PuzzlesController < ApplicationController
 
   def worker
     @puzzle = Puzzle.find(params[:id])
-    set_worker(@puzzle,current_user) if current_user
-    broadcast_puzzle_edit(@puzzle,{})
+    
+    emit_activity(@puzzle, "is working")
     render :nothing => true
   end
 

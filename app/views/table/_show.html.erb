@@ -1,12 +1,13 @@
-<div class="rounded_<%= table.priority == "Useless" ? "box": "title" %>">
-  <div style="padding:2px; float:left;">
-    [<%= link_to_remote 'Edit', :url => edit_table_path(:id => table.id), :method => 'get', :update => table.div_id %> ]
-    <% if current_user && current_user.team_captain %>
-    [<%= link_to_remote 'Destroy', :url => delete_table_path(:id => table.id), :confirm => "Are you sure?", :method => :delete %> ]
-    <% end %>
-    <b> <%= h table.title %> </b>
+<div class=" priority_<%= table.priority %>">
+ <div class="<%= table.title_class %>">
+  <div class="title_left">
+      <%= render :partial => 'layouts/edit_controls',   :locals => {        :edit_path => edit_table_path(:id => table.id), 
+        :show_path => show_table_path(:id => table.id),
+        :update_id => table.div_id,
+        :delete_path => delete_table_path(:id => table.id),
+        :title => table.title } %>
   </div>
-  <div style="float:right">
+  <div class="title_right">
     Updated <%= relative_time table.updated_at %> by <%= table.editor %>
     <% form_remote_for table, :url => prioritize_table_path(:id => table.id), :html => { :class => 'iform', :id => table.div_id + '.prio', :autocomplete => 'off' } do %>
       <%= select :table, :priority, options_for_select(Table.priorities,table.priority),{ :id => table.div_id + '.priobox' }, {:onchange => "$('#{table.div_id}.prio').onsubmit()"} %>
@@ -16,19 +17,28 @@
 <% if table.priority != "Useless" %>
 <div class="rounded_content">
   <div id="<%= table.div_id %>.content" class="pzt_table" style="padding: 4px;">
-  <table id="<%= table.t_id %>" class="sortable resizable" style="width:100%;">
+  <table id="<%= table.t_id %>" style="width:100%;">
   <% table.rows.each_with_index do |row,i| %>
     <tr>
-    <% if i>0 %> <td style="width:8px;" class="pzt_row"><%=i%></td> <% else %> <th style="width:8px;" class="pzt_head">#<span class="sorter">&diams;</span></th> <% end %>
+    <% if i>0 %> <td class="pzt_row"><%=i%></td> <% else %> <th style="width:3%;" class="pzt_head">#<span class="sorter">&#8597;</span></th> <% end %>
     <% row.each do |cell_id| %>
     <% if i>0 %> <td class="pzt_row"><span class="inp"><% else %> <th class="pzt_head"><% end %>
-    <input name="text" class="inpi" autocomplete="off" onchange="<%= remote_function(:url => update_cell_path(:id => cell_id, :channel => table.thread.chat_id), :with => "Form.Element.serialize($('TC#{cell_id}'))") %>" id="TC<%=cell_id%>" type="text" value="<%= table.getcell(cell_id).contents %>"><% if i>0 %></span><span class="calc hidden"></span></td><% else %><span class="sorter">&diams;</span></th> <% end %>
+    <input name="text" class="inpi" autocomplete="off" onchange="<%= remote_function(:url => update_cell_path(:id => cell_id,
+    :channel => table.thread.chat_id), :with => "Form.Element.serialize($('TC#{cell_id}'))") %>" id="TC<%=cell_id%>" type="text" value="<%= table.getcell(cell_id).contents %>"><% if i>0 %></span><span class="calc hidden"></span></td><% else %><span class="sorter">&#8597;</span></th> <% end %>
     <% end %>
     </tr>
   <% end %>
   </table>
+  <script type="text/javascript">
+  TableKit.Sortable.init("<%= table.t_id %>");
+  TableKit.Resizable.init("<%= table.t_id %>");
+  <% if update %>
+  update_table('<%= table.div_id %>');
+  <% end %>
+  </script>
     <%= link_to_remote 'Add row', :url => rc_table_path(:id => table.id,:type=>'row'), :method => 'get' %> 
     <%= link_to_remote 'Add col', :url => rc_table_path(:id => table.id,:type=>'col'), :method => 'get' %> 
   </div>
 </div>
 <%end%>
+</div>

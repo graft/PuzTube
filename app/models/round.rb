@@ -10,6 +10,9 @@ class Round < ActiveRecord::Base
     "RND"+id.to_s
   end
 
+  def div_id
+    "ROUND#{id}"
+  end
   def t_id
     "RNT"+id.to_s
   end

@@ -111,6 +111,10 @@ function getField(r,c,tinf,V,C) {
 function formulaElement(r,c,tinf) {
     tinf.rows[r][c].inp.hide();
     tinf.rows[r][c].calc.show();
+}
+
+function computeFormula(r,c,tinf) {
+    normalElement(r,c,tinf);
     var formula = tinf.heads[c].substr(1);
     if (formula.match(/([A-Z]|\d+)(:[LbBIl])?([\+\-\*\/\%\@\[])([A-Z]|\d+)(:[LbBIl])?(\])?/)) {
        var LV=RegExp.$1;
@@ -138,10 +142,12 @@ function formulaElement(r,c,tinf) {
                 break;
        }
        tinf.rows[r][c].calc.update(LV);
+       formulaElement(r,c,tinf);
        return;
     }
     if (formula.match(/([A-Z]|\d+)(:[LbBIl])/)) {
        tinf.rows[r][c].calc.update(getField(r,c,tinf,RegExp.$1,RegExp.$2));
+       formulaElement(r,c,tinf);
     }
 }
 
@@ -188,7 +194,7 @@ function update_table(tid) {
       var r=parseInt(i/tinf.heads.length);
       if (!c) return;
       if (tinf.heads[c].match(/^\=/)) {
-         formulaElement(r,c,tinf);
+         computeFormula(r,c,tinf);
       } else {
          normalElement(r,c,tinf);
       }

@@ -3,7 +3,7 @@ class Puzzle < ActiveRecord::Base
   has_many :workspaces, :as => :thread, :order => 'priority'
   has_many :tables, :as => :thread, :order => 'priority'
   has_many :users
-  serialize :workers
+  has_many :activities
 
   def comments
     (workspaces+tables).sort! { |c1,c2|
@@ -17,6 +17,10 @@ class Puzzle < ActiveRecord::Base
 
   def t_id
     "PZR"+id.to_s
+  end
+  
+  def act_id
+    "PZA#{id}"
   end
   
   def status_color

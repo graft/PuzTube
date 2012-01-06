@@ -1,6 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
   map.resources :hunts
-
+  map.stats '/hunts/stats/:id', :controller => 'hunts', :action => 'stats'
+  
   map.edit_puzzlerow '/puzzles/edit_row', :controller => 'puzzles', :action => 'edit_row'
   map.delete_puzzle '/puzzles/delete/:id', :controller => 'puzzles', :action => 'destroy', :method => :delete
   map.edit_puzzle '/puzzles/edit/:id', :controller => 'puzzles', :action => 'edit'

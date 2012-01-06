@@ -209,6 +209,14 @@ module ApplicationHelper
     
     return text
   end
+  
+  def emit_activity(puzzle,task)
+    activity = Activity.new
+    activity.puzzle_id = puzzle.id
+    activity.hunt_id = puzzle.round.hunt_id
+    activity.user_id = current_user.id
+    activity.save
+  end
 
   def csv_array(csv)
     # cases where the cell is """text"""
@@ -303,6 +311,18 @@ module ApplicationHelper
   
   def tsv_html(options,tsv)
     return array_html(options, tsv_array(tsv))
+  end
+
+  def time_diff(time)
+    case time
+    when 0..3540 then return (time/60).to_i.to_s+' min'
+    when 3541..3600 then return '1 hr' # 3600 = 1 hour
+    when 3601..82800 then return ((time+99)/3600).round(1).to_s+' hrs'
+    when 82801..86400 then return '1 day' # 86400 = 1 day
+    when 86401..518400 then return ((time+800)/(60*60*24)).round(1).to_s+' days'
+    when 518400..1036800 then return '1 wk'
+    end
+    return ((time+180000)/(60*60*24*7)).to_i.to_s+' wks'
   end
 
   def recent_broadcasts

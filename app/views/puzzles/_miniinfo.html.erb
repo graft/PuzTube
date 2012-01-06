@@ -4,10 +4,10 @@
 <td><%= link_to puzzle.name, puzzle, :target => '_blank' %> (<%= sanitize(link_to("url &#10138;",puzzle.url,:target =>'_blank'),:tags => %w(a), :attributes => %w(href target)) %>)</td>
 <td><%=h puzzle.hint %></td>
 <td><%=h puzzle.captain %></td>
-<td><%= puzzle.workers ? puzzle.workers.size.to_s : '' %>(<%= puzzle.users.length %> active)</td>
+<td style="padding:0px;"><%= render :partial => 'puzzles/activity', :locals => { :puzzle => puzzle } %></td>
 <td><%= puzzle.meta ? "&#10004;" : "" %></td>
 <td><%=h puzzle.answer %></td>
 <td><%= link_to_remote 'Edit', :url => { :action => 'edit', :controller => 'puzzles', :id => puzzle.id, :type => 'mini' }, :update => "PZR"+puzzle.id.to_s %></td>
-<% if current_user && current_user.team_captain %>
+<% if current_user.team_captain %>
 <td><%= link_to_remote 'Destroy', :url => { :id => puzzle.id, :controller => 'puzzles', :action => :destroy}, :confirm => 'Are you sure?' %></td>
 <% end %>

@@ -49,10 +49,21 @@
 }
 .button a {
 	text-decoration: none;
+  background-color: transparent;
 }
 
 #mainpage {
   width: 72%;
+}
+
+#statbox {
+position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;
+}
+.graphbutton {
+position: absolute; right:5px; top: 3px; padding:2px; background-color: #ccc;
+}
+#stats {
+position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
 }
 
 .workspace {
@@ -62,6 +73,9 @@
 .title_left {
  padding:2px;
  float:left;
+}
+.title_left a {
+  text-decoration: none;
 }
 .title_right {
   float:right;
@@ -209,6 +223,10 @@
   padding: 3px;
 }
 
+.chatlist a {
+  text-decoration: none;
+}
+
 ul.chatlist {
   padding: 0px;
   margin: 0px;
@@ -271,8 +289,7 @@ ul.userlist li:before {
 
 .sorter {
   display:inline;
-  font-size: 18pt;
-  border: 0px solid #000;
+/*   font-size: 18pt; */
   margin: 0px;
   padding: 0px;
 }
