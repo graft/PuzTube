@@ -14,6 +14,15 @@ class Workspace < ActiveRecord::Base
     ["High", "Normal","Useless"]
   end
   
+  def table_id(c)
+    "WS#{id}_TB#{c}"
+  end
+  
+  def cell_id(c,i,j)
+    "#{table_id(c)}_#{i}_#{j}"
+  end
+
+  
   def title_class
     "rounded_#{ priority == "Useless" ? "box": "title" }"
   end

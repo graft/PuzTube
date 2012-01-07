@@ -1,5 +1,6 @@
 # Methods added to this helper will be available to all templates in the application.
 require 'digest/sha1'
+require 'csv'
 
 module ApplicationHelper
 
@@ -50,12 +51,7 @@ module ApplicationHelper
   def sanitize_text(str)
     sanitize(auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
   end
-  
-  
-  def comment_format(str)
-    texturize(str,ApplicationHelper::DEFAULT_OPTIONS) # also replace COMMA/ENDCOMMA stuff
-  end
-  
+
   def current_or_anon_login
     if (current_user)
       return current_user.login
@@ -64,13 +60,13 @@ module ApplicationHelper
       return "anon_"+session[:anon_id]
     end
   end
-  
+
   LIST_OPEN_TAGS = { '#' => '<ol>',
                    '-' => '<ul>' }
   LIST_CLOSE_TAGS = { '#' => '</ol>',
                     '-' => '</ul>' }
 
-  DEFAULT_OPTIONS = { :p => true,
+  OPTIONS = { :p => true,
                     :pre => true,
                     :list => true,
                     :tab => true,
@@ -82,132 +78,112 @@ module ApplicationHelper
                     :http => true,
                     :quote => false
                     }
+  def quoteblock(s)
+    "<div class='quotation'>\n#{s.sub(/^>/,"")}\n</div>\n"
+  end
+  def refblock(m)
+    "a href=\"#{m}\" target=\"_blank\">#{m}</a"
+  end
 
-  def texturize(text, options) 
-    #warn "texturize: $text";
-
-    # standardize newlines and collapse
-    text = text.gsub(/\r\n/,"\n").gsub(/\A\n+/,'').sub(/\n+\z/,'').gsub(/\n\n+/,"\n\n")
-
+  def comment_format(workspace) 
+    text = workspace.content.gsub(/\r\n/,"\n").gsub(/\A\n+/,'').sub(/\n+\z/,'').gsub(/\n\n+/,"\n\n")
     tags = []
-    
-    # protect tag contents
-    text.gsub!(/<([^>]+)>/) do |match|
-      tags.push($1)
-      "<#{(tags.size-1).to_s}>"
-    end
-    lines = text.split(/\n/)
-
-    # protected <pre> blocks
     pre = []
-    j = 0
-    
-    # fuck this stuff
 
-   
-    #quote blocks
-    text.gsub!(/^>(.*?)(?=(^[^>]|\z))/m) do |match|
-      "<div class='quotation'>\n#{$1.sub(/^>/,"")}\n</div>\n"
-    end if options[:quote]
-    
-    #pre blocks
-    text.gsub!(/^[ \t](.*?)(?=(^[^ \t]|\z))/m) do |match|
-      pre.push $1.gsub(/^[ \t]/,"")
-      "<pre><pre#{pre.length-1}></pre>\n"
-    end if options[:pre]
-    
-    text.gsub!(/^TAB\n(.*?)^ENDTAB$/m) do |match|
-      tsv_html(options,$1)
-    end if options[:tab]
-    
-    text.gsub!(/^COMMA\n(.*?)^ENDCOMMA($|\z)/m) do |match|
-      csv_html(options,$1)
-    end if options[:comma]
-    
+    # protect tag contents
+    tablecount = 0
+    text.gsub!(/<([^>]+)>/) { |m| tags.push($1); "<#{(tags.size-1).to_s}>" }
+    text.gsub!(/^>(.*?)(?=(^[^>]|\z))/m) { |m| quoteblock(s) } if OPTIONS[:quote]
+    text.gsub!(/^[ \t](.*?)(?=(^[^ \t]|\z))/m) { |m| pre.push $1.gsub(/^[ \t]/,""); "<pre><pre#{pre.length-1}></pre>\n" } if OPTIONS[:pre]
+    text.gsub!(/^(TAB|COMMA)\n(.*?)^END\1$/m) do |m|
+      tablecount += 1
+      table_html(send("array_#{$1}", $2), workspace, tablecount)
+    end if OPTIONS[:tab]
     
     # lists
-    if options[:list]
+    if OPTIONS[:list]
       text.gsub!(/^([#-]+.*?)(?=^[^#-]|\z)/m) do |match|
-        #warn "\n$1$lines[$i]\n" if $1;
         old = ""
         match.gsub!(/^([#-]+)(.*?)$/) do |m|
-          line = "<li> #{$2} </li>" #if $2.size > 0
           new = $1
           changes = ''
           diff = 0
-          [old.length,new.length].max.times do |d|
-            diff = d
-            break if (new[d] != old[d])
-          end
-          diff = diff+1 if new == old
+          [old.length,new.length].max.times { |d| break if (new[diff = d] != old[d]) }
+          diff += 1 if new == old
           (diff...old.length).each do |j|
-            changes = (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j].chr] + "\n" + changes
+            changes = (' ' * j) + LIST_CLOSE_TAGS[old[j].chr] + "\n" + changes
           end
           (diff...new.length).each do |j|
-            changes += (' ' * j) + ApplicationHelper::LIST_OPEN_TAGS[new[j].chr] + "\n"
+            changes += (' ' * j) + LIST_OPEN_TAGS[new[j].chr] + "\n"
           end
           old = new
-          changes + (' ' * new.size) + line
+          changes + (' ' * new.size) + "<li> #{$2} </li>"
         end
-
         old.length.times do |j|
-          match << (' ' * j) + ApplicationHelper::LIST_CLOSE_TAGS[old[j].chr]
+          match << (' ' * j) + LIST_CLOSE_TAGS[old[j].chr]
         end
         match
       end
     end 
-    
-     # paragraphs
-    if options[:p]
-      text.gsub!(/^$/,"</p>\n\n<p>") if options[:p]
-      text = "<p>\n#{text}</p>\n"
-    end
+ 
+    text = text.gsub(/^$/,"</p>\n\n<p>").sub(/\A/,"<p>\n").sub(/\z/,"</p>\n") if OPTIONS[:p]
+    text.gsub!(/([^\w]?)\*(\S[^*]*\S|\S)\*(?!\w)/,"\\1<b>\\2</b>") if OPTIONS[:b]
+    text.gsub!(/([^\w]?)\@(\S[^@]*?\S|\S)\@(?!\w)/,"\\1<strike>\\2</strike>") if OPTIONS[:s]    
+    text.gsub!(/([^\w]?)_(\S[^_]*\S|\S)_(?!\w)/,"\\1<i>\\2</i>") if OPTIONS[:i]    
+    text.gsub!(/--/,"&#8212;") if OPTIONS[:emdash]
+    text.gsub!(/<pre(\d+)>/) { |c| pre[$1.to_i] } if OPTIONS[:pre]
+    text.gsub!(/\b((https?|ftp|irc):\/\/[^\s\<]+)/i) { |m| tags.push refblock(m); "<#{(tags.size-1).to_s}>" } if OPTIONS[:http]    
+    # restore tag contents
+    text.gsub(/<(\d+)>/) { |m| "<#{tags[$1.to_i]}>" }
+  end
+  
+  def expand(rows)
+    max = rows.map{|r|r.length}.max
+    rows.map!{|r| r + [''] * (max-r.length)}
+  end
+  
+  def array_COMMA(csv)
+    expand(CSV.parse(csv))
+  end
 
-    # bold
-    if options[:b]
-      text.gsub!(/([^\w]?)\*(\S[^*]*\S|\S)\*(?!\w)/,"\\1<b>\\2</b>")
-    end
-    
-    # strike
-    if options[:s]
-      text.gsub!(/([^\w]?)\@(\S[^@]*?\S|\S)\@(?!\w)/,"\\1<strike>\\2</strike>")
-    end
-    
-    # italic
-    if options[:i]
-      text.gsub!(/([^\w]?)_(\S[^_]*\S|\S)_(?!\w)/,"\\1<i>\\2</i>")
-    end
+  def array_TAB(tsv)
+    expand(tsv.split("\n").map { |c| [ c.split("\t") ] })
+  end
+
+  def text_COMMA(rows)
+    CSV.generate { |c| rows.each { |row| c << row } }
+  end
+  def text_TAB(rows)
+    return rows.map { |c| c.join("\t") }.join("\n") + "\n"
+  end
+
+  def table_html(rows,workspace,count)
+     # okay, we're going to go radical and render this as a table!
+    return render :partial => 'workspace/table', :locals => { :workspace => workspace, :count => count, :rows => rows }
+  end
+  
+  def update_table(workspace,table,row,col,txt)
+    # first find the right table
+    tc = 0
+    updated = false
+    text = workspace.content.clone
+    text.gsub!(/^(TAB|COMMA)\n(.*?)^END\1($)/m) do |match|
+      tc += 1
+      if tc == table
+        puts "Found the correct table in update_table"
+        # split it according to the given rules and flee
+        rows = send("array_#{$1}", $2)
         
-    # emdash
-    if options[:emdash]
-      text.gsub!(/--/,"&#8212;")
-    end
-
-    #logger.info "Text is >>#{text}<<"
-
-    # restore pre contents
-    text.gsub!(/<pre(\d+)>/) do |c|
-      logger.info "Restoring >>#{$1}<<"
-      pre[$1.to_i]
-    end if options[:pre]
-
-    # http links
-    if options[:http]
-      text.gsub!(/\b((https?|ftp|irc):\/\/[^\s\<]+)/i) do |m|
-        tags.push("a href=\"#{m}\" target=\"_blank\">#{m}</a")
-        "<#{(tags.size-1).to_s}>"
+        if row < rows.length && col < rows[row].length
+          rows[row][col] = txt
+          updated = true
+        end
+        "#{$1}\n#{send("text_#{$1}",rows)}END#{$1}#{$3}"
+      else
+        match
       end
     end
-    
-
-    # restore tag contents
-    text.gsub!(/<(\d+)>/) do |m|
-      "<#{tags[$1.to_i]}>"
-    end
-    
-    #warn "texturized: $text";
-    
-    return text
+    workspace.update_attribute(:content,text) if updated
   end
   
   def emit_activity(puzzle,task)
@@ -216,101 +192,6 @@ module ApplicationHelper
     activity.hunt_id = puzzle.round.hunt_id
     activity.user_id = current_user.id
     activity.save
-  end
-
-  def csv_array(csv)
-    # cases where the cell is """text"""
-    csv.gsub!(/(\A|,|\n)"""/,"\\1\"&quot;")
-    csv.gsub!(/"""(\z|,|\n)/,"&quot;\"\\1")
-    csv.gsub!(/""/,"&quot;")
-    
-    rows = []
-    i = 0
-    while (csv.size > 0) do
-      if csv.gsub!(/\A[ \t]*"([^"]*)"[ \t]*(,|\n|\z)/,'')
-        #warn "1: $1 ($2) " . ($2 eq "\n");
-        cell = $1
-        terminator = $2
-        cell.gsub!(/&quot;/,'"')
-        rows[i] ||= []
-        rows[i].push(cell)
-        i += 1 if (terminator == "\n")
-      elsif csv.sub!(/\A(.*?)(,|\n|\z)/,'')
-        #warn "2: $1";
-        rows[i] ||= []
-        rows[i].push($1)
-        i += 1 if ($2 == "\n")
-      else
-        #warn "3: $1";
-        rows[i].push($1)
-        csv = ''
-      end
-    end
-    
-    return rows
-  end
-
-  def tsv_array(tsv)
-    return tsv.split("\n").map { |c| [ c.split("\t") ] }
-  end
-
-  def array_table(rows)
-    max = rows.map{|r|r.length}.max
-    rows.map!{|r| r + [''] * (max-r.length)}
-      
-    return "<table class='neattable' border=\"1\">\n<tr>\n#{
-        rows.map { |c| "<td>#{ c.join("</td>\n<td>") }</td>\n" }.join("</tr>\n<tr>\n")
-        }</tr>\n</table>\n"
-  end
-  
-  def cell_csv(cell)
-    if cell =~ /[,"\n]/
-      cell.gsub!(/"/,'""')
-      cell = '"' + cell + '"'
-    end
-    return cell
-  end
-
-        
-  def array_csv(rows)
-    return rows.map { |c| c.map { |d| cell_csv(d) }.join(",") }.join("\n") + "\n"
-  end
-
-  def array_tsv(rows)
-    return rows.map { |c| c.join("\t") }.join("\n") + "\n"
-  end
-  
-
-  def array_html(options,array)
-    html = array_table array
-
-    if csv_link = options[:csvlink]
-      encoded = array_csv(array)
-      encoded.gsub!(/([^a-zA-Z0-9_.-])/) do |c|
-        uc sprintf("%%%02x",ord(c))
-      end
-      html += "<a href=\"#{csv_link}?csv=#{encoded}\">CSV</a> "
-    end
-
-    if tsv_link = options[:tsvlink]
-        encoded = array_tsv(array)
-        encoded.gsub!(/([^a-zA-Z0-9_.-])/) do |c|
-          sprintf("%%%02x",?c).upcase
-        end
-        html += "<a href=\"#{tsv_link}?tsv=#{encoded}\">TSV</a> "
-    end
-
-    return html
-  end
-
-        
-  def csv_html(options,csv)
-    #return "%%#{csv}$$"
-    return array_html options, csv_array(csv)
-  end
-  
-  def tsv_html(options,tsv)
-    return array_html(options, tsv_array(tsv))
   end
 
   def time_diff(time)

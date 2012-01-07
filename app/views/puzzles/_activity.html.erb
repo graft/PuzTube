@@ -1,9 +1,6 @@
 <%
   # A tiny activities graph for puzzles
-  acts = []
-  puzzle.activities.each do |act|
-    acts.push act.created_at
-  end
+  acts = puzzle.activities.map{|a| a.created_at}
   mx = Time.now
   mn = puzzle.created_at
   num = 20
@@ -30,7 +27,7 @@
             line.Set('chart.title',"<%= time_diff mx-mn %>");
             line.Set('chart.title.color',"#f00");
             line.Set('chart.title.vpos',2.2);
-            line.Set('chart.title.hpos',0.3);
+            line.Set('chart.title.hpos',0.35);
             line.Set('chart.title.bold',false);
             line.Set('chart.title.size',8);
             line.Set('chart.text.color', '#f00');

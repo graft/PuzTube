@@ -25,6 +25,8 @@
   }
 </script>
 
+<% content_for :title, "#{@hunt.name}" %>
+
 <%= render :partial => "welcome/login" %> 
 <%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @hunt.chat_id } %> 
 

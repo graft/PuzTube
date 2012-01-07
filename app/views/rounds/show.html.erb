@@ -9,7 +9,6 @@
 <script type="text/javascript" charset="utf-8">
   var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
   document.observe("dom:loaded", startup);
-  document.observe("dom:loaded", update_tables);
 </script>
 <%= render :partial => "welcome/login" %> 
 <%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @round.chat_id } %> 

@@ -66,6 +66,22 @@ class WorkspaceController < ApplicationController
     render :nothing => true
   end
   
+  def update_cell
+    @workspace = Workspace.find(params[:id])
+    table,row,col = params[:cell].match(/WS[0-9]*_TB([0-9]*)_([0-9]*)_([0-9]*)/).captures.map{|i|i.to_i}
+    txt = params[:text]
+    # okay now find the relevant table and update it
+    puts "Before updating, content is {#{@workspace.content}}"
+    update_table(@workspace,table,row,col,txt)
+
+    emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
+
+    render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
+        page << "if ($('#{params[:cell]}')) $('#{params[:cell]}').value='#{javascript_escape txt}'; update_table('#{@workspace.table_id(table)}');"
+    end
+    render :nothing => true
+  end
+  
   def new_attachment
     # create the attachment
     @workspace = Workspace.find(params[:id])

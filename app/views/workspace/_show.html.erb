@@ -18,7 +18,7 @@
 <% if workspace.priority != "Useless" %>
   <div class="rounded_content">
     <div id="<%= workspace.div_id %>.content" style="padding: 4px;">
-      <%= comment_format workspace.content || '<br>' %>
+      <%= comment_format(workspace) || '<br>' %>
     </div>
     <div id="<%= workspace.div_id %>.assets">
       <% workspace.assets.each do |asset| %>

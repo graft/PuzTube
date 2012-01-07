@@ -161,6 +161,16 @@ function init_table(table) {
   TableKit.Resizable.init(table, {});
 }
 
+function table_navigate(evt,i,j,len,id) {
+  if ((evt.keyCode==13
+    || evt.keyCode==40)
+    && i < len-1) {
+    $(id+'_'+(i+1)+'_'+j).focus();
+  } else if (evt.keyCode == 38 && i > 0) {
+    $(id+'_'+(i-1)+'_'+j).focus();
+  }
+}
+
 function update_tables() {
  tables=$$('.pzt_table');
  tables.each(function(tid) { update_table(tid); });
