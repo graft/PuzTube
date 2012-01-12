@@ -3,7 +3,6 @@
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
 <%= javascript_include_tag "workspaces" %>
-<%= javascript_include_tag "fastinit" %>
 <%= javascript_include_tag "tablekit" %>
 
 
@@ -12,6 +11,8 @@
 
 <script type="text/javascript" charset="utf-8">
   var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
+  user = '<%= current_user.login %>';
+  channel = '<%= @puzzle.chat_id %>';
   document.observe("dom:loaded", startup);
 </script>
 

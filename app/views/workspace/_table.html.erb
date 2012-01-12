@@ -1,21 +1,21 @@
-  <table id="<%= workspace.table_id(count) %>" style="width:100%;">
+<% if show_div %> <div id="<%= workspace.tdiv_id(count) %>"> <% end %>
+<table id="<%= workspace.table_id(count) %>" style="width:100%;">
   <% rows.each_with_index do |row,i| %>
     <tr>
-<!--  First column    -->
+<%#  First column    %>
     <% if i>0 %>
     <td class="pzt_row"><%=i%></td>
     <% else %>
     <th style="width:3%;" class="pzt_head">#<span class="sorter">&#8597;</span></th>
     <% end %>
     
-<!--   Rest of columns   -->
+<%#   Rest of columns   %>
     <% row.each_with_index do |contents,j| %>
       <% if i>0 %>
         <td class="pzt_row"><span class="inp">
       <% else %>
-        <th class="pzt_head">
+        <th class="pzt_head"> <%= (j+65).chr %>|
       <% end %>
-    
       <input name="text" class="inpi"
         autocomplete="off"
         id="<%= workspace.cell_id(count,i,j) %>"
@@ -24,7 +24,7 @@
         %>"
         onkeypress="table_navigate(event,<%= "#{i},#{j},#{rows.length},'#{workspace.table_id(count)}'" %>);"
         type="text"
-        value="<%= contents %>">
+        value="<%= quote_escape contents %>">
       <% if i>0 %>
         </span><span class="calc hidden"></span></td>
       <% else %>
@@ -39,5 +39,8 @@
   TableKit.Resizable.init("<%= workspace.table_id(count) %>");
   update_table('<%= workspace.table_id(count) %>');
   </script>
-  <%= link_to_remote '+ row', {:url => rc_table_path(:id => workspace.id,:type=>'row'), :method => 'get'}, :class => "tableadd" %> |
-  <%= link_to_remote '+ col', {:url => rc_table_path(:id => workspace.id,:type=>'col'), :method => 'get'}, :class => "tableadd" %> 
+  <%= link_to_remote '+ row', {:url => add_rc_path(:id => workspace.id,:table => count, :type=>'row'), :method => 'get'}, :class => "tableadd" %> |
+  <%= link_to_remote '+ col', {:url => add_rc_path(:id => workspace.id,:table => count, :type=>'col'), :method => 'get'}, :class => "tableadd" %> 
+<% if show_div %>
+</div>
+<% end %>

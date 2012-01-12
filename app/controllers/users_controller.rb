@@ -14,8 +14,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.xml
   def show
-    @user = User.find(params[:id]) if params[:id]
-    @user = User.find_by_login(params[:name]) if params[:name]
+    @user = User.find_by_login(params[:id])
     @chats = Chat.find(:all, :conditions => {:chat_id => "private_to_"+@user.login})
 
     respond_to do |format|
@@ -44,7 +43,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
-    @user = User.find(params[:id])
+    @user = User.find_by_login(params[:id])
   end
 
   # POST /users
@@ -72,7 +71,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user) }
+        format.html { redirect_to( user_path :id => @user.login) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

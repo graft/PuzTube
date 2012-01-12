@@ -7,17 +7,17 @@ module ApplicationHelper
   def send_chat(user,channel,text)
     @chat = Chat.new( { :user => user } )
     jc = { :type => :send_to_channel, :channel => channel }
-    msg = "<b>#{user}:</b> #{ text }"
+    msg = "<b>#{with_link(user)}:</b> #{ text }"
     sus = "subscribe_user('#{user}')"
     if (text.sub!(/^\/msg ([\w]*) /,''))
       # echo it
       jc[:type] = :send_to_client_on_channel
       jc[:client_id] = user
-      msg = "<b style='color:red;'>PRIVATE to #{$1}:</b> #{ text }"
+      msg = "<b style='color:red;'>PRIVATE to #{with_link $1}:</b> #{ text }"
       render :juggernaut => jc do |page|
         page << "jug_chat_update('<li>#{javascript_escape sanitize_text msg}</li>');"
       end
-      msg = "<b style='color:red;'>PRIVATE from #{user}:</b> #{ text }"
+      msg = "<b style='color:red;'>PRIVATE from #{with_link(user)}:</b> #{ text }"
       jc[:type] = :send_to_client
       jc[:client_id] = $1
       channel = "private_to_#{$1}"
@@ -25,10 +25,10 @@ module ApplicationHelper
     elsif (text.sub!(/^\/([\w]*) /,''))
       if $1 == "all"
         jc[:type] = :send_to_all
-        msg = "<b style='color:red;'>BROADCAST from #{user}:</b> #{ text }"
+        msg = "<b style='color:red;'>BROADCAST from #{with_link user}:</b> #{ text }"
       else
         jc[:type] = :send_to_channel
-        msg = "<b style='color:red;'>OOC{#{channel}} #{user}:</b> #{ text }"
+        msg = "<b style='color:red;'>OOC{#{channel}} #{with_link user}:</b> #{ text }"
       end
       sus = ''
       channel = $1
@@ -44,8 +44,16 @@ module ApplicationHelper
     end
   end
 
+  def with_link(user)
+    "<a href=\"/users/#{user}\" target=\"blank\">#{user}</a>"
+  end
+
   def javascript_escape(str)
-    str.gsub(/\\|'/) { |c| "\\#{c}" }.gsub(/\n/,'\n')
+    (str || "").gsub(/\\|'/) { |c| "\\#{c}" }.gsub(/\n/,'\n')
+  end
+
+  def quote_escape(str)
+    (str || "").gsub(/"/,'&quot;')
   end
   
   def sanitize_text(str)
@@ -86,19 +94,27 @@ module ApplicationHelper
   end
 
   def comment_format(workspace) 
-    text = workspace.content.gsub(/\r\n/,"\n").gsub(/\A\n+/,'').sub(/\n+\z/,'').gsub(/\n\n+/,"\n\n")
+    text = (workspace.content || "").gsub(/\r\n/,"\n").gsub(/\A\n+/,'').sub(/\n+\z/,'').gsub(/\n\n+/,"\n\n")
     tags = []
     pre = []
+    tables = []
 
     # protect tag contents
     tablecount = 0
+    gridcount = 0
     text.gsub!(/<([^>]+)>/) { |m| tags.push($1); "<#{(tags.size-1).to_s}>" }
     text.gsub!(/^>(.*?)(?=(^[^>]|\z))/m) { |m| quoteblock(s) } if OPTIONS[:quote]
     text.gsub!(/^[ \t](.*?)(?=(^[^ \t]|\z))/m) { |m| pre.push $1.gsub(/^[ \t]/,""); "<pre><pre#{pre.length-1}></pre>\n" } if OPTIONS[:pre]
     text.gsub!(/^(TAB|COMMA)\n(.*?)^END\1$/m) do |m|
       tablecount += 1
-      table_html(send("array_#{$1}", $2), workspace, tablecount)
+      tables.push table_html(send("array_#{$1}", $2), workspace, tablecount)
+      "<table#{tables.length-1}>"
     end if OPTIONS[:tab]
+    text.gsub!(/^GRID ([0-9]+)x([0-9]+)\n(.*)^ENDGRID$/m) do |m|
+      gridcount += 1
+      tables.push grid_html(array_GRID($3,$1.to_i,$2.to_i),workspace,gridcount)
+      "<table#{tables.length-1}>"
+    end
     
     # lists
     if OPTIONS[:list]
@@ -127,23 +143,40 @@ module ApplicationHelper
     end 
  
     text = text.gsub(/^$/,"</p>\n\n<p>").sub(/\A/,"<p>\n").sub(/\z/,"</p>\n") if OPTIONS[:p]
+    text.gsub!(/img:([\w]*\.[\w]*)/,"<img src=/uploads/\\1>")
+    text.gsub!(/img\{(\d*)x(\d*)\}:([\w]*\.[\w]*)/) { |m| "<img style='#{$1.length > 0 ? "width: #{$1}px; " : ""}#{$2.length > 0 ? "height: #{$2}px; " : ""}' src=/uploads/#{$3}>" }
     text.gsub!(/([^\w]?)\*(\S[^*]*\S|\S)\*(?!\w)/,"\\1<b>\\2</b>") if OPTIONS[:b]
     text.gsub!(/([^\w]?)\@(\S[^@]*?\S|\S)\@(?!\w)/,"\\1<strike>\\2</strike>") if OPTIONS[:s]    
     text.gsub!(/([^\w]?)_(\S[^_]*\S|\S)_(?!\w)/,"\\1<i>\\2</i>") if OPTIONS[:i]    
     text.gsub!(/--/,"&#8212;") if OPTIONS[:emdash]
-    text.gsub!(/<pre(\d+)>/) { |c| pre[$1.to_i] } if OPTIONS[:pre]
     text.gsub!(/\b((https?|ftp|irc):\/\/[^\s\<]+)/i) { |m| tags.push refblock(m); "<#{(tags.size-1).to_s}>" } if OPTIONS[:http]    
+    text.gsub!(/<pre(\d+)>/) { |c| pre[$1.to_i] } if OPTIONS[:pre]
+    text.gsub!(/<table(\d+)>/) { |c| tables[$1.to_i] } if OPTIONS[:tab]
     # restore tag contents
     text.gsub(/<(\d+)>/) { |m| "<#{tags[$1.to_i]}>" }
   end
   
   def expand(rows)
     max = rows.map{|r|r.length}.max
-    rows.map!{|r| r + [''] * (max-r.length)}
+    rows.map!{|r| r + [nil] * (max-r.length)}
   end
   
   def array_COMMA(csv)
-    expand(CSV.parse(csv))
+    begin
+    expand(CSV.parse(csv.gsub(/, "/,',"')))
+    rescue CSV::IllegalFormatError
+      ["PARSE ERROR"]
+    end
+  end
+
+  def array_GRID(csv,rows,cols)
+    begin
+    arr = CSV.parse(csv.gsub(/, "/,',"'))
+    arr.map!{|r| r.take(cols) + [nil] * [cols-r.length,0].max}
+    arr = arr.take(rows)  + [ [nil] * cols ] * [rows-arr.length,0].max
+    rescue CSV::IllegalFormatError
+      ["PARSE ERROR"]
+    end
   end
 
   def array_TAB(tsv)
@@ -151,39 +184,94 @@ module ApplicationHelper
   end
 
   def text_COMMA(rows)
-    CSV.generate { |c| rows.each { |row| c << row } }
+    rows.map { |row| CSV.generate_line row }.join("\n")+ "\n"
+    #CSV.generate { |c| rows.each { |row| c << row } }
   end
+  alias :text_GRID :text_COMMA
   def text_TAB(rows)
     return rows.map { |c| c.join("\t") }.join("\n") + "\n"
   end
 
-  def table_html(rows,workspace,count)
-     # okay, we're going to go radical and render this as a table!
-    return render :partial => 'workspace/table', :locals => { :workspace => workspace, :count => count, :rows => rows }
+  GRID_COLORS = {
+    "!" => "grid_black",
+    "@" => "grid_brown",
+    "#" => "grid_red",
+    "$" => "grid_orange",
+    "%" => "grid_yellow",
+    "^" => "grid_green",
+    "&" => "grid_blue",
+    "*" => "grid_purple" }
+
+  def grid_html(rows,workspace,count)
+    return render :partial => 'workspace/grid', :locals => { :workspace => workspace, :count => count, :rows => rows, :show_div => true }
+  end
+
+  def update_grid(workspace,grid,row,col,txt)
+    tc = 0
+    rows = nil
+    txt = nil if txt.length == 0
+    text = workspace.content.clone
+    text.gsub!(/^GRID ([0-9]*)x([0-9]*)\n(.*?)^ENDGRID($)/m) do |match|
+      tc += 1
+      if tc == grid
+        rows = array_GRID($3,$1.to_i,$2.to_i)
+        rows[row][col] = txt if row < rows.length && col < rows[row].length
+        "GRID #{$1}x#{$2}\n#{text_GRID(rows)}ENDGRID#{$4}"
+      else
+        match
+      end
+    end
+    workspace.update_attribute(:content,text) if rows
   end
   
+  def table_html(rows,workspace,count)
+     # okay, we're going to go radical and render this as a table!
+    return render :partial => 'workspace/table', :locals => { :workspace => workspace, :count => count, :rows => rows, :show_div => true }
+  end
+
   def update_table(workspace,table,row,col,txt)
     # first find the right table
     tc = 0
-    updated = false
+    rows = nil
+    txt = nil if txt.length == 0 || txt == ":" # might as well prevent quotes
     text = workspace.content.clone
     text.gsub!(/^(TAB|COMMA)\n(.*?)^END\1($)/m) do |match|
       tc += 1
       if tc == table
-        puts "Found the correct table in update_table"
+        rows = send("array_#{$1}", $2)
+        rows[row][col] = txt if row < rows.length && col < rows[row].length
+        "#{$1}\n#{send("text_#{$1}",rows)}END#{$1}#{$3}"
+      else
+        match
+      end
+    end
+    workspace.update_attribute(:content,text) if rows
+  end
+  
+  def expand_table(workspace,table,type)
+    # first find the right table
+    tc = 0
+    rows = nil
+    logger.info "Expanding table #{workspace.table_id(table)}"
+    text = workspace.content.clone
+    text.gsub!(/^(TAB|COMMA)\n(.*?)^END\1($)/m) do |match|
+      tc += 1
+      if tc == table
         # split it according to the given rules and flee
         rows = send("array_#{$1}", $2)
-        
-        if row < rows.length && col < rows[row].length
-          rows[row][col] = txt
-          updated = true
+        logger.info "Found the table."
+        if (type == "col")
+          rows.map!{ |r| r + [nil] }
+        elsif rows.length > 0
+          rows.push( [nil] * rows[0].length )
         end
         "#{$1}\n#{send("text_#{$1}",rows)}END#{$1}#{$3}"
       else
         match
       end
     end
-    workspace.update_attribute(:content,text) if updated
+    workspace.update_attribute(:content,text) if rows
+    rows
   end
   
   def emit_activity(puzzle,task)

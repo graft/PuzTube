@@ -81,11 +81,11 @@ tr.roweven {
 }
 .sortasc {
 	background-color: #DDFFAC;
-	background-image: url(up.gif);
+	/* background-image: url(up.gif); */
 }
 .sortdesc {
 	background-color: #B9DDFF;
-	background-image: url(down.gif);
+	/* background-image: url(down.gif); */
 }
 .nosort {
 	cursor: default;

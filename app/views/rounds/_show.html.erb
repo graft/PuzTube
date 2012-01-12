@@ -29,7 +29,9 @@
     <%= hidden_field_tag "puzzle[priority]", nil, :id =>"r#{round.id}.priority" %>
   <% end %>
 
+  <% if current_user.team_captain || round.captain == current_user.login %>
   <%= link_to_remote 'Add puzzle', :url => create_rpuzzle_path(:id => round.id) %> <br>
+  <% end %>
 
   <table id="RPT<%= round.id %>" class="puzzletable">
     <tr>
@@ -37,7 +39,7 @@
       <th>Status</th>
       <th>Round</th>
       <th>Name</th>
-      <th>Hint</th>
+      <th>Blurb</th>
       <th>Captain</th>
       <th>Activity</th>
       <th>Meta</th>

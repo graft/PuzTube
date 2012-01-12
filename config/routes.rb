@@ -22,9 +22,13 @@ ActionController::Routing::Routes.draw do |map|
   map.options_user '/users/options', :controller => 'users', :action => 'options'
   map.login '/login', :controller => 'users', :action => 'login'
   
-  map.connect '/users/:name', :controller => 'users', :action => 'show'
   map.resources :users
+  map.connect '/users/:name', :controller => 'users', :action => 'show'
+
   map.resources :chats
+  map.chat_log 'chats/log/:channel', :controller => 'chats', :action => 'log'
+  map.broadcasts '/broadcasts', :controller => 'chats', :action => 'broadcasts'
+
   map.resources :rounds
 
   map.subscribe '/connections/subscribe', :controller => 'connections', :action => 'subscribe'
@@ -38,7 +42,6 @@ ActionController::Routing::Routes.draw do |map|
   map.topics 'topics', :controller => 'topics', :action => 'index'
   map.topic 'topic/:name', :controller => 'topics', :action => 'show'
 
-  map.chat_log 'chats/log/:channel', :controller => 'chats', :action => 'log'
 
   map.new_attachment 'workspace/new_attachment', :controller => 'workspace', :action => 'new_attachment', :conditions => { :method => :post }
   map.delete_attachment 'workspace/delete_attachment', :controller => 'workspace', :action => 'delete_attachment'
@@ -57,7 +60,7 @@ ActionController::Routing::Routes.draw do |map|
   map.show_table 'table/show', :controller => 'table', :action => 'show'
   map.update_table 'table/update', :controller => 'table', :action => 'update'
   map.update_cell 'workspace/update_cell', :controller => 'workspace', :action => 'update_cell'
-  map.rc_table 'table/rc', :controller => 'table', :action => 'get_rc'
+  map.add_rc 'workspace/rc', :controller => 'workspace', :action => 'add_rc'
   map.root :controller => 'topics', :action => 'show', :name => 'Project Electric Mayhem'
 
   map.connect ':controller/:action/:id'

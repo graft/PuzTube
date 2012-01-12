@@ -9,7 +9,7 @@ class ConnectionsController < ApplicationController
           end
         end
         render :juggernaut => { :type => :send_to_client_on_channel, :channel => channel, :client_id => params[:client_id] } do |page|
-          page << "connectionActive('#{channel}','#{params[:client_id]}'); jug_connected();"
+          page << "connectionActive(null); jug_connected();"
         end
       end
     end

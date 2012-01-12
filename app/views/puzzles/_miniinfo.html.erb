@@ -8,6 +8,6 @@
 <td><%= puzzle.meta ? "&#10004;" : "" %></td>
 <td><%=h puzzle.answer %></td>
 <td><%= link_to_remote 'Edit', :url => { :action => 'edit', :controller => 'puzzles', :id => puzzle.id, :type => 'mini' }, :update => "PZR"+puzzle.id.to_s %></td>
-<% if current_user.team_captain %>
+<% if current_user.team_captain || puzzle.round && puzzle.round.captain == current_user.login %>
 <td><%= link_to_remote 'Destroy', :url => { :id => puzzle.id, :controller => 'puzzles', :action => :destroy}, :confirm => 'Are you sure?' %></td>
 <% end %>

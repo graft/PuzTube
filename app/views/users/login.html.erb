@@ -3,7 +3,7 @@
 <div class="loginbox">
   <p>Who are you?</p>
   <% form_tag url_for( :action => 'login', :controller => 'welcome' ), :class => 'iform', :id => 'login_form', :autocomplete => 'off' do %>
-    <%= select :user, :login, "<option value='' selected>Please select</option>" + options_from_collection_for_select(User.all,:login,:login),{ }, {:onchange => "$('login_form').submit()"} %>
+    <%= select :user, :login, "<option value='' selected>Please select</option>" + options_from_collection_for_select(User.find(:all,:order=> "login ASC"),:login,:login),{ }, {:onchange => "$('login_form').submit()"} %>
     <p>or</p>
     <%= link_to 'sign up', { :action => 'new', :controller => 'users' }, :target => '_blank' %>
   <% end %>

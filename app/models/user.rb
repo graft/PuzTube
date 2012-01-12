@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_options
   validates_uniqueness_of :login
   belongs_to :puzzle
+  has_many :activities
   has_attached_file :photo, :styles => {
 	  		:thumb => "60x60>"
   		},
@@ -13,5 +14,9 @@ class User < ActiveRecord::Base
   
   def set_default_options
     self.options ||= { :sorting => "status", :grouped => false }
+  end
+
+  def active?
+    updated_at > Time.utc(2011,12)
   end
 end

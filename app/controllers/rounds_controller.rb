@@ -46,17 +46,6 @@ class RoundsController < ApplicationController
     end
   end
 
-  # GET /rounds/new
-  # GET /rounds/new.xml
-  def new
-    
-  end
-  
-  def new_puzzle
-    @round = Round.find(params[:id])
-    @puzzle = @round.puzzles.build
-  end
-
   def create_puzzle
     @round = Round.find(params[:id])
     @puzzle = @round.puzzles.build

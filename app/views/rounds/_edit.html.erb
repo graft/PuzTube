@@ -13,10 +13,7 @@
     <b><%= f.label :name %>:</b>
     <%= f.text_field :name %><br>
     <b><%= f.label :hunt %>:</b>
-    <%= collection_select(:round,:hunt_id,Hunt.all,:id,:name,{ :selected => round.hunt_id })
-    select :round, :hunt_id, 
-    
-    "<option value='' selected>Please select</option>" + options_from_collection_for_select(Hunt.all,:id,:name) %><br>
+    <%= collection_select(:round,:hunt_id,Hunt.all,:id,:name,{ :selected => round.hunt_id }) %><br>
     <b><%= f.label :url %></b>
     <%= f.text_field :url %><br>
     <b><%= f.label :hint %></b>

@@ -5,7 +5,7 @@
     <%= f.text_field :name %><br>
     <b><%= f.label :url %></b>
     <%= f.text_field :url %><br>
-    <b><%= f.label :hint %></b><br>
+    <b><%= f.label :blurb %></b> - "crossword", "picma", "couple of wavy lines", "need a sanskrit speaker", etc.<br>
     <%= f.text_area :hint, :rows => 5, :cols => 60 %><br>
     <b><%= f.label :captain %></b>
     <%= collection_select(:puzzle,:captain,User.all,:login,:login,{:prompt=>true}) %><br>

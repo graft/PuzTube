@@ -8,7 +8,8 @@ class WelcomeController < ApplicationController
       
   def login
     if (params[:user][:login] && user = User.find_by_login(params[:user][:login]))
-      cookies[:user] = user.login
+      cookies[:user] = { :value => user.login, :expires => 1.month.from_now }
+      user.touch
       redirect_to root_url
     end
   end
@@ -19,9 +20,10 @@ class WelcomeController < ApplicationController
   end
         
   def test
+    chatusers =  Juggernaut.show_clients_for_channel(params[:channel]);
     render :juggernaut => { :type => :send_to_client_on_channel, :client_id => params[:user], :channel => params[:channel] } do |page|
-      page << "connectionActive('#{params[:channel]}','#{params[:user]}')"
+      page << "connectionActive([#{chatusers.map{|c| "'#{c['client_id']}'"}.join(",")}]);"
     end
-    render :js => "connectionTimer()"
+    render :js => "connectionTimer();"
   end
 end

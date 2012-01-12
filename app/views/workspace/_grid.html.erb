@@ -1,0 +1,42 @@
+<% if show_div %>
+<div id="<%= workspace.gdiv_id(count) %>">
+<% end %>
+<table id="<%= workspace.grid_id(count) %>" >
+  <tr > <td class="gridcell"></td>
+  <% rows[0].length.times do |i| %>
+    <td class="gridcell gridhead"> <%= i+1 %> </td>
+  <% end %>
+</tr>
+  <% rows.each_with_index do |row,i| %>
+    <tr>
+<%#   First column    %>
+    <td class="gridcell gridhead"><%=i+1%></td>
+    
+<%#   Rest of columns   %>
+    <% row.each_with_index do |contents,j| %>
+    
+          <%
+            c = (contents || "").split(/:/)
+          %>
+        <td class="gridcell"><div style="position:relative;width:100%; height:100%;"><span class="gridlabel"><%= c.length > 1 ? c[1] : "" %></span><input name="text" class="gridinput inpi <%= c[0] =~ /^[\!\@\#\$\%\^\&\*]/ ? ApplicationHelper::GRID_COLORS[c[0]] : "" %>"
+        autocomplete="off"
+        maxlength="1"
+        id="<%= workspace.gcell_id(count,i,j) %>"
+        onclick="if (grid_set_label(event,'<%= workspace.gcell_id(count,i,j) %>','<%= workspace.id %>')) return false;"
+        onchange="<%= 
+        remote_function(:url => update_cell_path(:id => workspace.id, :cell => workspace.gcell_id(count,i,j)),
+                        :with => "{ text: gcell_value('#{workspace.gcell_id(count,i,j)}') }")
+        %>"
+        onkeypress="if (grid_navigate(event,<%= "#{i},#{j},#{rows.length},#{row.length},'#{workspace.grid_id(count)}'" %>)) return false;"
+        type="text"
+        value="<%= c[0] %>"></div></td>
+    <% end %>
+     </tr>
+ <% end %>
+  </table>
+  <script type="text/javascript">
+  </script>
+  <span class="tableadd">!-* to color, shift-click to number</span>
+<% if show_div %>
+</div>
+<% end %>

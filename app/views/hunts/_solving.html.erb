@@ -29,20 +29,20 @@ Statistics
     end
     total.push p.created_at
     mx = total[total.size-1] if !mx || total[total.size-1] > mx
-    
   end
+  mx ||= Time.now
   # how big an interval should it be?
   # you should round to the nearest half-day, at least. And there should be 5 intervals. If you are on the scale of years, round to the nearest month.
   gap = (mx-mn)/5
-  fmt = gap > 60*60*24*10 ? "%m/%d/%y" : "%a %H:%M"
+  fmt = gap > 60*60*24 ? "%m/%d/%y" : "%a %H:%M"
   interval = (0..5).to_a.map{|a| "'#{(mn + a*gap).strftime(fmt)}'" }
   #[mn.strftime("%m/%d/%y %H:%M"),mx.to_s]
   total.each do |t|
-    bin = (num*([0,t-mn].max / (mx-mn+1))).to_i
+    bin = [num-1,(num*([0,t-mn].max.to_f / (mx-mn+1))).to_i].min
     total_bins[bin] += 1
   end
   solved.each do |s|
-    bin = (num*([0,s-mn].max / (mx-mn+1))).to_i
+    bin = [num-1,(num*([0,s-mn].max / (mx-mn+1))).to_i].min
     solved_bins[bin] += 1
   end
   (1...num).each do |i|
@@ -76,7 +76,7 @@ Statistics
   num = 50
   
   gap = (mx-mn)/5
-  fmt = gap > 60*60*24*10 ? "%m/%d/%y" : "%a %H:%M"
+  fmt = gap > 60*60*24 ? "%m/%d/%y" : "%a %H:%M"
   interval = (0..5).to_a.map{|a| "'#{(mn + a*gap).strftime(fmt)}'" }
   
   act_bins = [0] * num

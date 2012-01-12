@@ -44,25 +44,25 @@ function delete_asset(divid,assetid) {
   }
 }
 
-  function create_workspace(txt) {
-    if ($('comments')) $('comments').insert({ top: txt });
-    sortWorkspaces();
-  }
+function create_workspace(txt) {
+  if ($('comments')) $('comments').insert({ top: txt });
+  sortWorkspaces();
+}
 
 function jug_table_update(dv,txt,tid) {
   jug_ws_update(dv,txt);
   init_table(tid);
 }
 
-  function jug_ws_update(dv,txt) {
-    if ($(dv)) {
-      if ($(dv+'.editing')) {
-        if ($(dv+'.conflict')) $(dv+'.conflict').update('<font style="color:red;font-weight:bold;">Edit Conflict!</font>');
-      } else
-        $(dv).update(txt);
-      sortWorkspaces();
-    }
+function jug_ws_update(dv,txt) {
+  if ($(dv)) {
+    if ($(dv+'.editing')) {
+      if ($(dv+'.conflict')) $(dv+'.conflict').update('<font style="color:red;font-weight:bold;">Edit Conflict!</font>');
+    } else
+      $(dv).update(txt);
+    sortWorkspaces();
   }
+}
   
 function sortWorkspaces() {
   workspaces = $$('div.workspace');
@@ -91,6 +91,10 @@ function sortWorkspaces() {
 function fakemod(i,m) {
   if (i%m) return i%m;
   return m;
+}
+
+function ASC(s) {
+	return s.charCodeAt(0);
 }
 function getField(r,c,tinf,V,C) {
   if (V.match(/\d+/)) return V;
@@ -171,6 +175,29 @@ function table_navigate(evt,i,j,len,id) {
   }
 }
 
+function grid_navigate(evt,i,j,len,wid,id) {
+  if ((evt.keyCode==13
+    || evt.keyCode==40)
+    && i < len-1) {
+    $(id+'_'+(i+1)+'_'+j).focus();
+    $(id+'_'+(i+1)+'_'+j).select();
+    return true;
+  } else if (evt.keyCode == 38 && i > 0) {
+    $(id+'_'+(i-1)+'_'+j).focus();
+    $(id+'_'+(i-1)+'_'+j).select();
+    return true;
+  } else if (evt.keyCode == 37 && j > 0) {
+    $(id+'_'+i+'_'+(j-1)).focus();
+    $(id+'_'+i+'_'+(j-1)).select();
+    return true;
+  } else if (evt.keyCode == 39 && j < wid-1) {
+    $(id+'_'+i+'_'+(j+1)).focus();
+    $(id+'_'+i+'_'+(j+1)).select();
+    return true;
+  }
+  return false;
+}
+
 function update_tables() {
  tables=$$('.pzt_table');
  tables.each(function(tid) { update_table(tid); });
@@ -180,13 +207,14 @@ function update_table(tid) {
   if ($(tid)) {
     var t=$(tid);
     var tinf={}
+
     tinf.heads = t.select('th');
-    tinf.cols=[];
     tinf.heads.each(function(h,i) {
       if (!i) tinf.heads[i] = 0;
       else
       tinf.heads[i] = h.select('input')[0].value;
     });
+
     cells = t.select('td');
     tinf.rows=[];
     cells.each(function(cell,i) {
@@ -199,6 +227,7 @@ function update_table(tid) {
       tinf.rows[r][c].calc = cell.select('.calc')[0];
       tinf.rows[r][c].inp = cell.select('.inp')[0];
     });
+
     cells.each(function(cell,i) {
       var c=i%tinf.heads.length;
       var r=parseInt(i/tinf.heads.length);
@@ -210,4 +239,45 @@ function update_table(tid) {
       }
     });
   }
+}
+
+function update_table_cell(cid,txt,tid) {
+	if (!$(cid)) return;
+	$(cid).value = txt;
+	update_table(tid);
+}
+
+grid_colors = { "!":"grid_black", "@":"grid_brown", "#":"grid_red", "$":"grid_orange", "%":"grid_yellow", "^":"grid_green", "&":"grid_blue", "*":"grid_purple" };
+
+function update_grid_cell(cid,txt) {
+	if (!$(cid)) return;
+	a = txt.split(":");
+	$(cid).value = a[0];
+	for (var n in grid_colors) {
+		$(cid).removeClassName(grid_colors[n]);
+	}
+	if (a[0].match(/^[\!\@\#\$\%\^\&\*]/)) $(cid).addClassName(grid_colors[a[0]]);
+	if (a.length > 1) {
+	label = $(cid).previous();
+	label.innerHTML = a[1];
+	}
+
+}
+
+function gcell_value(cid) {
+	return $(cid).getValue() + ':' + $(cid).previous().innerHTML;
+}
+
+function grid_set_label(evt,cid,id) {
+	if (!evt.shiftKey) return false;
+	if (!$(cid)) return false;
+	var label = $(cid).previous();
+	var name = prompt("Label for this cell", label.innerHTML);
+	if (name == null) return true;
+	if (name.match(/[A-Z0-9]*/)) {
+		// it is a valid label. Set it.
+		v = $(cid).getValue() + ':' + name;
+		new Ajax.Request('/workspace/update_cell?cell='+cid+'&id='+id, {asynchronous:true, evalScripts:true, parameters: { text: v } });
+	}
+	return true;
 }

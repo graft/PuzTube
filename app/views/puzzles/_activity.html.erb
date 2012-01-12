@@ -3,7 +3,7 @@
   acts = puzzle.activities.map{|a| a.created_at}
   mx = Time.now
   mn = puzzle.created_at
-  num = 20
+  num = 40
   act_bins = [0] * num
   acts.each do |a|
     bin = (num*([0,a-mn].max / (mx-mn+1))).to_i

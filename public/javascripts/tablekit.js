@@ -621,8 +621,10 @@ TableKit.Resizable = {
 		if(table.tagName !== "TABLE") {return;}
 		TableKit.register(table,Object.extend(options || {},{resizable:true}));		 
 		var cells = TableKit.getHeaderCells(table);
-		cells.each(function(c){
+		cells.each(function(c,i){
+			if (i == cells.length-1) throw $break;
 			c = $(c);
+			log("Initializing detection on "+c.tagName);
 			Event.observe(c, 'mouseover', TableKit.Resizable.initDetect);
 			Event.observe(c, 'mouseout', TableKit.Resizable.killDetect);
 		});
@@ -640,26 +642,25 @@ TableKit.Resizable = {
 		} else {
 			cell = $(index);
 			table = table ? $(table) : cell.up('table');
-      if (window.console && window.console.log)
-      window.console.log("W:"+w+" TW:"+table.getWidth());
+      			log("W:"+w+" TW:"+table.getWidth());
 			index = TableKit.getCellIndex(cell);
 		}
 		var pad = parseInt(cell.getStyle('paddingLeft'),10) + parseInt(cell.getStyle('paddingRight'),10);
 		w = Math.max(w-pad, TableKit.option('minWidth', table.id)[0]);
 		
-		if (window.console && window.console.log)
-			window.console.log("FW:"+w);
+		log("FW:"+w);
 		cell.setStyle({'width' : parseInt(100*w/table.getWidth()) + '%'});
 	},
 	initDetect : function(e) {
 		e = TableKit.e(e);
-		var cell = Event.element(e);
+		var cell = this;
+		log("initDetect on "+cell.tagName);
 		Event.observe(cell, 'mousemove', TableKit.Resizable.detectHandle);
 		Event.observe(cell, 'mousedown', TableKit.Resizable.startResize);
 	},
 	detectHandle : function(e) {
 		e = TableKit.e(e);
-		var cell = Event.element(e);
+		var cell = this;
   		if(TableKit.Resizable.pointerPos(cell,Event.pointerX(e),Event.pointerY(e))){
   			cell.addClassName(TableKit.option('resizeOnHandleClass', cell.up('table').id)[0]);
   			TableKit.Resizable._onHandle = true;
@@ -671,7 +672,7 @@ TableKit.Resizable = {
 	killDetect : function(e) {
 		e = TableKit.e(e);
 		TableKit.Resizable._onHandle = false;
-		var cell = Event.element(e);
+		var cell = this;
 		Event.stopObserving(cell, 'mousemove', TableKit.Resizable.detectHandle);
 		Event.stopObserving(cell, 'mousedown', TableKit.Resizable.startResize);
 		cell.removeClassName(TableKit.option('resizeOnHandleClass', cell.up('table').id)[0]);
@@ -679,7 +680,7 @@ TableKit.Resizable = {
 	startResize : function(e) {
 		e = TableKit.e(e);
 		if(!TableKit.Resizable._onHandle) {return;}
-		var cell = Event.element(e);
+		var cell = this;
 		Event.stopObserving(cell, 'mousemove', TableKit.Resizable.detectHandle);
 		Event.stopObserving(cell, 'mousedown', TableKit.Resizable.startResize);
 		Event.stopObserving(cell, 'mouseout', TableKit.Resizable.killDetect);

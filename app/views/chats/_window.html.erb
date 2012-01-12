@@ -22,9 +22,8 @@
     </ul>
   </div>
   <div id="chatbox" style="height: 20px; padding: 3px;">
-<% form_remote_tag(
-                  :url => { :action => 'chat', :id => thread.id },
-                  :complete => "$('chat_input').value = '';",
+<% form_remote_tag( :url => { :action => 'chat', :id => thread.id },
+                  :loading => "$('chat_input').value = '';",
                   :html => { :id => 'chatform' } ) do %>
 <%= text_field_tag( :chat_input, '', { :size => 20, :id => :chat_input } ) %>
 <%= submit_tag "Add", :disable_with => "Sending..." %>

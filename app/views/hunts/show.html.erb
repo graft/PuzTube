@@ -2,9 +2,11 @@
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
 
-<%= juggernaut :channels => [@hunt.chat_id], :client_id => current_user ? current_user.login : "anon", :debug => false %>
+<%= juggernaut :channels => [@hunt.chat_id], :client_id => current_user.login, :debug => true %>
 
 <script type="text/javascript" charset="utf-8">
+  user = '<%= current_user.login %>';
+  channel = '<%= @hunt.chat_id %>';
   function update_and_submit(pzr,pid,rid,flds) {
     var fields = flds.split(',');
     fields.each(function(t) {
@@ -75,7 +77,7 @@ Statistics
       <th>Round</th>
       <th>Name</th>
       <th>Url</th>
-      <th>Hint</th>
+      <th>Blurb</th>
       <th>Captain</th>
       <th>Meta</th>
       <th>Answer</th>

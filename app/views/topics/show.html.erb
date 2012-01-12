@@ -3,12 +3,16 @@
 <%= javascript_include_tag "juggernaut-users" %>
 <%= javascript_include_tag "resize" %>
 <%= javascript_include_tag "workspaces" %>
+<%= javascript_include_tag "tablekit" %>
+
 
 <%= juggernaut :channels => [@topic.chat_id], :client_id => current_or_anon_login, :debug => true %>
 <% content_for :title, "#{@topic.name}" %>
 
 <script type="text/javascript" charset="utf-8">
   var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
+  user = '<%= current_user.login %>';
+  channel = '<%= @topic.chat_id %>';
   document.observe("dom:loaded", startup);
   
 </script>

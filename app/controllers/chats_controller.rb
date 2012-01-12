@@ -3,7 +3,14 @@ class ChatsController < ApplicationController
   # GET /chats.xml
   def index
     @chats = Chat.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.xml  { render :xml => @chats }
+    end
+  end
 
+  def broadcasts
+    @broadcasts = Chat.find(:all, :conditions => { :chat_id => "all" }, :order => "created_at DESC")
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @chats }
@@ -83,10 +90,6 @@ class ChatsController < ApplicationController
   def destroy
     @chat = Chat.find(params[:id])
     @chat.destroy
-
-    respond_to do |format|
-      format.html { redirect_to(chats_url) }
-      format.xml  { head :ok }
-    end
+    render :js => 'window.location.reload()'
   end
 end

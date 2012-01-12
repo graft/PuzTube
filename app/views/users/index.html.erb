@@ -2,7 +2,7 @@
 
 <%= render "welcome/login" %> 
 
-<h1><%= @users.size %> Hunters!</h1>
+<h1><%= @users.count { |u| u.active? } %> Hunters!</h1>
 
 <p><%= link_to 'New user', new_user_path %></p>
 
@@ -15,12 +15,12 @@
 
 <% @users.each do |user| %>
   <tr>
-    <td><%= "<b>" if user.team_captain %><%= user.login %><%= "</b>" if user.team_captain %></td>
-    <td><%= link_to user.name, user %></td>
+    <td class="hunt_<%= user.active? ? "active" : "inactive"%>"><%= "<b>" if user.team_captain %><%= user.login %><%= "</b>" if user.team_captain %></td>
+    <td><%= link_to user.name, user_path(user.login) %></td>
     <td><%= user.email %></td>
     <td><%= user.info %></td>
     <td><%= image_tag(user.photo.url(:thumb)) if user.photo? %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
+    <td><%= link_to 'Edit', edit_user_path(:id => user.login) %></td>
 <% if current_user && current_user.team_captain %>
     <td><%= link_to 'Destroy', user, :confirm => 'Are you sure?', :method => :delete %></td>
 <% end %>

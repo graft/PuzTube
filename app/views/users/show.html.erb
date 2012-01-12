@@ -43,10 +43,5 @@ function showChats() {
 </div>
 <% end %>
 
-<% if @user.activities.length > 0 %>
-<% @user.activities.each do |act| %>
-  <%= act.dateformat %> <b>PZ</b>(<%= act.puzzle.name %>) - <%= act.task %>
-<% end %>
-<% end %>
-<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Edit', edit_user_path(:id => @user.login) %> |
 <%= link_to 'Back', users_path %>
