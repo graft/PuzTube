@@ -67,7 +67,7 @@ class ChatsController < ApplicationController
 
     respond_to do |format|
       if @chat.update_attributes(params[:chat])
-        format.html { redirect_to(@chat) }
+        format.html { redirect_to(broadcasts_path) }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }

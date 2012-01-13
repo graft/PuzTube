@@ -96,6 +96,12 @@ function fakemod(i,m) {
 function ASC(s) {
 	return s.charCodeAt(0);
 }
+function LET(s) {
+	var n = ASC(s);
+	if (n >= ASC("a") && n <= ASC("z")) return n - ASC("a") + 1;
+	if (n >= ASC("A") && n <= ASC("Z")) return n - ASC("A") + 1;
+	return 26;
+}
 function getField(r,c,tinf,V,C) {
   if (V.match(/\d+/)) return V;
   V = V.charCodeAt(0) - 65+1;
@@ -104,11 +110,11 @@ function getField(r,c,tinf,V,C) {
   V = tinf.rows[r][V].calc.innerHTML;
   else
   V = tinf.rows[r][V].value;
-  if (C == ":L")  V = String.fromCharCode(fakemod(parseInt(V),26)+64);
+  /* if (C == ":L")  V = String.fromCharCode(fakemod(parseInt(V),26)+64);
   if (C == ":l")  V = String.fromCharCode(fakemod(parseInt(V),26)+96);
   if (C == ":I")  { if (V.match(/[A-Z]/)) V = (V.charCodeAt(0)-65+1).toString(); else V=(V.charCodeAt(0)-97+1).toString();}
   if (C == ":b")  { V = parseInt(V,2).toString(); }
-  if (C == ":B")  { V = parseInt(V.reverse(),2).toString(); }
+  if (C == ":B")  { V = parseInt(V.reverse(),2).toString(); } */
   return V;
 }
 
@@ -206,7 +212,7 @@ function update_tables() {
 function update_table(tid) {
   if ($(tid)) {
     var t=$(tid);
-    var tinf={}
+    tinf={}
 
     tinf.heads = t.select('th');
     tinf.heads.each(function(h,i) {

@@ -26,6 +26,7 @@
   }
 
   var currtitle;
+  var focused = true;
   function blinkTitle() {
     if (currtitle) return;
     currtitle = document.title;
@@ -39,14 +40,18 @@
   }
 
   function restoreTitle() {
-    if (currtitle.match(/^\*[\w]/)) {
+    if (currtitle.match(/^\*[\w]/) || focused) {
     document.title = currtitle;
     }
     else
     document.title = "*"+currtitle;
     currtitle = null;
   }
+  function setFocus() {
+    focused = false;
+  }
   function unmarkTitle() {
+    focused = true;
     if (document.title.match(/^\*[\w]/)) {
       document.title = document.title.substr(1)
     }
@@ -154,4 +159,5 @@
 
     window.onresize = fixchatsize;
     window.onfocus = unmarkTitle;
+    window.onblur = setFocus;
   }

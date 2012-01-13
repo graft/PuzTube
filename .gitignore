@@ -7,3 +7,4 @@ tmp/cache/*
 tmp/sessions/*
 tmp/sockets/*
 config/juggernaut*
+.htpasswd
