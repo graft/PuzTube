@@ -74,7 +74,7 @@
   function jug_connected() {
     if ($('chatform')) $('chatform').enable();
     if ($('editables')) $('editables').removeClassName("hidden");
-    testTimer = setTimeout('testConnection()',60000);
+    //testTimer = setTimeout('testConnection()',40000+Math.random()*30000);
   }
 
   var connectiontimer;
@@ -90,7 +90,7 @@
     //window.console.log("Connection active. active time is "+activetime);
     new Effect.Highlight('connectiontest', { startcolor: '#99cc33', endcolor: '#1d5875', restorecolor: '#1d5875' });
     // test the connection every 60 seconds to be safe
-    if (newusers) {
+    if (null) {
       users = {};
       newusers.each(function(o) { users[o] = true; });
       update_users();
@@ -109,12 +109,12 @@
 
   function testConnection() {
     log("Testing the connection...");
-    new Ajax.Request('/welcome/test?channel='+channel+'&amp;user='+user, {asynchronous:true, evalScripts:true});
+    new Ajax.Request('/welcome/test?channel='+channel+'&amp;user='+user, {method:'get', asynchronous:true, evalScripts:true});
     // ensure you don't test twice... you might have been clicked by hand.
     if (testTimer) clearTimeout(testTimer);
     // set the test timer here rather than elsewhere to ensure you always keep testing.
     log("Setting testTimer.");
-    testTimer = setTimeout('testConnection()',60000);
+    //testTimer = setTimeout('testConnection()',360000+Math.random()*60000);
   }
 
   function reconnectJug() {

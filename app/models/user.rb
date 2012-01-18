@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   after_initialize :set_default_options
   validates_uniqueness_of :login
   belongs_to :puzzle
-  has_many :activities
+  has_many :recent_activities, :class_name => "Activity", :order => "created_at DESC", :limit => 20
   has_attached_file :photo, :styles => {
 	  		:thumb => "60x60>"
   		},

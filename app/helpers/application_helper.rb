@@ -180,7 +180,7 @@ module ApplicationHelper
   end
 
   def array_TAB(tsv)
-    expand(tsv.split("\n").map { |c| [ c.split("\t") ] })
+    expand(tsv.split("\n").map { |c| c.split("\t") })
   end
 
   def text_COMMA(rows)

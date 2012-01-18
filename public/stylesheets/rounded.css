@@ -123,11 +123,13 @@ position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
 }
 
 .broadcasts {
-  border: 3px dashed #080;
+  border: 3px solid #080;
+  background-color: #8c4;
   margin: 4px;
   padding: 4px;
   font-size: 12pt;
   font-weight: bold;
+  border-radius: 10px;
 }
 
 .testbox {
@@ -359,6 +361,10 @@ ul.userlist li:before {
 }
 
 .inp {
+}
+
+.inpi {
+	font-family: monospace;
 }
 
 .calc {

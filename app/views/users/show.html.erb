@@ -43,5 +43,8 @@ function showChats() {
 </div>
 <% end %>
 
+Recently active in:
+<% @user.recent_activities.map{|a| puzzle_path(a.puzzle) }.join(", ") %>
+
 <%= link_to 'Edit', edit_user_path(:id => @user.login) %> |
 <%= link_to 'Back', users_path %>

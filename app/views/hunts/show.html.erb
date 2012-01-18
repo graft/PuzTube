@@ -82,7 +82,7 @@ Statistics
       <th>Meta</th>
       <th>Answer</th>
     </tr>
-  <% hunt.puzzles.each do |puzzle| %>
+  <% @hunt.puzzles.each do |puzzle| %>
     <% if puzzle.round && !puzzle.round.hidden %>
       <tr id="<%= puzzle.t_id %>">
         <%= render :partial => 'puzzles/miniinfo', :locals => { :puzzle => puzzle } %>

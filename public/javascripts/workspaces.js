@@ -7,6 +7,9 @@ String.prototype.reverse = function() {
     }
     return s;
 }
+String.prototype.replaceAt = function(index, c) {
+	  return this.substr(0, index) + c + this.substr(index+c.length);
+}
 
 Element.addMethods({
     show : function(element) {
@@ -93,6 +96,7 @@ function fakemod(i,m) {
   return m;
 }
 
+
 function ASC(s) {
 	return s.charCodeAt(0);
 }
@@ -100,16 +104,17 @@ function LET(s) {
 	var n = ASC(s);
 	if (n >= ASC("a") && n <= ASC("z")) return n - ASC("a") + 1;
 	if (n >= ASC("A") && n <= ASC("Z")) return n - ASC("A") + 1;
-	return 26;
+	return 0;
 }
-function getField(r,c,tinf,V,C) {
-  if (V.match(/\d+/)) return V;
-  V = V.charCodeAt(0) - 65+1;
-  if (V < 1 || V >= tinf.heads.length) return null;
-  if (tinf.heads[V].match(/^=/))
-  V = tinf.rows[r][V].calc.innerHTML;
+function getField(V) {
+  if (V.match(/-?[\d\.]+/)) return V;
+  if (V.match(/\#/)) return currrow + 1;
+  V = LET(V);
+  if (V < 1 || V >= currtable.heads.length) return null;
+  if (currtable.heads[V].match(/^=/))
+  V = currtable.rows[currrow][V].calc.innerHTML;
   else
-  V = tinf.rows[r][V].value;
+  V = currtable.rows[currrow][V].value;
   /* if (C == ":L")  V = String.fromCharCode(fakemod(parseInt(V),26)+64);
   if (C == ":l")  V = String.fromCharCode(fakemod(parseInt(V),26)+96);
   if (C == ":I")  { if (V.match(/[A-Z]/)) V = (V.charCodeAt(0)-65+1).toString(); else V=(V.charCodeAt(0)-97+1).toString();}
@@ -123,42 +128,19 @@ function formulaElement(r,c,tinf) {
     tinf.rows[r][c].calc.show();
 }
 
+var currtable;
+var currrow;
+
 function computeFormula(r,c,tinf) {
     normalElement(r,c,tinf);
     var formula = tinf.heads[c].substr(1);
-    if (formula.match(/([A-Z]|\d+)(:[LbBIl])?([\+\-\*\/\%\@\[])([A-Z]|\d+)(:[LbBIl])?(\])?/)) {
-       var LV=RegExp.$1;
-       var LC=RegExp.$2;
-       var OP=RegExp.$3;
-       var RV=RegExp.$4;
-       var RC=RegExp.$5;
-       LV = getField(r,c,tinf,LV,LC);
-       RV = getField(r,c,tinf,RV,RC);
-       if (LV == null || RV == null) { tinf.rows[r][c].calc.update(); return; }
-       switch(OP) {
-         case "+": LV = parseInt(LV)+parseInt(RV); break;
-         case "-": LV = parseInt(LV)-parseInt(RV); break;
-         case "*": LV = parseInt(LV)*parseInt(RV); break;
-         case "/": LV = parseInt(LV)/parseInt(RV); break;
-         case "%": LV = parseInt(LV)%parseInt(RV); break;
-         case "@":
-		if (LV.match(/[A-Z]/))
-			 LV = String.fromCharCode(fakemod(LV.charCodeAt(0)-65+1+parseInt(RV),26)+65);
-		else 
-			LV = String.fromCharCode(fakemod(LV.charCodeAt(0)-97+1+parseInt(RV),26)+97);
-		break;
-         case "[":
-		LV = LV.replace(/[^A-Za-z]/g,'').substr(parseInt(RV)-1,1);
-                break;
-       }
-       tinf.rows[r][c].calc.update(LV);
-       formulaElement(r,c,tinf);
-       return;
-    }
-    if (formula.match(/([A-Z]|\d+)(:[LbBIl])/)) {
-       tinf.rows[r][c].calc.update(getField(r,c,tinf,RegExp.$1,RegExp.$2));
-       formulaElement(r,c,tinf);
-    }
+    currtable = tinf;
+    currrow = r;
+    log("Trying the infix parser...");
+    // okay, parse the formula.
+    var V = infix_parse(formula);
+    tinf.rows[r][c].calc.update(V);
+    formulaElement(r,c,tinf);
 }
 
 function normalElement(r,c,tinf) {
@@ -182,6 +164,7 @@ function table_navigate(evt,i,j,len,id) {
 }
 
 function grid_navigate(evt,i,j,len,wid,id) {
+log("navigating on grid.");
   if ((evt.keyCode==13
     || evt.keyCode==40)
     && i < len-1) {
@@ -286,4 +269,162 @@ function grid_set_label(evt,cid,id) {
 		new Ajax.Request('/workspace/update_cell?cell='+cid+'&id='+id, {asynchronous:true, evalScripts:true, parameters: { text: v } });
 	}
 	return true;
+}
+
+// okay, this is an infix parser. Its goal is to be able to parse a message to do operations on columns.
+// E.g., (C@(A+B):I+A[C]:I):L
+// Just so we can continue to use shunting yard, we're going to do this:
+// A[blah] => A$(blah), with $ as a high-precedence operator.
+function infix_parse(s) {
+	// evaluate a properly-formed expression in infix notation
+	var output = [];
+	var stack = [];
+	// check for negatives first?
+	var cn=true;
+	var token;
+	var precedence = { "$":4, ":":3, "@":2, "/":1, "*":1, "+":0, "-":0 };
+	if (!s || !s.length) return 0;
+	while (token=get_token(s,cn)) {
+		s = token[1];
+		if (token[2] == 1) {
+			// first get the field value here.
+			// now wait - if your last token was :, don't getField.
+			if (stack[stack.length-1] == ":")
+			output.push(token[0]);
+			else
+			output.push(getField(token[0])); cn = false;
+		} else if (token[0] == '(') {
+			stack.push(token[0]); cn = true;
+		} else if (token[0] == ')') {
+			cn = false;
+			while (stack.length && stack[stack.length-1] != '(') {
+				output.push(stack.pop());
+			}
+			if (!stack.length) return 0;
+			stack.pop();
+		} else {
+			// you are an operator
+			if (token[2] == 2) {
+				log("Faking $ operator");
+				output.push(getField(token[0]));
+				token[0] = '$';
+			}
+			while (stack.length 
+				&& stack[stack.length-1].match(/[\+\*\-\/\:\@\$]/)
+				&& precedence[stack[stack.length-1]] >= precedence[token[0]]) {
+				output.push(stack.pop());
+			}
+			stack.push(token[0]);
+			cn = true;
+		}
+	}
+	log("Stack is "+stack.join(","));
+	log("Output is "+output.join(","));
+	while (stack.length) {
+		if (stack[stack.length-1] == '(') {
+			return 0;
+		}
+		output.push(stack.pop());
+	}
+
+	log("Doing RPN");
+
+	for (i=0;i<output.length;i++) {
+		// push everything on the stack that isn't an operator
+		if ((typeof output[i] == "string") && output[i].match(/[\+\*\-\/\:\@\$]/)) {
+			log("Operator is "+output[i]);
+			var x1 = stack.pop();
+			var x2 = stack.pop();
+			if (output[i] == '*') stack.push(asInt(x2)*asInt(x1));
+			if (output[i] == '/') stack.push(asInt(x2)/asInt(x1));
+			if (output[i] == '+') stack.push(asInt(x2)+asInt(x1));
+			if (output[i] == '-') stack.push(asInt(x2)-asInt(x1));
+			if (output[i] == ':') stack.push(cast(x2,x1));
+			if (output[i] == '@') stack.push(rot(x2,x1));
+			if (output[i] == '$') stack.push(ind(x2,x1));
+			log("Pushed "+stack[stack.length-1]);
+		} else {
+			stack.push(output[i]);
+		}
+	}
+	return stack[0];
+}
+
+function asInt(n) {
+	// it is some kind of string.
+	return parseFloat(n);
+}
+
+function cast(a,b) {
+	if (b == "I") {
+		return LET(a);
+	}
+	if (b == "B") return parseInt(a.reverse(),2);
+	if (b == "b") return parseInt(a,2);
+	if (b == "L") return String.fromCharCode(fakemod(parseInt(a),26)+64);
+	if (b == "l") return String.fromCharCode(fakemod(parseInt(a),26)+96);
+	if (b == "R") return a.reverse();
+	return 0;
+}
+
+function rot(a,b) {
+	var r = "";
+	var i;
+	for (i=0;i<a.length;i++) {
+	 r += String.fromCharCode(fakemod(LET(a[i])-1 + parseInt(b),26)+65);
+	}
+	return r;
+}
+
+function ind(a,b) {
+	log("Trying to index..."+a+" "+b);
+	return a.replace(/[^A-Za-z]/g,'').substr(parseInt(b)-1,1);
+}
+
+function get_token(s,cn) {
+	var i = 0;
+	log("Parsing {"+s+"}");
+	if (!s || !s.length) return null;
+	if (!cn && s.match(/^[\+\*\/\(\-\)]/)) {
+		return [s.slice(0,1),s.slice(1),0];
+	}
+	if (s.match(/^\-?[0-9]+\.?[0-9]*/)) {
+		if (s.match(/^[\-]/)) i++;
+		while (i < s.length && s[i].match(/[0-9\.]/)) i++;
+		var token = s.slice(0,i);
+		return [token, s.slice(i),1];
+	}
+	if (s.match(/^[A-Za-z\#]+([^A-Za-z\#\(\[]|$)/)) {
+		while (i < s.length && !s[i].match(/[^A-Za-z\#\(]/)) i++;
+		// it's just a string. return it.
+		token = s.slice(0,i);
+		return [token,s.slice(i),1];
+	}
+	if (s.match(/^[A-Za-z]+\(/)) {
+		while (s[i] != '(') i++;
+		// find the match
+		var nest = 1;
+		while (nest) {
+			if (s[++i] == '(') nest ++;
+			if (s[i] == ')') nest--;
+		}
+		token = s.slice(0,i+1);
+		return [0,s.slice(i+1),1];
+	}
+	if (s.match(/^[A-Z]\[/)) {
+		s = s.replaceAt(1,'(');
+		var nest = 1;
+		while (nest) {
+			if (s[++i] == '[') nest ++;
+			if (s[i] == ']') nest--;
+		}
+		s = s.replaceAt(i,')');
+		token = s.slice(0,1);
+		return [token,s.slice(1),2];
+	}
+	if (s.match(/^[\+\*\/\(\-\)\^\:\@]/)) {
+		return [s.slice(0,1),s.slice(1),0];
+	}
+	log("Improper token "+s+"!");
+	return null;
 }

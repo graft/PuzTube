@@ -27,7 +27,7 @@ class HuntsController < ApplicationController
         round.puzzles.sort! {|r1,r2| r1.send(sort_key) <=> r2.send(sort_key)}
       end
     else
-      hunt.puzzles.sort! {|r1,r2| r1.send(sort_key) <=> r2.send(sort_key)}
+      @hunt.puzzles.sort! {|r1,r2| r1.send(sort_key) <=> r2.send(sort_key)}
     end
 
 
