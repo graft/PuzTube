@@ -31,4 +31,16 @@
   </div>
   <div id="chatusers" style="height: 80px; overflow:auto; padding:3px;">Users: <ul class="userlist"></ul> </div>
 <%= link_to 'Log', chat_log_path(:channel => thread.chat_id,:thread=>thread.id,:type=> thread.class.to_s), :target => "_blank" %>
+
+<script type="text/javascript">
+function pop_window() {
+  var opts = 'titlebar=no,toolbar=no,location=no,directories=no,status=no,menubar=no,scrollbars=yes,resizable=yes,height=300,width=700';
+  var win = window.open('','puztube_chat', opts);
+  if (!win || win.closed || win.location.href == 'about:blank') {
+  window.open('<%= chat_window_path(:channel => thread.chat_id) %>',
+     'puztube_chat', opts );
+  }
+}
+</script>
+<%= link_to_function 'pop &#8599;', 'pop_window();', :style => "float:right;" %>
 </div>

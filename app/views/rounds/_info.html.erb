@@ -20,7 +20,7 @@
     <%= hidden_field_tag "puzzle[priority]", nil, :id =>"r#{round.id}.priority" %>
   <% end %>
 
-  <table id="RPT<%= round.id %>" class="puzzletable" style="width:75%;">
+  <table id="<%= round.puzzle_table_id %>" class="puzzletable" style="width:75%;">
     <tr>
       <th>Priority</th>
       <th>Status</th>

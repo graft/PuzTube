@@ -33,7 +33,8 @@
   <%= link_to_remote 'Add puzzle', :url => create_rpuzzle_path(:id => round.id) %> <br>
   <% end %>
 
-  <table id="RPT<%= round.id %>" class="puzzletable">
+  <table class="puzzletable">
+    <thead>
     <tr>
       <th>Priority</th>
       <th>Status</th>
@@ -45,11 +46,13 @@
       <th>Meta</th>
       <th>Answer</th>
     </tr>
-
+    </thead>
+    <tbody id="<%= round.puzzle_table_id %>">
     <% round.puzzles.each do |puzzle| %>
       <tr id="<%= puzzle.t_id %>">
         <%= render :partial => 'puzzles/miniinfo', :locals => { :puzzle => puzzle } %>
       </tr>
     <% end %>
+    </tbody>
   </table>
 </div>

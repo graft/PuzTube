@@ -7,7 +7,7 @@
 }
 
 .rounded_title {
-  width:100%; height:25px; border-bottom: 1px solid #444; background-color: #aa5;
+  width:100%; height:25px; border-bottom: 1px solid #444; background-color: #b93;
   -moz-border-radius-topleft: 7px;
   -webkit-border-top-left-radius: 7px;
   -moz-border-radius-topright: 7px;
@@ -22,7 +22,7 @@
 }
 
 .rounded_box {
-  width:100%; height:25px; background-color: #aa5;
+  width:100%; height:25px; background-color: #b93;
   -moz-border-radius: 7px;
   -webkit-border-radius: 7px;
   border-radius:7px;
@@ -92,10 +92,10 @@ position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
 }
 
 .priority_Normal .rounded_title, .rounded_box {
-  background-color: #88a;
+  background-color: #568;
 }
 .priority_Normal .rounded_content {
-  background-color: #ddf;
+  background-color: #bcd;
 }
 .priority_Normal .asset {
   background-color: #667;
@@ -188,7 +188,7 @@ position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
 .statusblock {
   margin: 0px;
   z-index: -1;
-  position:absolute; 
+  position:fixed; 
   top:0;
   left: 0;
   width:100%; 
@@ -280,6 +280,7 @@ ul.userlist li:before {
   height: 20px;
 }
 
+
 .pzt_head textarea, .pzt_head input
 {
   color: #715;
@@ -345,6 +346,10 @@ ul.userlist li:before {
 .grid_green { background-color: #6f6; color: #6f6; }
 .grid_blue { background-color: #66f; color: #66f; }
 .grid_purple { background-color: #f6f; color: #f6f; }
+
+.updating {
+  background-color: #cf9 !important;
+}
 
 .tableadd {
   text-decoration: none;

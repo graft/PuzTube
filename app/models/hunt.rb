@@ -4,7 +4,7 @@ class Hunt < ActiveRecord::Base
   has_many :activities
 
   def chat_id
-    "HUNT"+id.to_s
+    "hunt-#{id}"
   end  
   
 end

@@ -12,11 +12,11 @@ class Puzzle < ActiveRecord::Base
   end
 
   def chat_id
-    "PUZ"+id.to_s
+    "puzzle-#{id}"
   end
 
   def t_id
-    "PZR"+id.to_s
+    "PZR#{id}"
   end
   
   def act_id

@@ -31,14 +31,17 @@ class RoundsController < ApplicationController
         end
       }
     @round.puzzles.sort! &sorter
-    render :partial => 'show', :locals => { :round => @round }
+    if params[:c]
+      render :partial => 'round', :locals => { :round => @round }
+    else
+      render :partial => 'show', :locals => { :round => @round }
+    end
   end
   # GET /rounds/1
   # GET /rounds/1.xml
   def show
     @round = Round.find(params[:id])
     @chats = Chat.find(:all, :conditions => {:chat_id => @round.chat_id}, :order => "created_at DESC", :limit => 10)
-    @chatusers = Juggernaut.show_clients_for_channel(@round.chat_id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -54,17 +57,13 @@ class RoundsController < ApplicationController
     @puzzle.priority = "Normal"
     
     if @puzzle.save
-      text = render_to_string :partial => 'puzzles/miniblock', :locals => { :puzzle => @puzzle }
-      render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
-        page << "add_puzzle('RPT#{@round.id}','#{javascript_escape text}');"
-      end
+      Push.send :command => "new puzzle", :channel => @round.hunt.chat_id, :puzzle => @puzzle.id, :table => @round.puzzle_table_id
     end
     render :nothing => true
   end
   # GET /rounds/1/edit
   def edit
     @round = Round.find(params[:id])
-    
     render :partial => 'edit', :locals => { :round => @round }
   end
 
@@ -91,13 +90,8 @@ class RoundsController < ApplicationController
     @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
 
      if @round.update_attributes(params[:round])
-        # DON'T update here - use juggernaut to send the request. You need the chat id!
-      txt = render_to_string :partial => "show", :locals => { :round => @round, :sorting => @sorting  }
       logger.info "Rendered channel for #{@round.hunt.chat_id}"
-      render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
-        logger.info "Updating channel for #{@round.hunt.chat_id}"
-        page << "$('ROUND#{@round.id}').update('#{javascript_escape txt}');"
-      end
+      Push.send :command => "update round", :round => @round.id, :channel => @round.hunt.chat_id, :table => @round.div_id
     end
     render :nothing => true
   end
@@ -107,9 +101,7 @@ class RoundsController < ApplicationController
   def destroy
     @round = Round.find(params[:id])
     
-    render :juggernaut => { :type => :send_to_channel, :channel => @round.hunt.chat_id } do |page|
-      page << "$('ROUND#{@round.id}').remove();"
-    end
+    Push.send :command => "destroy round", :round => @round.div_id, :channel => @round.hunt.chat_id
     @round.hidden = true
     @round.hunt_id = nil
     @round.save

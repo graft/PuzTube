@@ -18,12 +18,4 @@ class WelcomeController < ApplicationController
     cookies[:user] = nil
     render :js => 'window.location.reload()'
   end
-        
-  def test
-    #chatusers =  Juggernaut.show_clients_for_channel(params[:channel]);
-    render :juggernaut => { :type => :send_to_client_on_channel, :client_id => params[:user], :channel => params[:channel] } do |page|
-      page << "connectionActive(null);"
-    end
-    render :js => "connectionTimer();"
-  end
 end

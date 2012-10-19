@@ -8,7 +8,6 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     @round = @puzzle.round
     @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 25)
-    @chatusers = Juggernaut.show_clients_for_channel(@puzzle.chat_id)
     
     respond_to do |format|
       format.html # show.html.erb
@@ -58,7 +57,11 @@ class PuzzlesController < ApplicationController
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
     if params[:type] == 'mini'
-      render :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
+      if params[:c]
+        render :partial => 'miniblock', :locals => { :puzzle => @puzzle }
+      else
+        render :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
+      end
     else
       render :partial => 'info', :locals => { :puzzle => @puzzle }
     end
@@ -100,10 +103,7 @@ class PuzzlesController < ApplicationController
   def destroy
     @puzzle = Puzzle.find(params[:id])
 
-    render :juggernaut => { :type => :send_to_channel, :channel => @puzzle.round.hunt.chat_id } do |page|
-      page << "$('#{@puzzle.t_id}').remove();"
-    end
-    
+    Push.send :command => "destroy puzzle", :channel => @puzzle.round.hunt.chat_id, :puzzle => @puzzle.t_id
     @puzzle.destroy
     render :nothing => true
   end

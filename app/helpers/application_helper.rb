@@ -3,44 +3,17 @@ require 'digest/sha1'
 require 'csv'
 
 module ApplicationHelper
-
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::SanitizeHelper 
   def send_chat(user,channel,text)
     @chat = Chat.new( { :user => user } )
-    jc = { :type => :send_to_channel, :channel => channel }
     msg = "<b>#{with_link(user)}:</b> #{ text }"
-    sus = "subscribe_user('#{user}')"
-    if (text.sub!(/^\/msg ([\w]*) /,''))
-      # echo it
-      jc[:type] = :send_to_client_on_channel
-      jc[:client_id] = user
-      msg = "<b style='color:red;'>PRIVATE to #{with_link $1}:</b> #{ text }"
-      render :juggernaut => jc do |page|
-        page << "jug_chat_update('<li>#{javascript_escape sanitize_text msg}</li>');"
-      end
-      msg = "<b style='color:red;'>PRIVATE from #{with_link(user)}:</b> #{ text }"
-      jc[:type] = :send_to_client
-      jc[:client_id] = $1
-      channel = "private_to_#{$1}"
-      sus = ''
-    elsif (text.sub!(/^\/([\w]*) /,''))
-      if $1 == "all"
-        jc[:type] = :send_to_all
-        msg = "<b style='color:red;'>BROADCAST from #{with_link user}:</b> #{ text }"
-      else
-        jc[:type] = :send_to_channel
-        msg = "<b style='color:red;'>OOC{#{channel}} #{with_link user}:</b> #{ text }"
-      end
-      sus = ''
-      channel = $1
-      jc[:channel] = channel
-    end
     @chat.text = text
     @chat.chat_id = channel
     if (@chat.save)
-      # how do we render this?
-      render :juggernaut => jc do |page|
-        page << "jug_chat_update('<li>#{@chat.timeformat} #{javascript_escape sanitize_text msg}</li>'); #{sus}"
-      end
+      txt = javascript_escape(sanitize_text(msg))
+      logger.info "Pushing chat request #{txt}"
+      Push.send :command => "chat", :channel => channel, :text => "<li>#{@chat.timeformat} #{txt}</li>", :user => user
     end
   end
 
@@ -56,8 +29,13 @@ module ApplicationHelper
     (str || "").gsub(/"/,'&quot;')
   end
   
+  def strip_html(str)
+    str.sub("<","&lt;")
+  end
+  
   def sanitize_text(str)
-    sanitize(auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
+    ActionController::Base.helpers.sanitize(
+      ActionController::Base.helpers.auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
   end
 
   def current_or_anon_login
@@ -173,7 +151,7 @@ module ApplicationHelper
     begin
     arr = CSV.parse(csv.gsub(/, "/,',"'))
     arr.map!{|r| r.take(cols) + [nil] * [cols-r.length,0].max}
-    arr = arr.take(rows)  + [ [nil] * cols ] * [rows-arr.length,0].max
+    arr = arr.take(rows)  + Array.new([rows-arr.length,0].max) { [nil] * cols }
     rescue CSV::IllegalFormatError
       ["PARSE ERROR"]
     end
@@ -184,8 +162,8 @@ module ApplicationHelper
   end
 
   def text_COMMA(rows)
-    rows.map { |row| CSV.generate_line row }.join("\n")+ "\n"
-    #CSV.generate { |c| rows.each { |row| c << row } }
+    #rows.map { |row| CSV.generate_line row }.join("\n")+ "\n"
+    CSV.generate { |c| rows.each { |row| c << row } }
   end
   alias :text_GRID :text_COMMA
   def text_TAB(rows)
@@ -239,8 +217,11 @@ module ApplicationHelper
       tc += 1
       if tc == table
         rows = send("array_#{$1}", $2)
+        logger.info "Old text was |#{$2}|"
         rows[row][col] = txt if row < rows.length && col < rows[row].length
-        "#{$1}\n#{send("text_#{$1}",rows)}END#{$1}#{$3}"
+        x = "#{$1}\n#{send("text_#{$1}",rows)}END#{$1}#{$3}"
+        logger.info "Table text is now |#{x}|"
+        x
       else
         match
       end

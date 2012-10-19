@@ -1,24 +1,22 @@
+<% content_for :title, "#{@puzzle.name}" %>
 
-<%= javascript_include_tag :defaults, :juggernaut %>
-<%= javascript_include_tag "juggernaut-users" %>
+<%= javascript_include_tag :defaults %>
+<%= javascript_include_tag "chat" %>
+
+<script type="text/javascript">
+  document.observe("dom:loaded", startup);
+  user = '<%= current_user.login %>';
+  channel = '<%= @puzzle.chat_id %>';
+</script>
+
 <%= javascript_include_tag "resize" %>
 <%= javascript_include_tag "workspaces" %>
 <%= javascript_include_tag "tablekit" %>
-
-
-<%= juggernaut :channels => [@puzzle.chat_id], :client_id => current_or_anon_login, :debug => true %>
-<% content_for :title, "#{@puzzle.name}" %>
-
-<script type="text/javascript" charset="utf-8">
-  var userlist = new Array(<%= @chatusers.map {|c| "'#{h c['client_id']}'" }.join(',') %>);
-  user = '<%= current_user.login %>';
-  channel = '<%= @puzzle.chat_id %>';
-  document.observe("dom:loaded", startup);
-</script>
+<%= javascript_include_tag "http://localhost/socket.io/socket.io.js" %>
+<%= javascript_include_tag "socket-users" %>
 
 <div id="mainpage">
 <%= render :partial => "welcome/login" %> 
-<%= render :partial => "connections/test", :locals => { :user => current_or_anon_login, :channel => @puzzle.chat_id } %> 
 
 <div id="info">
   <%= render :partial => 'info', :locals => { :puzzle => @puzzle } %>
@@ -35,4 +33,4 @@
   </div>
 </div>
 </div>
-<%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @puzzle } %>
+<%= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @puzzle, :multi => nil } %>

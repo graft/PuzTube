@@ -23,7 +23,7 @@
         maxlength="1"
         id="<%= workspace.gcell_id(count,i,j) %>"
         onclick="if (grid_set_label(event,'<%= workspace.gcell_id(count,i,j) %>','<%= workspace.id %>')) return false;"
-        onchange="<%= 
+        onchange="$('<%= workspace.gcell_id(count,i,j) %>').addClassName('updating'); <%= 
         remote_function(:url => update_cell_path(:id => workspace.id, :cell => workspace.gcell_id(count,i,j)),
                         :with => "{ text: gcell_value('#{workspace.gcell_id(count,i,j)}') }")
         %>"

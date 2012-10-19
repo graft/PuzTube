@@ -3,6 +3,6 @@ class Topic < ActiveRecord::Base
   has_many :workspaces, :as => :thread, :order => 'priority'
   
   def chat_id
-    "TOP"+id.to_s
+    "topic-#{id}"
   end
 end

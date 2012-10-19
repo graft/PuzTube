@@ -10,18 +10,15 @@ class WorkspaceController < ApplicationController
     @workspace = @thread.workspaces.build({:priority=>"Normal"})
     @workspace.editor = current_or_anon_login
     if @workspace.save
-      text = render_to_string :partial => 'block', :locals => { :workspace => @workspace }
+      Push.send :command => "new workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id
       emit_activity(@thread, "created a workspace") if params[:type] == "puzzle"
-      # again, use juggernaut to do this.
-      Juggernaut.send_to_channel( "create_workspace('#{javascript_escape text}');", @workspace.thread.chat_id )
     end
     render :nothing => true
   end
   
   def delete
-    logger.info "Destroying"
     @workspace = Workspace.find(params[:id])
-    Juggernaut.send_to_channel( "$('#{@workspace.div_id}').remove()", @workspace.thread.chat_id )
+    Push.send :command => "destroy workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.div_id
     @workspace.destroy
     render :nothing => true
   end
@@ -33,15 +30,18 @@ class WorkspaceController < ApplicationController
 
   def show
     @workspace = Workspace.find(params[:id])
-    render :partial => 'show', :locals => { :workspace => @workspace, :yourtext => nil }
+    if (params[:c])
+      render :partial => 'block', :locals => { :workspace => @workspace, :yourtext => nil }
+    else
+      render :partial => 'show', :locals => { :workspace => @workspace, :yourtext => nil }
+    end
   end
 
   def prioritize
     @workspace = Workspace.find(params[:id])
     return false if (params[:workspace][:priority] == @workspace.priority)
     if @workspace.update_attributes(params[:workspace])
-      txt = render_to_string :partial => "show", :locals => { :workspace => @workspace }
-      Juggernaut.send_to_channel("jug_ws_update('#{@workspace.div_id}','#{javascript_escape txt}');", @workspace.thread.chat_id)
+      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id, :container => @workspace.div_id
     end
     render :nothing => true
   end
@@ -54,14 +54,7 @@ class WorkspaceController < ApplicationController
       return false
     elsif @workspace.update_attributes(params[:workspace])
       emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
-      # DON'T update here - use juggernaut to send the request. You need the chat id!
-      txt = render_to_string :partial => "show", :locals => { :workspace => @workspace }
-      Juggernaut.send_to_channel("jug_ws_update('#{@workspace.div_id}','#{javascript_escape txt}');", @workspace.thread.chat_id)
-      #render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
-      #  page << "jug_ws_update('#{@workspace.div_id}','#{javascript_escape txt}');"
-      #end
-      render :text => txt
-      return false
+      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id, :container => @workspace.div_id
     end
     render :nothing => true
   end
@@ -72,19 +65,17 @@ class WorkspaceController < ApplicationController
     if m = params[:cell].match(/WS[0-9]*_TB([0-9]*)_([0-9]*)_([0-9]*)/)
       table,row,col = m.captures.map{|i|i.to_i}
       update_table(@workspace,table,row,col,params[:text])
-      rstr = "update_table_cell('#{params[:cell]}','#{javascript_escape params[:text]}','#{@workspace.table_id(table)}');"
+      puts "Table text is |#{params[:text]}|"
+      Push.send :command => "update table cell", :channel => @workspace.thread.chat_id, :cell => params[:cell], :text => javascript_escape(params[:text]), :table => @workspace.table_id(table)
     elsif m = params[:cell].match(/WS[0-9]*_GR([0-9]*)_([0-9]*)_([0-9]*)/)
       grid,row,col = m.captures.map{|i|i.to_i}
       update_grid(@workspace,grid,row,col,params[:text])
-      rstr = "update_grid_cell('#{params[:cell]}','#{javascript_escape params[:text]}');"
+      Push.send :command => "update grid cell", :channel => @workspace.thread.chat_id, :cell => params[:cell], :text => javascript_escape(params[:text])
     else
       render :nothing => true
       return
     end
     emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
-    render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
-        page << rstr
-    end
     render :nothing => true
   end
 
@@ -96,10 +87,7 @@ class WorkspaceController < ApplicationController
 
     if rows
       emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
-      txt = render_to_string :partial => 'workspace/table', :locals => { :workspace => @workspace, :count => params[:table], :rows => rows, :show_div => false }
-      render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
-          page << "if ($('#{@workspace.tdiv_id(table)}')) $('#{@workspace.tdiv_id(table)}').update('#{javascript_escape txt}'); update_table('#{@workspace.table_id(table)}');"
-      end
+      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id, :container => @workspace.div_id
     end
     render :nothing => true;
   end
@@ -110,14 +98,7 @@ class WorkspaceController < ApplicationController
     @asset = @workspace.assets.build(params[:asset])
     if @asset.save
       text = render_to_string :partial => 'asset', :locals => { :asset=> @asset }
-      # again, use juggernaut to do this.
-      render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
-        page << "insert_asset('#{@workspace.div_id}','#{javascript_escape text}');"
-      end
-    else
-      render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
-        page << "alert('failed for some reason');"
-      end
+      Push.send :command => "new asset", :channel => @workspace.thread.chat_id, :workspace => @workspace.div_id, :text => text
     end
     render :nothing => true
   end
@@ -125,9 +106,7 @@ class WorkspaceController < ApplicationController
   def delete_attachment
     @asset = Asset.find(params[:id])
     @workspace = Workspace.find(@asset.workspace_id)
-    render :juggernaut => { :type => :send_to_channel, :channel => @workspace.thread.chat_id } do |page|
-      page << "delete_asset('#{@workspace.div_id}','#{@asset.id}');"
-    end
+    Push.send :command => "destroy attachment", :channel => @workspace.thread.chat_id, :workspace => @workspace.div_id, :asset => @asset.id
     @asset.destroy
     render :nothing => true
   end

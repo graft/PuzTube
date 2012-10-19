@@ -1,0 +1,35 @@
+<!-- okay this is the chat window. it contains a set of tab panes that can be activated by the thingy-dingy -->
+
+<script type="text/javascript">
+socket = io.connect('http://localhost', { port: 80 });
+
+socket.on('connected', function (data) {
+  if ($('chatform')) $('chatform').enable();
+  if ($('editables')) $('editables').removeClassName("hidden");
+  socket.emit('nick',user);
+  socket.emit('join',channel, function (userlist) {
+  userlist.each(function(u){
+    subscribe_user(u,true);
+  });
+  update_users();
+});
+});
+socket.on('chat',function (msg,user) {
+  if (msg.channel && $('chat-'+msg.channel)) {
+    $('chat-'+msg.channel).firstDescendant().insert({ bottom: msg.text});
+    scrollChat();
+    blinkTitle();
+    if (msg.user) subscribe_user(msg.user,false);
+  }
+});
+socket.on('joined',function (user) {
+  subscribe_user(user,false);
+});
+socket.on('left',function (user) {
+  unsubscribe_user(user);
+});
+</script>
+
+<div id="tabs">
+</div>
+

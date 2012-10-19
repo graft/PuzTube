@@ -7,14 +7,17 @@ class Round < ActiveRecord::Base
   PRIORITY_OPTIONS = { "High" => 0, "Normal" => 1, "Low" => 2 }
 
   def chat_id
-    "RND"+id.to_s
+    "round-#{id}"
   end
 
   def div_id
-    "ROUND#{id}"
+    "rnd-#{id}"
   end
   def t_id
-    "RNT"+id.to_s
+    "rnt-#{id}"
+  end
+  def puzzle_table_id
+    "rpt-#{id}"
   end
   def priority_color
     case priority

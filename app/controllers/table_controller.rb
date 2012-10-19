@@ -10,19 +10,13 @@ class TableController < ApplicationController
     @table = @thread.tables.build({:priority=>"Normal"})
     @table.editor = current_or_anon_login
     create_table(@table,5,2)
-    if @table.save
-      emit_activity(@thread, "created a table") if params[:type] == "puzzle"
-      text = render_to_string :partial => 'block', :locals => { :table => @table }
-      # again, use juggernaut to do this.
-      Juggernaut.send_to_channel( "create_workspace('#{javascript_escape text}'); init_table('#{@table.t_id}');", @table.thread.chat_id )
-    end
+    @table.save
     render :nothing => true
   end
   
   def delete
     logger.info "Destroying"
     @table = Table.find(params[:id])
-    Juggernaut.send_to_channel( "$('#{@table.div_id}').remove()", @table.thread.chat_id )
     @table.destroy
     render :nothing => true
   end
@@ -43,20 +37,12 @@ class TableController < ApplicationController
     @tablecell.contents = params[:text]
     @tablecell.save
     emit_activity(@tablecell.table.thread,"edited workspace #{@tablecell.table.title}") if @tablecell.table.thread_type == "Puzzle"
-
-    render :juggernaut => { :type => :send_to_channel, :channel => params[:channel] } do |page|
-        page << "if ($('#{@tablecell.t_id}')) $('#{@tablecell.t_id}').value='#{javascript_escape @tablecell.contents}'; update_table('TB#{@tablecell.table_id}');"
-    end
     render :nothing => true
   end
 
   def prioritize
     @table = Table.find(params[:id])
     return false if (params[:table][:priority] == @table.priority)
-    if @table.update_attributes(params[:table])
-      txt = render_to_string :partial => "show", :locals => { :table => @table }
-      Juggernaut.send_to_channel("jug_table_update('#{@table.div_id}','#{javascript_escape txt}','#{@table.t_id}');", @table.thread.chat_id)
-    end
     render :nothing => true
   end
 
@@ -67,12 +53,6 @@ class TableController < ApplicationController
     end
     
     if @table.update_attributes(params[:table])
-        # DON'T update here - use juggernaut to send the request. You need the chat id!
-      txt = render_to_string :partial => "show", :locals => { :table => @table }
-      Juggernaut.send_to_channel("jug_table_update('#{@table.div_id}','#{javascript_escape txt}','#{@table.t_id}');", @table.thread.chat_id)
-      #render :juggernaut => { :type => :send_to_channel, :channel => @table.thread.chat_id } do |page|
-      #  page << "jug_ws_update('#{@table.div_id}','#{javascript_escape txt}');"
-      #end
     end
     render :nothing => true
   end
@@ -84,11 +64,7 @@ class TableController < ApplicationController
     else
       add_column(@table)
     end
-    if @table.save
-      text = render_to_string :partial => 'show', :locals => { :table => @table, :update => true }
-      # again, use juggernaut to do this.
-      Juggernaut.send_to_channel( "jug_table_update('#{@table.div_id}','#{javascript_escape text}','#{@table.t_id}');", @table.thread.chat_id )
-    end
+    @table.save
     render :nothing => true
   end
 end

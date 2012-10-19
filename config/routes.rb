@@ -7,6 +7,7 @@ ActionController::Routing::Routes.draw do |map|
   map.edit_puzzle '/puzzles/edit/:id', :controller => 'puzzles', :action => 'edit'
   map.update_puzzle '/puzzles/update/:id', :controller => 'puzzles', :action => 'update'
   map.new_puzzle '/puzzles/new/:id', :controller => 'puzzles', :action => 'new'
+  map.info_puzzle '/puzzles/info', :controller => 'puzzles', :action => 'info'
   map.worker_puzzle '/puzzles/worker/:id', :controller => 'puzzles', :action => 'worker'
   map.puzzle '/puzzles/:id', :controller => 'puzzles', :action => 'show'
 
@@ -27,6 +28,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :chats
   map.chat_log 'chats/log/:channel', :controller => 'chats', :action => 'log'
+  map.chat_window 'chats/window/:channel', :controller => 'chats', :action => 'window'
   map.broadcasts '/broadcasts', :controller => 'chats', :action => 'broadcasts'
 
   map.resources :rounds

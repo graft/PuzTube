@@ -84,6 +84,10 @@ class ChatsController < ApplicationController
       @thread = Topic.find(params[:thread])
     end
   end
+  
+  def window
+    @chats = Chat.find(:all, :conditions => { :chat_id => params[:channel] }, :order => "created_at DESC", :limit => 35)
+  end
 
   # DELETE /chats/1
   # DELETE /chats/1.xml

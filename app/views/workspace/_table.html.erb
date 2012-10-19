@@ -19,7 +19,7 @@
       <input name="text" class="inpi"
         autocomplete="off"
         id="<%= workspace.cell_id(count,i,j) %>"
-        onchange="<%= 
+        onchange="$('<%= workspace.cell_id(count,i,j) %>').addClassName('updating'); <%= 
         remote_function(:url => update_cell_path(:id => workspace.id, :cell => workspace.cell_id(count,i,j)), :with => "Form.Element.serialize($('#{workspace.cell_id(count,i,j)}'))")
         %>"
         onkeypress="table_navigate(event,<%= "#{i},#{j},#{rows.length},'#{workspace.table_id(count)}'" %>);"

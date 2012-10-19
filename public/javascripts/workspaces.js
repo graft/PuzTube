@@ -52,11 +52,6 @@ function create_workspace(txt) {
   sortWorkspaces();
 }
 
-function jug_table_update(dv,txt,tid) {
-  jug_ws_update(dv,txt);
-  init_table(tid);
-}
-
 function jug_ws_update(dv,txt) {
   if ($(dv)) {
     if ($(dv+'.editing')) {
