@@ -9,12 +9,12 @@
   </div>
   <div style="padding: 5px;">
     <h2><%= link_to round.name, round, :target => "_blank" %></h2> 
-    <b>Url: <%=auto_link round.url, :html => { :target => '_blank' } %></b><br>
+    <b>Url: <%=link_to round.url, :html => { :target => '_blank' } %></b><br>
     <b>Priority: <%=h round.priority %></b><br>
     <b>Hint: <%=h round.hint %></b><br>
     <b>Captain: <%=h round.captain %></b><br>
     <b>Answer: <%=h round.answer %></b><br>
-  <% form_remote_tag(
+    <%= form_tag( :remote => true,
                   :url => { :action => 'edit_row', :controller => 'puzzles' },
                   :method => :put,
                   :html => { :id => "r#{round.id}.form" } ) do %>
@@ -30,7 +30,7 @@
   <% end %>
 
   <% if current_user.team_captain || round.captain == current_user.login %>
-  <%= link_to_remote 'Add puzzle', :url => create_rpuzzle_path(:id => round.id) %> <br>
+    <%= link_to 'Add puzzle', :remote => true, :url => create_rpuzzle_path(:id => round.id) %> <br>
   <% end %>
 
   <table class="puzzletable">

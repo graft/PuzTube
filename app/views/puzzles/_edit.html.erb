@@ -1,4 +1,4 @@
-<% form_remote_for @puzzle, :url => update_puzzle_url(@puzzle) do |f| %>
+<% form_for @puzzle, :remote => true, :url => update_puzzle_url(@puzzle) do |f| %>
   <%= f.error_messages %>
   <p>
     <b><%= f.label :name %>:</b>
@@ -27,4 +27,4 @@
 
 <div id="statusblock" class="statusblock" style="background-color: <%= @puzzle.status_color %>;"></div>
 
-<%= link_to_remote 'Show', :url => { :action => 'info', :id => @puzzle.id }, :method => 'get', :update => 'info' %>
+<%= link_to 'Show', :remote => true, :url => { :action => 'info', :id => @puzzle.id }, :method => 'get', :update => 'info' %>

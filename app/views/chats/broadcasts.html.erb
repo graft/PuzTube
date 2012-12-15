@@ -14,7 +14,7 @@
     <td><%=h chat.text %></td>
     <td><%= link_to 'Edit', edit_chat_path(chat) %></td>
     <% if current_user.team_captain %>
-    <td><%= link_to_remote 'Destroy', :url => { :id => chat.id, :controller => 'chats', :action => 'destroy' }, :confirm => 'Are you sure?', :method => :delete %></td>
+      <td><%= link_to 'Destroy', :remote => true, :url => { :id => chat.id, :controller => 'chats', :action => 'destroy' }, :confirm => 'Are you sure?', :method => :delete %></td>
     <% end %>
   </tr>
 <% end %>

@@ -8,4 +8,4 @@
   <td class="med"><%= check_box_tag @puzzle.t_id+".meta", '1', @puzzle.meta %></td>
   <td class="med"><%= text_field_tag @puzzle.t_id+".answer", @puzzle.answer %></td>
   <td class="med"><%= link_to_function 'Update', "javascript: update_and_submit('#{@puzzle.t_id}','#{@puzzle.id}','r#{@puzzle.round_id}','name,url,hint,captain,meta,answer,status,priority')" %></td>
-  <td class="med"><%= link_to_remote 'Cancel', :url => { :action => 'info', :controller => 'puzzles', :id => @puzzle.id, :type => 'mini' }, :update => @puzzle.t_id %></td>
+  <td class="med"><%= link_to 'Cancel', :remote => true, :url => { :action => 'info', :controller => 'puzzles', :id => @puzzle.id, :type => 'mini' }, :update => @puzzle.t_id %></td>

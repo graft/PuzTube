@@ -4,6 +4,6 @@
 <% if asset.file_content_type =~ /mpeg/ %>
   <%= render :partial => 'workspace/mp3player', :locals => { :mp3 => asset.file.url } %>
 <% end %>
-<div style="float: right;"><%= link_to_remote 'X', :url => delete_attachment_path(:id => asset.id), :confirm => "Are you sure (the file will not be destroyed)?" %></div>
+<div style="float: right;"><%= link_to 'X', :remote => true, :url => delete_attachment_path(:id => asset.id), :confirm => "Are you sure (the file will not be destroyed)?" %></div>
 </div>
 <%end%>

@@ -1,5 +1,5 @@
 <span id="hide_graph" class="button graphbutton" style="<%= shown ? "" : "display:none" %>"><%= link_to_function 'Hide', "hideGraph();" %></a></span>
-<span id="reload_graph" class="button graphbutton" style="right:45px; <%= shown ? "" : "display:none" %>"><%= link_to_remote '&#8634;',
+<span id="reload_graph" class="button graphbutton" style="right:45px; <%= shown ? "" : "display:none" %>"><%= link_to '&#8634;', :remote => true,
   :url => stats_path(:id=>hunt.id), :method => 'get', :update => "statbox" %></span>
 <span id="show_graph" class="button graphbutton" style="<%= shown ? "display:none" : "" %>"><%= link_to_function 'Show', "showGraph();" %></span>
 

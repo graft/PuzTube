@@ -1,19 +1,30 @@
 <div class=" priority_<%= workspace.priority %>">
- <div class="<%= workspace.title_class %>">
-  <div class="title_left">
-    <%= render :partial => 'layouts/edit_controls',   :locals => {        :edit_path => edit_workspace_path(:id => workspace.id), 
-        :show_path => show_workspace_path(:id => workspace.id),
-        :update_id => workspace.div_id,
-        :delete_path => delete_workspace_path(:id => workspace.id),
-        :title => workspace.title } %>
+  <div class="<%= workspace.title_class %>">
+    <div class="title_left">
+      <%= render :partial => 'layouts/edit_controls',   :locals => {
+          :edit_path => edit_workspace_path(:id => workspace.id),
+          :show_path => show_workspace_path(:id => workspace.id),
+          :update_id => workspace.div_id,
+          :delete_path => delete_workspace_path(:id => workspace.id),
+          :title => workspace.title } %>
+    </div>
+    <div class="title_right">
+      Updated <%= relative_time workspace.updated_at %> by <%= workspace.editor %>
+      <%= form_for workspace, 
+        :url => prioritize_workspace_path(:id => workspace.id),
+        :remote => true, 
+        :html => {
+        :class => 'iform', 
+        :id => workspace.div_id + '.prio', 
+        :autocomplete => 'off' } do %>
+          <%= select :workspace, 
+            :priority, 
+            options_for_select(Workspace.priorities,workspace.priority),
+            { :id => workspace.div_id + '.priobox' },
+            {:onchange => "$('#{workspace.div_id}.prio').onsubmit()"} %>
+      <% end %>
+    </div>
   </div>
-  <div class="title_right">
-    Updated <%= relative_time workspace.updated_at %> by <%= workspace.editor %>
-   <% form_remote_for workspace, :url => prioritize_workspace_path(:id => workspace.id), :html => { :class => 'iform', :id => workspace.div_id + '.prio', :autocomplete => 'off' } do %>
-      <%= select :workspace, :priority, options_for_select(Workspace.priorities,workspace.priority),{ :id => workspace.div_id + '.priobox' }, {:onchange => "$('#{workspace.div_id}.prio').onsubmit()"} %>
-    <% end %>
-  </div>
-</div>
 
 <% if workspace.priority != "Useless" %>
   <div class="rounded_content">

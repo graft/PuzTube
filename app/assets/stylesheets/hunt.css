@@ -1,0 +1,28 @@
+.hunt_active {
+	background-color: #cfc;
+}
+.hunt_inactive {
+	background-color: #fcc;
+}
+
+.puzzletable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.puzzletable td {
+  border: 2px solid #354;
+  padding: 2px;
+}
+
+.statusblock {
+  margin: 0px;
+  z-index: -1;
+  position:fixed; 
+  top:0;
+  left: 0;
+  width:100%; 
+  height:100%; 
+  background-color:#a0c; 
+  opacity: 0.55; 
+}

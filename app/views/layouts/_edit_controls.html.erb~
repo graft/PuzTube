@@ -1,0 +1,8 @@
+<b><%= link_to 'Edit', {:url => edit_path}, :method => 'get',  :remote => true, :update => update_id %></b>
+| <b><%= link_to '&#8634;', :remote => true, :url => show_path, :method => 'get', :update => update_id %></b>
+<% if current_user && current_user.team_captain %>
+  | <b><%= link_to '&#9746;', :url => delete_path,  :remote => true, :confirm => 'Are you sure?' %></b>
+<% end %>
+<% if title %>
+   | <b> <%= h title %> </b>
+<% end %>

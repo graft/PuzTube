@@ -1,0 +1,35 @@
+.updating {
+  background-color: #cf9 !important;
+}
+
+.tableadd {
+  text-decoration: none;
+  font-size: smaller;
+  font-weight: bold;
+  color: #804;
+}
+
+.sorter {
+  display:inline;
+/*   font-size: 18pt; */
+  margin: 0px;
+  padding: 0px;
+}
+
+.inp {
+}
+
+.inpi {
+	font-family: monospace;
+}
+
+.calc {
+  padding-left: 2px;
+}
+
+.med input {
+  color: #715;
+  border: 1px solid #715;
+  width: 100%;
+  height: 100%;
+}

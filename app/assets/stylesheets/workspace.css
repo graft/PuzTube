@@ -1,0 +1,35 @@
+.workspace {
+  background-color: #f4ffaa; 
+}
+
+.title_left {
+ padding:2px;
+ float:left;
+}
+.title_left a {
+  text-decoration: none;
+}
+.title_right {
+  float:right;
+  padding:2px;
+}
+
+.priority_Normal .rounded_title, .rounded_box {
+  background-color: #568;
+}
+.priority_Normal .rounded_content {
+  background-color: #bcd;
+}
+.priority_Normal .asset {
+  background-color: #667;
+}
+
+.priority_Useless .rounded_title, .rounded_box {
+  background-color: #a8a;
+}
+.priority_Useless .rounded_content {
+  background-color: #fcf;
+}
+.priority_Useless .asset {
+  background-color: #545;
+}

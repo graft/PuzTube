@@ -1,11 +1,12 @@
 <div style="padding: 5px;">
     <h2><%=h round.name %></h2> 
-    <b>Url: <%=auto_link round.url, :html => { :target => '_blank' } %></b><br>
+    <b>Url: <%=link_to round.url, :html => { :target => '_blank' } %></b><br>
     <b>Hint: <%=h round.hint %></b><br>
     <b>Captain: <%=h round.captain %></b><br>
     <b>Priority: <%=h round.priority %></b><br>
     <b>Answer: <%=h round.answer %></b><br>
-  <% form_remote_tag(
+  <%= form_tag(
+                  :remote => true,
                   :url => { :action => 'edit_row', :controller => 'puzzles' },
                   :method => :put,
                   :html => { :id => "r#{round.id}.form" } ) do %>

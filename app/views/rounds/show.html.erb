@@ -12,7 +12,7 @@
 <%= javascript_include_tag "resize" %>
 <%= javascript_include_tag "workspaces" %>
 <%= javascript_include_tag "tablekit" %>
-<%= javascript_include_tag "http://localhost/socket.io/socket.io.js" %>
+<%= javascript_include_tag "http://localhost:5000/socket.io/socket.io.js" %>
 <%= javascript_include_tag "socket-users" %>
 
 <%= render :partial => "welcome/login" %> 
@@ -20,7 +20,7 @@
 <%= render :partial => 'info', :locals => { :round => @round } %>
 </div>
 <div id="editables" class="hidden">
-<%= link_to_remote 'New Comment', :url => new_workspace_path(:type => 'round', :id => @round.id), :method => :post %>
+  <%= link_to 'New Comment', :remote => true, :url => new_workspace_path(:type => 'round', :id => @round.id), :method => :post %>
 <div id="comments">
 <% @round.workspaces.each do |ws| %>
   <%= render :partial => 'workspace/block', :locals => { :workspace => ws } %>

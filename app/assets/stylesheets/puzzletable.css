@@ -1,0 +1,33 @@
+.pzt_head {
+  margin: 0px;
+  padding: 0px 1px;
+  height: 20px;
+  text-align: left;
+  font-size: 12px;
+}
+
+.pzt_row {
+  margin: 0px;
+  padding: 0px;
+  height: 20px;
+}
+
+.pzt_head textarea, .pzt_head input
+{
+  color: #715;
+  background-color: transparent;
+  border: 0px solid #715;
+  padding:0px;
+  margin:0px;
+  height: 100%;
+  width: 75%;
+}
+
+.pzt_row textarea, .pzt_row input
+{
+  color: #715;
+  background-color: transparent;
+  border: 0px solid #715;
+  width: 100%;
+  height: 100%;
+}

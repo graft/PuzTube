@@ -7,7 +7,7 @@
       <div class="title_left" id="<%= table.div_id %>.conflict"></div>
   </div>
   <div class="rounded_content" id="<%= table.div_id %>.edit">
-<% form_remote_for(table, :url => update_table_path(:id => table.id), :method => :put, :html => { :id => table.form_id } ) do |f| %>
+    <% form_for(table, :remote => true, :url => update_table_path(:id => table.id), :method => :put, :html => { :id => table.form_id } ) do |f| %>
     <p>
     Title:<br>
     <%= f.text_field :title %><br>

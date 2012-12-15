@@ -1,7 +1,7 @@
 <!-- okay this is the chat window. it contains a set of tab panes that can be activated by the thingy-dingy -->
 
 <script type="text/javascript">
-socket = io.connect('http://localhost', { port: 80 });
+socket = io.connect('http://localhost', { port: 5000 });
 
 socket.on('connected', function (data) {
   if ($('chatform')) $('chatform').enable();

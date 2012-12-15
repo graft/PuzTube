@@ -1,6 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 require 'digest/sha1'
 require 'csv'
+#require 'push'
 
 module ApplicationHelper
   include ActionView::Helpers::TextHelper
@@ -34,8 +35,9 @@ module ApplicationHelper
   end
   
   def sanitize_text(str)
-    ActionController::Base.helpers.sanitize(
-      ActionController::Base.helpers.auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
+    str
+    #ActionController::Base.helpers.sanitize(
+      #ActionController::Base.helpers.auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
   end
 
   def current_or_anon_login
@@ -131,7 +133,7 @@ module ApplicationHelper
     text.gsub!(/<pre(\d+)>/) { |c| pre[$1.to_i] } if OPTIONS[:pre]
     text.gsub!(/<table(\d+)>/) { |c| tables[$1.to_i] } if OPTIONS[:tab]
     # restore tag contents
-    text.gsub(/<(\d+)>/) { |m| "<#{tags[$1.to_i]}>" }
+    text.gsub(/<(\d+)>/) { |m| "<#{tags[$1.to_i]}>" }.html_safe
   end
   
   def expand(rows)

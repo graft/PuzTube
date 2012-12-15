@@ -1,70 +1,69 @@
-ActionController::Routing::Routes.draw do |map|
-  map.resources :hunts
-  map.stats '/hunts/stats/:id', :controller => 'hunts', :action => 'stats'
+Puztube2::Application.routes.draw do
+  resources :hunts
+  match '/hunts/stats/:id' => 'hunts#stats', :as => :stats
+  match '/puzzles/edit_row' => 'puzzles#edit_row', :as => :edit_puzzlerow
+  match '/puzzles/delete/:id' => 'puzzles#destroy', :method => :delete, :as => :delete_puzzle
+  match '/puzzles/edit/:id' => 'puzzles#edit', :as => :edit_puzzle
+  match '/puzzles/update/:id' => 'puzzles#update', :as => :update_puzzle
+  match '/puzzles/new/:id' => 'puzzles#new', :as => :new_puzzle
+  match '/puzzles/info' => 'puzzles#info', :as => :info_puzzle 
+  match '/puzzles/worker/:id' => 'puzzles#worker', :as => :worker_puzzle 
+  match '/puzzles/:id' => 'puzzles#show', :as => :puzzle 
+  match '/puzzles/chat/:id' => 'puzzles#chat', :as => :puzzle_chat
+
+  match '/rounds/create_puzzle' => 'rounds#create_puzzle', :as => :create_rpuzzle 
+  match '/hunts/new_round/:id' => 'hunts#new_round', :as => :new_round 
+  match '/rounds/delete/:id' => 'rounds#destroy', :method => :delete, :as => :delete_round 
+  match '/rounds/edit/:id' => 'rounds#edit', :as => :edit_round 
+  match '/rounds' => 'rounds#index', :as => :rounds 
+
+  match '/round/info' => 'rounds#info', :as => :info_round 
+  match '/round/:id' => 'rounds#show', :as => :round 
+
+  match '/users/options' => 'users#options', :as => :options_user 
+  match '/login' => 'users#login', :as => :login 
+  match '/welcome' => 'welcome#login', :as => :welcome 
   
-  map.edit_puzzlerow '/puzzles/edit_row', :controller => 'puzzles', :action => 'edit_row'
-  map.delete_puzzle '/puzzles/delete/:id', :controller => 'puzzles', :action => 'destroy', :method => :delete
-  map.edit_puzzle '/puzzles/edit/:id', :controller => 'puzzles', :action => 'edit'
-  map.update_puzzle '/puzzles/update/:id', :controller => 'puzzles', :action => 'update'
-  map.new_puzzle '/puzzles/new/:id', :controller => 'puzzles', :action => 'new'
-  map.info_puzzle '/puzzles/info', :controller => 'puzzles', :action => 'info'
-  map.worker_puzzle '/puzzles/worker/:id', :controller => 'puzzles', :action => 'worker'
-  map.puzzle '/puzzles/:id', :controller => 'puzzles', :action => 'show'
+  resources :users
+  match '/users/:name' => 'users#show', :as => :connect 
 
-  map.create_rpuzzle '/rounds/create_puzzle', :controller => 'rounds', :action => 'create_puzzle'
-  map.new_round '/hunts/new_round/:id', :controller => 'hunts', :action => 'new_round'
-  map.delete_round '/rounds/delete/:id', :controller => 'rounds', :action => 'destroy', :method => :delete
-  map.edit_round '/rounds/edit/:id', :controller => 'rounds', :action => 'edit'
-  map.rounds '/rounds', :controller => 'rounds', :action => 'index'
+  resources :chats
+  match '/chats/log/:channel' => 'chats#log', :as => :chat_log 
+  match '/chats/window/:channel' => 'chats#window', :as => :chat_window 
+  match '/broadcasts' => 'chats#broadcasts', :as => :broadcasts 
 
-  map.info_round '/round/info', :controller => 'rounds', :action => 'info'
-  map.round '/round/:id', :controller => 'rounds', :action => 'show'
+  resources :rounds
 
-  map.options_user '/users/options', :controller => 'users', :action => 'options'
-  map.login '/login', :controller => 'users', :action => 'login'
-  
-  map.resources :users
-  map.connect '/users/:name', :controller => 'users', :action => 'show'
+  match '/connections/subscribe' => 'connections#subscribe', :as => :subscribe 
+  match '/connections/unsubscribe' => 'connections#unsubscribe', :as => :unsubscribe 
 
-  map.resources :chats
-  map.chat_log 'chats/log/:channel', :controller => 'chats', :action => 'log'
-  map.chat_window 'chats/window/:channel', :controller => 'chats', :action => 'window'
-  map.broadcasts '/broadcasts', :controller => 'chats', :action => 'broadcasts'
+  match '/topic/:name/edit' => 'topics#edit', :as => :edit_topic 
+  match '/topic/:name' => 'topics#update', :method => :put, :as => :update_topic
+  match '/topic/new' => 'topics#new', :as => :new_topic 
+  match '/topic' => 'topics#create', :method => :post, :as => :create_topic 
+  match '/topic/:name' => 'topics#destroy', :method => :delete, :as => :destroy_topic 
+  match '/topics' => 'topics#index', :as => :topics 
+  match '/topic/show/:name' => 'topics#show', :as => :topic 
+  match '/topics/chat/:id' => 'topics#chat', :as => :topic_chat
 
-  map.resources :rounds
+  match '/workspace/new_attachment' => 'workspace#new_attachment', :conditions => { :method => :post }, :as => :new_attachment 
+  match '/workspace/delete_attachment' => 'workspace#delete_attachment', :as => :delete_attachment 
 
-  map.subscribe '/connections/subscribe', :controller => 'connections', :action => 'subscribe'
-  map.unsubscribe '/connections/unsubscribe', :controller => 'connections', :action => 'unsubscribe'
+  match '/workspace/new' => 'workspace#new', :conditions => { :method => :post }, :as => :new_workspace 
+  match '/workspace/delete' => 'workspace#delete', :as => :delete_workspace 
+  match '/workspace/prioritize' => 'workspace#prioritize', :as => :prioritize_workspace 
+  match '/workspace/edit' => 'workspace#edit', :as => :edit_workspace 
+  match '/workspace/show' => 'workspace#show', :as => :show_workspace 
+  match '/workspace/update' => 'workspace#update', :as => :update_workspace 
 
-  map.edit_topic 'topic/:name/edit', :controller => 'topics', :action => 'edit'
-  map.update_topic 'topic/:name', :controller => 'topics', :action => 'update', :conditions => { :method => :put }
-  map.new_topic 'topic/new', :controller => 'topics', :action => 'new'
-  map.create_topic 'topic', :controller => 'topics', :action => 'create', :conditions => { :method => :post }
-  map.destroy_topic 'topic/:name', :controller => 'topics', :action => 'destroy', :conditions => { :method => :delete }
-  map.topics 'topics', :controller => 'topics', :action => 'index'
-  map.topic 'topic/:name', :controller => 'topics', :action => 'show'
+  match '/table/new' => 'table#new', :conditions => { :method => :post }, :as => :new_table
+  match '/table/delete' => 'table#delete', :as => :delete_table 
+  match '/table/prioritize' => 'table#prioritize', :as => :prioritize_table 
+  match '/table/edit' => 'table#edit', :as => :edit_table 
+  match '/table/show' => 'table#show', :as => :show_table 
+  match '/table/update' => 'table#update', :as => :update_table 
+  match '/workspace/update_cell' => 'workspace#update_cell', :as => :update_cell 
+  match '/workspace/rc' => 'workspace#add_rc', :as => :add_rc 
 
-
-  map.new_attachment 'workspace/new_attachment', :controller => 'workspace', :action => 'new_attachment', :conditions => { :method => :post }
-  map.delete_attachment 'workspace/delete_attachment', :controller => 'workspace', :action => 'delete_attachment'
-
-  map.new_workspace 'workspace/new', :controller => 'workspace', :action => 'new', :conditions => { :method => :post }
-  map.delete_workspace 'workspace/delete', :controller => 'workspace', :action => 'delete'
-  map.prioritize_workspace 'workspace/prioritize', :controller => 'workspace', :action => 'prioritize'
-  map.edit_workspace 'workspace/edit', :controller => 'workspace', :action => 'edit'
-  map.show_workspace 'workspace/show', :controller => 'workspace', :action => 'show'
-  map.update_workspace 'workspace/update', :controller => 'workspace', :action => 'update'
-
-  map.new_table 'table/new', :controller => 'table', :action => 'new', :conditions => { :method => :post }
-  map.delete_table 'table/delete', :controller => 'table', :action => 'delete'
-  map.prioritize_table 'table/prioritize', :controller => 'table', :action => 'prioritize'
-  map.edit_table 'table/edit', :controller => 'table', :action => 'edit'
-  map.show_table 'table/show', :controller => 'table', :action => 'show'
-  map.update_table 'table/update', :controller => 'table', :action => 'update'
-  map.update_cell 'workspace/update_cell', :controller => 'workspace', :action => 'update_cell'
-  map.add_rc 'workspace/rc', :controller => 'workspace', :action => 'add_rc'
-  map.root :controller => 'topics', :action => 'show', :name => 'Project Electric Mayhem'
-
-  map.connect ':controller/:action/:id'
-  map.connect ':controller/:action'
+  root :to => 'topics#show', :name => 'Project Electric Mayhem'
 end

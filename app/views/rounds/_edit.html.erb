@@ -6,7 +6,8 @@
     </div>
   </div>
   <div style="padding: 5px;">
-  <% form_remote_for(round,
+  <% form_for(round,
+                  :remote => true,
                   :url => { :action => 'update', :controller => 'rounds', :id => round.id },
                   :method => :put,
                   :html => { :id => "r#{round.id}.update" } ) do |f| %>

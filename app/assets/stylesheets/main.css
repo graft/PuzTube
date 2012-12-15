@@ -1,0 +1,19 @@
+#mainpage {
+  width: 72%;
+}
+
+#statbox {
+position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;background-color: #fff;
+}
+
+.graphbutton {
+position: absolute; right:5px; top: 2px; padding:2px; background-color: #ccc;
+}
+
+#stats {
+position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
+}
+
+.iform {
+	display: inline;
+}

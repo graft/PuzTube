@@ -1,0 +1,45 @@
+.gridcell {
+  margin: 0px;
+  padding: 0px;
+  width: 14px;
+  height: 14px;
+  font-size: 8px;
+  text-align: center;
+  background-color: #fff;
+  line-height: 0px;
+}
+
+.gridhead {
+	background-color: #ccf;
+}
+
+.gridinput {
+  color: #715;
+  background-color: transparent;
+  border: 0px solid #715;
+  text-align: center;
+  line-height: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0px; margin: 0px;
+  position:relative;
+}
+
+.gridlabel {
+	width:100%;
+	height:100%;
+	color: #444;
+	position: absolute;
+	top: 4px;
+	text-align: left;
+	word-wrap: break-word;
+}
+
+.grid_black { background-color: #000; color: #000; }
+.grid_brown { background-color: #853; color: #853; }
+.grid_red { background-color: #f66; color: #f66; }
+.grid_orange { background-color: #fb6; color: #fb6; }
+.grid_yellow { background-color: #ff6; color: #ff6; }
+.grid_green { background-color: #6f6; color: #6f6; }
+.grid_blue { background-color: #66f; color: #66f; }
+.grid_purple { background-color: #f6f; color: #f6f; }
