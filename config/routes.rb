@@ -1,11 +1,10 @@
 Puztube2::Application.routes.draw do
   resources :hunts
   match '/hunts/stats/:id' => 'hunts#stats', :as => :stats
-  match '/puzzles/edit_row' => 'puzzles#edit_row', :as => :edit_puzzlerow
+  match '/puzzles/edit_row' => 'puzzles#edit_row', :method => :post, :as => :edit_puzzlerow
   match '/puzzles/delete/:id' => 'puzzles#destroy', :method => :delete, :as => :delete_puzzle
   match '/puzzles/edit/:id' => 'puzzles#edit', :as => :edit_puzzle
   match '/puzzles/update/:id' => 'puzzles#update', :as => :update_puzzle
-  match '/puzzles/new/:id' => 'puzzles#new', :as => :new_puzzle
   match '/puzzles/info' => 'puzzles#info', :as => :info_puzzle 
   match '/puzzles/worker/:id' => 'puzzles#worker', :as => :worker_puzzle 
   match '/puzzles/:id' => 'puzzles#show', :as => :puzzle 
@@ -22,6 +21,7 @@ Puztube2::Application.routes.draw do
 
   match '/users/options' => 'users#options', :as => :options_user 
   match '/login' => 'users#login', :as => :login 
+  match '/logout' => 'welcome#logout', :as => :logout 
   match '/welcome' => 'welcome#login', :as => :welcome 
   
   resources :users

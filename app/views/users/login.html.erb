@@ -4,10 +4,9 @@
   <p>Who are you?</p>
   <%= form_tag welcome_path, :class => 'iform', :id => 'login_form', :autocomplete => 'off' do %>
     <%= select :user, :login, 
-      [ 'Please select', '' ] + 
-      User.all(:order=> "login ASC").collect {|u| [ u.login, u.login ]},
-      { :include_blank => nil }, 
-      {:onchange => "$('login_form').submit()"} %>
+      User.list,
+      {:prompt => 'Please select'},
+      {:'data-change-submit' => 'login_form'} %>
     <p>or</p>
     <%= link_to 'sign up', { :action => 'new', :controller => 'users' }, :target => '_blank' %>
   <% end %>

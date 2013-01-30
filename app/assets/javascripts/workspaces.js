@@ -1,3 +1,5 @@
+//= require grid
+
 String.prototype.reverse = function() {
     var s = "";
     var i = this.length;
@@ -11,30 +13,6 @@ String.prototype.replaceAt = function(index, c) {
 	  return this.substr(0, index) + c + this.substr(index+c.length);
 }
 
-// Element.addMethods({
-//     show : function(element) {
-//         element = $(element);
-//         element.removeClassName('hidden') //should be enough to show Element, but 
-//                .setStyle({display: ''}); //in case the element was hidden with inline script
-//     },
-//     hide : function(element) {
-//         element = $(element);
-//         element.addClassName('hidden'); //hide element with css                
-//     }
-// });
-
-// function showUpload(id) {
-//   Element.show(id+'.upload');
-//   Element.show(id+'.cancelbutton');
-//   Element.hide(id+'.addbutton');
-// }
-// 
-// function hideUpload(id) {
-//   Element.hide(id+'.upload');
-//   Element.hide(id+'.cancelbutton');
-//   Element.show(id+'.addbutton');
-// }
-
 function insert_asset(divid,txt) {
   if ($(divid+'.assets')) {
     $(divid+'.assets').insert({bottom: txt});
@@ -47,42 +25,28 @@ function delete_asset(divid,assetid) {
   }
 }
 
-function create_workspace(txt) {
-  if ($('comments')) $('comments').insert({ top: txt });
-  sortWorkspaces();
-}
-
-function jug_ws_update(dv,txt) {
-  if ($(dv)) {
-    if ($(dv+'.editing')) {
-      if ($(dv+'.conflict')) $(dv+'.conflict').update('<font style="color:red;font-weight:bold;">Edit Conflict!</font>');
-    } else
-      $(dv).update(txt);
-    sortWorkspaces();
-  }
-}
-  
 function sortWorkspaces() {
-  workspaces = $$('div.workspace');
+  console.log("Sorting workspaces.");
+  workspaces = $('div.workspace');
   high = []
   normal = []
   useless = []
   other = []
-  workspaces.each(function(ws) {
-    fd = ws.firstDescendant();
+  workspaces.each(function(i,ws) {
+    fd = $(ws.children[0]);
     if (fd) {
-      if (fd.hasClassName('priority_High')) high.push(ws);
-      else if (fd.hasClassName('priority_Normal')) normal.push(ws);
-      else if (fd.hasClassName('priority_Useless')) useless.push(ws);
+      if (fd.hasClass('priority_High')) high.push(ws);
+      else if (fd.hasClass('priority_Normal')) normal.push(ws);
+      else if (fd.hasClass('priority_Useless')) useless.push(ws);
       else other.push(ws);
     }
   });
-  if ($('comments')) {
-    $('comments').update();
-    high.each(function(ws) { $('comments').insert({bottom:ws}); });
-    normal.each(function(ws) { $('comments').insert({bottom:ws}); });
-    other.each(function(ws) { $('comments').insert({bottom:ws}); });
-    useless.each(function(ws) { $('comments').insert({bottom:ws}); });
+  if ($('#comments')) {
+    $('#comments').html('');
+    $(high).each(function(i,ws) { $('#comments').append(ws); });
+    $(normal).each(function(i,ws) { $('#comments').append(ws); });
+    $(other).each(function(i,ws) { $('#comments').append(ws); });
+    $(useless).each(function(i,ws) { $('#comments').append(ws); });
   }
 }
 
@@ -158,30 +122,6 @@ function table_navigate(evt,i,j,len,id) {
   }
 }
 
-function grid_navigate(evt,i,j,len,wid,id) {
-log("navigating on grid.");
-  if ((evt.keyCode==13
-    || evt.keyCode==40)
-    && i < len-1) {
-    $(id+'_'+(i+1)+'_'+j).focus();
-    $(id+'_'+(i+1)+'_'+j).select();
-    return true;
-  } else if (evt.keyCode == 38 && i > 0) {
-    $(id+'_'+(i-1)+'_'+j).focus();
-    $(id+'_'+(i-1)+'_'+j).select();
-    return true;
-  } else if (evt.keyCode == 37 && j > 0) {
-    $(id+'_'+i+'_'+(j-1)).focus();
-    $(id+'_'+i+'_'+(j-1)).select();
-    return true;
-  } else if (evt.keyCode == 39 && j < wid-1) {
-    $(id+'_'+i+'_'+(j+1)).focus();
-    $(id+'_'+i+'_'+(j+1)).select();
-    return true;
-  }
-  return false;
-}
-
 function update_tables() {
  tables=$$('.pzt_table');
  tables.each(function(tid) { update_table(tid); });
@@ -229,41 +169,6 @@ function update_table_cell(cid,txt,tid) {
 	if (!$(cid)) return;
 	$(cid).value = txt;
 	update_table(tid);
-}
-
-grid_colors = { "!":"grid_black", "@":"grid_brown", "#":"grid_red", "$":"grid_orange", "%":"grid_yellow", "^":"grid_green", "&":"grid_blue", "*":"grid_purple" };
-
-function update_grid_cell(cid,txt) {
-	if (!$(cid)) return;
-	a = txt.split(":");
-	$(cid).value = a[0];
-	for (var n in grid_colors) {
-		$(cid).removeClassName(grid_colors[n]);
-	}
-	if (a[0].match(/^[\!\@\#\$\%\^\&\*]/)) $(cid).addClassName(grid_colors[a[0]]);
-	if (a.length > 1) {
-	label = $(cid).previous();
-	label.innerHTML = a[1];
-	}
-
-}
-
-function gcell_value(cid) {
-	return $(cid).getValue() + ':' + $(cid).previous().innerHTML;
-}
-
-function grid_set_label(evt,cid,id) {
-	if (!evt.shiftKey) return false;
-	if (!$(cid)) return false;
-	var label = $(cid).previous();
-	var name = prompt("Label for this cell", label.innerHTML);
-	if (name == null) return true;
-	if (name.match(/[A-Z0-9]*/)) {
-		// it is a valid label. Set it.
-		v = $(cid).getValue() + ':' + name;
-		new Ajax.Request('/workspace/update_cell?cell='+cid+'&id='+id, {asynchronous:true, evalScripts:true, parameters: { text: v } });
-	}
-	return true;
 }
 
 // okay, this is an infix parser. Its goal is to be able to parse a message to do operations on columns.
@@ -423,3 +328,11 @@ function get_token(s,cn) {
 	log("Improper token "+s+"!");
 	return null;
 }
+
+
+$(function() {
+    $(".tablesorter").each(function() {
+      console.log("Calling flexgrid on some table.");
+      $(this).tablesorter();
+    });
+  });

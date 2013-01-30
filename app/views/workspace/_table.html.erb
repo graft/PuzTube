@@ -1,22 +1,20 @@
 <% if show_div %> <div id="<%= workspace.tdiv_id(count) %>"> <% end %>
-<table id="<%= workspace.table_id(count) %>" style="width:100%;">
+
+<table id="<%= workspace.table_id(count) %>" style="width:100%;" class="tablesorter">
+  <% header = rows.shift %>
+  <thead>
+    <th style="width:3%;" class="pzt_head">#</th>
+    <% header.each_with_index do |contents,j| %>
+      <th class="pzt_head"> <%= (j+65).chr %>|<%= contents %>
+      </th>
+    <% end %>
+  </thead>
+  <tbody>
   <% rows.each_with_index do |row,i| %>
     <tr>
-<%#  First column    %>
-    <% if i>0 %>
-    <td class="pzt_row"><%=i%></td>
-    <% else %>
-    <th style="width:3%;" class="pzt_head">#<span class="sorter">&#8597;</span></th>
-    <% end %>
-    
-<%#   Rest of columns   %>
+    <td class="pzt_row"><%=i+1%></td>
     <% row.each_with_index do |contents,j| %>
-      <% if i>0 %>
-        <td class="pzt_row"><span class="inp">
-      <% else %>
-        <th class="pzt_head"> <%= (j+65).chr %>|
-      <% end %>
-      <input name="text" class="inpi"
+      <td class="pzt_row"><input name="text" class="inpi"
         autocomplete="off"
         id="<%= workspace.cell_id(count,i,j) %>"
         onchange="$('<%= workspace.cell_id(count,i,j) %>').addClassName('updating'); <%= 
@@ -24,15 +22,11 @@
         %>"
         onkeypress="table_navigate(event,<%= "#{i},#{j},#{rows.length},'#{workspace.table_id(count)}'" %>);"
         type="text"
-        value="<%= quote_escape contents %>">
-      <% if i>0 %>
-        </span><span class="calc hidden"></span></td>
-      <% else %>
-        <span class="sorter">&#8597;</span></th>
-      <% end %>
+        value="<%= quote_escape contents %>"></td>
     <% end %>
      </tr>
  <% end %>
+   </tbody>
   </table>
   <script type="text/javascript">
   //TableKit.Sortable.init("<%= workspace.table_id(count) %>");
@@ -41,6 +35,7 @@
   </script>
   <%= link_to '+ row',{:url => add_rc_path(:id => workspace.id,:table => count, :type=>'row'),  :remote => true,  :method => 'get'}, :class => "tableadd" %> |
   <%= link_to '+ col', {:url => add_rc_path(:id => workspace.id,:table => count, :type=>'col'), :remote => true, :method => 'get'}, :class => "tableadd" %> 
+
 <% if show_div %>
 </div>
 <% end %>

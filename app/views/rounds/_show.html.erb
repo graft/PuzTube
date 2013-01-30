@@ -8,29 +8,30 @@
     </div>
   </div>
   <div style="padding: 5px;">
-    <h2><%= link_to round.name, round, :target => "_blank" %></h2> 
-    <b>Url: <%=link_to round.url, :html => { :target => '_blank' } %></b><br>
+    <h2><%= link_to round.name, round, :target => "_blank" %>
+    (<%= link_to "url &#10138;".html_safe, round.url, :html => { :target => '_blank' } %>)</h2> 
     <b>Priority: <%=h round.priority %></b><br>
     <b>Hint: <%=h round.hint %></b><br>
     <b>Captain: <%=h round.captain %></b><br>
     <b>Answer: <%=h round.answer %></b><br>
-    <%= form_tag( :remote => true,
-                  :url => { :action => 'edit_row', :controller => 'puzzles' },
-                  :method => :put,
-                  :html => { :id => "r#{round.id}.form" } ) do %>
-    <%= hidden_field_tag "puzzle[id]", nil, :id =>"r#{round.id}.id" %>
-    <%= hidden_field_tag "puzzle[name]", nil, :id =>"r#{round.id}.name" %>
-    <%= hidden_field_tag "puzzle[url]", nil, :id =>"r#{round.id}.url" %>
-    <%= hidden_field_tag "puzzle[hint]", nil, :id =>"r#{round.id}.hint" %>
-    <%= hidden_field_tag "puzzle[captain]", nil, :id =>"r#{round.id}.captain" %>
-    <%= hidden_field_tag "puzzle[meta]", nil, :id =>"r#{round.id}.meta" %>
-    <%= hidden_field_tag "puzzle[answer]", nil, :id =>"r#{round.id}.answer" %>
-    <%= hidden_field_tag "puzzle[status]", nil, :id =>"r#{round.id}.status" %>
-    <%= hidden_field_tag "puzzle[priority]", nil, :id =>"r#{round.id}.priority" %>
+    <%= form_tag( 
+                 edit_puzzlerow_path,
+                 :remote => true,
+                 :method => :put,
+                 :id => "r#{round.id}_form" ) do %>
+    <%= hidden_field_tag "puzzle[id]", nil, :id =>"r#{round.id}_id" %>
+    <%= hidden_field_tag "puzzle[name]", nil, :id =>"r#{round.id}_name" %>
+    <%= hidden_field_tag "puzzle[url]", nil, :id =>"r#{round.id}_url" %>
+    <%= hidden_field_tag "puzzle[hint]", nil, :id =>"r#{round.id}_hint" %>
+    <%= hidden_field_tag "puzzle[captain]", nil, :id =>"r#{round.id}_captain" %>
+    <%= hidden_field_tag "puzzle[meta]", nil, :id =>"r#{round.id}_meta" %>
+    <%= hidden_field_tag "puzzle[answer]", nil, :id =>"r#{round.id}_answer" %>
+    <%= hidden_field_tag "puzzle[status]", nil, :id =>"r#{round.id}_status" %>
+    <%= hidden_field_tag "puzzle[priority]", nil, :id =>"r#{round.id}_priority" %>
   <% end %>
 
   <% if current_user.team_captain || round.captain == current_user.login %>
-    <%= link_to 'Add puzzle', :remote => true, :url => create_rpuzzle_path(:id => round.id) %> <br>
+    <%= link_to 'Add puzzle', create_rpuzzle_path(:id => round.id), :remote => true %> <br>
   <% end %>
 
   <table class="puzzletable">

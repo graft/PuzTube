@@ -60,17 +60,27 @@ class WorkspaceController < ApplicationController
   end
   
   def update_cell
-    @workspace = Workspace.find(params[:id])
+    @workspace = Workspace.find(params[:ws])
     # see if it is a table or a grid
-    if m = params[:cell].match(/WS[0-9]*_TB([0-9]*)_([0-9]*)_([0-9]*)/)
+    if params[:table]
       table,row,col = m.captures.map{|i|i.to_i}
       update_table(@workspace,table,row,col,params[:text])
       puts "Table text is |#{params[:text]}|"
-      Push.send :command => "update table cell", :channel => @workspace.thread.chat_id, :cell => params[:cell], :text => javascript_escape(params[:text]), :table => @workspace.table_id(table)
-    elsif m = params[:cell].match(/WS[0-9]*_GR([0-9]*)_([0-9]*)_([0-9]*)/)
-      grid,row,col = m.captures.map{|i|i.to_i}
+      Push.send :command => "update table cell", 
+        :channel => @workspace.thread.chat_id, 
+        :cell => params[:cell], 
+        :text => javascript_escape(params[:text]), 
+        :table => @workspace.table_id(table)
+    elsif params[:grid]
+      grid,row,col = [ params[:grid].to_i, params[:row].to_i, params[:col].to_i ]
       update_grid(@workspace,grid,row,col,params[:text])
-      Push.send :command => "update grid cell", :channel => @workspace.thread.chat_id, :cell => params[:cell], :text => javascript_escape(params[:text])
+      Push.send :command => "update grid cell", 
+        :channel => @workspace.thread.chat_id, 
+        :ws => params[:ws],
+        :grid => grid,
+        :row => row,
+        :col => col,
+        :text => javascript_escape(params[:text])
     else
       render :nothing => true
       return

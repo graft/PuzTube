@@ -1,15 +1,12 @@
-<div id="showchat" class="chattoggle button">
-    <%= link_to_function 'show chat', "showChat();" %>
-</div>
-<div id="hidechat" class="chattoggle button">
-    <%= link_to_function 'hide chat', "hideChat();" %>
+<div id="togglechat" class="button">
+  <%= link_to "hide chat", "#" %>
 </div>
 <div id="chatwindow" class="rounded">
   <div id="chattitle" class="rounded_title">
    <div class="title_left">Chat: <%= thread.name %></div>
    <div class="title_right"><span id="chatclock"></span></div>
   </div>
-  <div style="padding:3px; overflow: auto" id="chatpane">
+  <div id="chatpane">
     <ul id="chatlist">
 <% last_date = nil %>
 <%   chats.reverse_each do |c| %>
@@ -21,7 +18,7 @@
 <%   end %>
     </ul>
   </div>
-  <div id="chatbox" style="height: 20px; padding: 3px;">
+  <div id="chatbox">
     <%= form_tag( { :action => 'chat', :id => thread.id },
                  :remote => true,
                   :id => 'chatform' ) do %>
@@ -29,7 +26,7 @@
 <%= submit_tag "Add", :disable_with => "..." %>
 <% end %>
   </div>
-  <div id="chatusers" style="height: 80px; overflow:auto; padding:3px;">Users: <ul class="userlist"></ul> </div>
+  <div id="chatusers">Users: <ul id="userlist"></ul> </div>
 <%= link_to 'Log', chat_log_path(:channel => thread.chat_id,:thread=>thread.id,:type=> thread.class.to_s), :target => "_blank" %>
 
 <script type="text/javascript">

@@ -1,74 +1,74 @@
-function hideChat() {
-  $('#chatwindow').hide();
-  $('#hidechat').hide();
-  $('#showchat').show();
-  $('#mainpage').css( 'width', "100%" );
-}
-function showChat() {
-  $('#chatwindow').show();
-  $('#hidechat').show();
-  $('#showchat').hide();
-  $('#mainpage').css('width', "72%" );
-  scrollChat();
-}
-function fixchatsize() {
-  $('#chatwindow').css('height', ($(window).innerHeight()-15)+'px' );
-  $('#chatpane').css('height', ($('#chatwindow').height()-170) + 'px');
-  scrollChat();
-}
-
-function setFocus() {
-  focused = false;
-}
-  var currtitle;
-  var focused = true;
-  function blinkTitle() {
-    if (currtitle) return;
-    currtitle = document.title;
-    document.title = "***";
-    setTimeout('restoreTitle()',400);
-  }
-
-  function updateClock() {
-    if ($('#chatclock')) {
-    }
-  }
-
-  function restoreTitle() {
-    if (currtitle.match(/^\*[\w]/) || focused) {
-    document.title = currtitle;
-    }
+var Chat = {
+  hidden: false,
+  cache_title: null,
+  focused: true,
+  hide: function() {
+    Chat.link.html('show chat');
+    Chat.window.hide();
+    Chat.page.css( 'width', '100%' );
+  },
+  show: function() {
+    Chat.link.html('hide chat');
+    Chat.window.show();
+    Chat.page.css( 'width', '72%' );
+    Chat.scroll();
+  },
+  toggle: function() {
+    if (Chat.hidden)
+     Chat.show();
     else
-    document.title = "*"+currtitle;
-    currtitle = null;
+     Chat.hide();
+    Chat.hidden = !Chat.hidden;
+  },
+  scroll: function() {
+    Chat.pane.scrollTop(Chat.pane.prop('scrollHeight'));
+  },
+  fixsize: function() {
+    Chat.window.css('height', ($(window).innerHeight() - 15) + 'px' );
+    Chat.pane.css('height', (Chat.window.height()-170) + 'px');
+    Chat.scroll();
+  },
+  blink_title: function() {
+    if (Chat.cache_title) return;
+    Chat.cache_title = document.title;
+    document.title = "***";
+    setTimeout(Chat.restore_title,400);
+  },
+  restore_title: function() {
+    if (Chat.cache_title.match(/^\*[\w]/) || Chat.focused)
+      document.title = Chat.cache_title;
+    else
+      document.title = "*" + Chat.cache_title;
+    Chat.cache_title = null;
+  },
+  unmark_title: function() {
+    Chat.focused = true;
+    if (document.title.match(/^\*[\w]/)) {
+      document.title = document.title.substr(1)
+    }
+  },
+  unset_focus: function() {
+    focused = false;
+  },
+  clear_input: function() {
+    Chat.input.val('');
+  },
+  startup: function() {
+    console.log("Starting chat.");
+    Chat.box = $('#togglechat');
+    Chat.link = $('#togglechat a');
+    Chat.window = $('#chatwindow');
+    Chat.pane = $('#chatpane');
+    Chat.page = $('#mainpage');
+    Chat.form = $('#chatform');
+    Chat.input = $('#chat_input');
+    Chat.fixsize();
+    Chat.link.click(Chat.toggle);
+    $(window).resize(Chat.fixsize);
+    $(window).focus(Chat.unmark_title);
+    $(window).blur(Chat.unset_focus);
+    Chat.form.on('ajax:beforeSend', Chat.clear_input);
   }
+};
 
-function unmarkTitle() {
-  focused = true;
-  if (document.title.match(/^\*[\w]/)) {
-    document.title = document.title.substr(1)
-  }
-}
-
-function scrollChat() {
-  $('#chatpane').scrollTop($('#chatpane').prop('scrollHeight'));
-}
-
-function chat_startup() {
-  console.log("Starting up.");
-  fixchatsize();
-  $('#showchat').hide();
-  $(function($) {
-  	$('#chatform').bind('ajax:beforeSend', function() {
-	  	console.log("This might work.");
-	  	$('#chat_input').val('');
-  	});
-  });
-  $(window).resize(fixchatsize);
-  $(window).focus(unmarkTitle);
-  $(window).blur(setFocus);
-}
-
-function log(txt) {
-  if ("console" in window && "log" in window.console) window.console.log(txt);
-}
+$(Chat.startup);

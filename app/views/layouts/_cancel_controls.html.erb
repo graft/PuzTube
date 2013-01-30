@@ -1,2 +1,5 @@
-<b><%= link_to 'Cancel', :remote => true, :url => show_path, :method => 'get', :update => update_id %></b> |
-      <b><%= link_to_function 'Update', '$("'+form_id+'").onsubmit();' %>  </b>
+<b><%= link_to 'Cancel', show_path, :remote=> true, :method => 'get', :'data-update-target' => update_id %></b> | <b><%= link_to 'Update', '#', :'data-click-submit' => form_id, :id => form_id+'_update' %> </b>
+
+<script type="text/javascript">
+  $("#<%= form_id+'_update' %>").click( function() { $("#<%= form_id %>").submit();  return false; });
+</script>

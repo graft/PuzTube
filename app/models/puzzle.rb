@@ -4,6 +4,7 @@ class Puzzle < ActiveRecord::Base
   has_many :tables, :as => :thread, :order => 'priority'
   has_many :users
   has_many :activities
+  attr_accessible :name, :url, :hint, :captain, :meta, :answer, :status, :priority
 
   def comments
     (workspaces+tables).sort! { |c1,c2|

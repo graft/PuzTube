@@ -2,15 +2,15 @@
     <div class="title_left">
     <%= render :partial => 'layouts/cancel_controls',   :locals => {        :show_path => info_round_path(:id=>round.id),
         :update_id => round.div_id,
-        :form_id => "r#{round.id}.update"    } %>
+        :form_id => "r#{round.id}_update"    } %>
     </div>
   </div>
   <div style="padding: 5px;">
-  <% form_for(round,
+  <%= form_for(round,
                   :remote => true,
                   :url => { :action => 'update', :controller => 'rounds', :id => round.id },
                   :method => :put,
-                  :html => { :id => "r#{round.id}.update" } ) do |f| %>
+                  :html => { :id => "r#{round.id}_update" } ) do |f| %>
     <b><%= f.label :name %>:</b>
     <%= f.text_field :name %><br>
     <b><%= f.label :hunt %>:</b>

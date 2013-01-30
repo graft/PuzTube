@@ -11,7 +11,7 @@
 <%= link_to 'Things to Try', { :action => 'show', :controller => 'topics', :name => 'Things to Try' } %> |
 
 <% if current_user %>
-  <%= current_user.login %> (<%= link_to 'logout', :remote => true, :url => { :action => 'logout', :controller => 'welcome' } %>)
+  <%= current_user.login %> (<%= link_to 'logout', logout_path, :remote => true  %>)
 <% end %>
 </div>
 </div>

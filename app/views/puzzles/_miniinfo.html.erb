@@ -1,13 +1,13 @@
 <td style="background-color: <%= puzzle.priority_color %>;"><%=h puzzle.priority %></td>
 <td style="background-color: <%= puzzle.status_color %>;"><%=h puzzle.status %></td>
 <td><%=h puzzle.round.name %></td>
-<td><%= link_to puzzle.name, puzzle, :target => '_blank' %> (<%= sanitize(link_to("url &#10138;",puzzle.url,:target =>'_blank'),:tags => %w(a), :attributes => %w(href target)) %>)</td>
+<td><%= link_to puzzle.name, puzzle, :target => '_blank' %> (<%= sanitize(link_to("url &#10138;".html_safe,puzzle.url,:target =>'_blank'),:tags => %w(a), :attributes => %w(href target)) %>)</td>
 <td><%=h puzzle.hint %></td>
 <td><%=h puzzle.captain %></td>
 <td style="padding:0px;"><%= render :partial => 'puzzles/activity', :locals => { :puzzle => puzzle } %></td>
-<td><%= puzzle.meta ? "&#10004;" : "" %></td>
+<td><%= puzzle.meta ? "&#10004;".html_safe : "" %></td>
 <td><%=h puzzle.answer %></td>
-<td><%= link_to 'Edit', :remote => true, :url => { :action => 'edit', :controller => 'puzzles', :id => puzzle.id, :type => 'mini' }, :update => "PZR"+puzzle.id.to_s %></td>
+<td><%= link_to 'Edit', { :action => 'edit', :controller => 'puzzles', :id => puzzle.id, :type => 'mini' }, :remote => true, :'data-update-target' => "PZR"+puzzle.id.to_s %></td>
 <% if current_user.team_captain || puzzle.round && puzzle.round.captain == current_user.login %>
-  <td><%= link_to 'Destroy', :remote => true, :url => { :id => puzzle.id, :controller => 'puzzles', :action => :destroy}, :confirm => 'Are you sure?' %></td>
+  <td><%= link_to "\u2612", delete_puzzle_path(puzzle), :method => :delete, :remote => true, :confirm => 'Are you sure?' %></td>
 <% end %>

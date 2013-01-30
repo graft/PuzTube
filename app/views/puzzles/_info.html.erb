@@ -11,7 +11,7 @@
   <b>Priority:</b>  <%=h puzzle.priority %> <br>
 <%= button_to "I'm working on this", :url => worker_puzzle_path(:id => puzzle.id, :worker => current_user.login ) %><br>
 
-<%= link_to 'Edit', :remote => true, :url => { :action => 'edit', :id => puzzle.id }, :method => 'get', :update => 'info' %>
+<%= link_to 'Edit', edit_puzzle_path(puzzle), :remote => true, :method => 'get', :'data-update-target' => 'info' %>
 
 <% if puzzle.meta %>
 <p>

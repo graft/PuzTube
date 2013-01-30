@@ -1,6 +1,7 @@
 class Workspace < ActiveRecord::Base
   belongs_to :thread, :polymorphic => true
   has_many :assets
+  attr_accessible :title, :editor, :content, :priority
 
   def div_id
     "WS" + id.to_s

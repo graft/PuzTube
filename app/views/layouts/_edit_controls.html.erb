@@ -1,7 +1,7 @@
-<b><%= link_to 'Edit', edit_path, :method => 'get',  :remote => true, :update => update_id %></b>
-| <b><%= link_to "\u21BA", :remote => true, :url => show_path, :method => 'get', :update => update_id %></b>
+<b><%= link_to 'Edit', edit_path, :method => 'get',  :remote => true, :'data-update-target' => update_id %></b> |
+<b><%= link_to "\u21BA", show_path, :method => 'get', :remote => true, :'data-update-target' => update_id %></b>
 <% if current_user && current_user.team_captain %>
-  | <b><%= link_to "\u2612", :url => delete_path,  :remote => true, :confirm => 'Are you sure?' %></b>
+  | <b><%= link_to "\u2612", delete_path,  :method => 'delete', :remote => true, :confirm => 'Are you sure?' %></b>
 <% end %>
 <% if title %>
    | <b> <%= h title %> </b>

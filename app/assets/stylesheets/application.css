@@ -9,7 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ *= require_tree ./defaults
  */
 
 @import url(http://fonts.googleapis.com/css?family=Ubuntu:400,500);

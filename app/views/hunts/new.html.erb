@@ -1,7 +1,6 @@
 <h1>New hunt</h1>
 
-<% form_for(@hunt) do |f| %>
-  <%= f.error_messages %>
+<%= form_for(@hunt) do |f| %>
   <p>
     <%= f.label :name %><br />
     <%= f.text_field :name%>

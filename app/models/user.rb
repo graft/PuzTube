@@ -13,10 +13,14 @@ class User < ActiveRecord::Base
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
   
   def set_default_options
-    self.options ||= { :sorting => "status", :grouped => false }
+    options ||= { :sorting => "status", :grouped => false }
   end
 
   def active?
     updated_at > Time.utc(2011,12)
+  end
+
+  def self.list
+    self.all(:order => "login ASC").collect{|u| [u.login,u.login] }
   end
 end

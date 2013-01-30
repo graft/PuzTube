@@ -12,7 +12,7 @@ module ApplicationHelper
     @chat.text = text
     @chat.chat_id = channel
     if (@chat.save)
-      txt = javascript_escape(sanitize_text(msg))
+      txt = sanitize_text(msg)
       logger.info "Pushing chat request #{txt}"
       Push.send :command => "chat", :channel => channel, :text => "<li>#{@chat.timeformat} #{txt}</li>", :user => user
     end
@@ -35,9 +35,9 @@ module ApplicationHelper
   end
   
   def sanitize_text(str)
-    str
-    #ActionController::Base.helpers.sanitize(
-      #ActionController::Base.helpers.auto_link(str, :html => { :target => '_blank' }), :tags => %w(a b), :attributes => %w(href style target) )
+    ActionController::Base.helpers.sanitize( str,
+                                            #ActionController::Base.helpers.auto_link(str, :html => { :target => '_blank' }),
+                                            :tags => %w(a b), :attributes => %w(href style target) )
   end
 
   def current_or_anon_login
@@ -90,7 +90,7 @@ module ApplicationHelper
       tables.push table_html(send("array_#{$1}", $2), workspace, tablecount)
       "<table#{tables.length-1}>"
     end if OPTIONS[:tab]
-    text.gsub!(/^GRID ([0-9]+)x([0-9]+)\n(.*)^ENDGRID$/m) do |m|
+    text.gsub!(/^GRID ([0-9]+)x([0-9]+)\n(.*?)^ENDGRID$/m) do |m|
       gridcount += 1
       tables.push grid_html(array_GRID($3,$1.to_i,$2.to_i),workspace,gridcount)
       "<table#{tables.length-1}>"
@@ -190,8 +190,8 @@ module ApplicationHelper
     tc = 0
     rows = nil
     txt = nil if txt.length == 0
-    text = workspace.content.clone
-    text.gsub!(/^GRID ([0-9]*)x([0-9]*)\n(.*?)^ENDGRID($)/m) do |match|
+    text = workspace.content.gsub(/\r/,"")
+    text.gsub!(/^GRID ([0-9]+)x([0-9]+)\n(.*?)^ENDGRID($)/m) do |match|
       tc += 1
       if tc == grid
         rows = array_GRID($3,$1.to_i,$2.to_i)

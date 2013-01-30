@@ -1,7 +1,11 @@
-<span id="hide_graph" class="button graphbutton" style="<%= shown ? "" : "display:none" %>"><%= link_to_function 'Hide', "hideGraph();" %></a></span>
-<span id="reload_graph" class="button graphbutton" style="right:45px; <%= shown ? "" : "display:none" %>"><%= link_to '&#8634;', :remote => true,
-  :url => stats_path(:id=>hunt.id), :method => 'get', :update => "statbox" %></span>
-<span id="show_graph" class="button graphbutton" style="<%= shown ? "display:none" : "" %>"><%= link_to_function 'Show', "showGraph();" %></span>
+<span id="hide_graph" class="button graphbutton" style="<%= shown ? "" : "display:none" %>">
+  <%= link_to_function 'Hide', "hideGraph();" %>
+</span>
+<span id="reload_graph" class="button graphbutton" style="right:45px; <%= shown ? "" : "display:none" %>">
+  <%= link_to '&#8634;'.html_safe, stats_path(:id=>hunt.id), :method => 'get', :remote => true, :'data-update-target' => "statbox" %></span>
+<span id="show_graph" class="button graphbutton" style="<%= shown ? "display:none" : "" %>">
+  <%= link_to_function 'Show', "showGraph();" %>
+</span>
 
 <div id="graphs" style="<%= shown ? "" : "display:none" %>">
 <canvas id="solving_graph" width="700" height="175">No canvas element!</canvas>
@@ -50,7 +54,7 @@ Statistics
     total_bins[i] += total_bins[i-1]
   end
 %>
-            var line = new RGraph.Line('solving_graph', [<%= total_bins.join(",") %>],[<%= solved_bins.join(",") %>]);
+            var line = new RGraph.Line('solving_graph', [<%= total_bins.join(",").html_safe %>],[<%= solved_bins.join(",").html_safe %>]);
             line.Set('chart.gutter.left', 35);
             line.Set('chart.colors', ['red','green']);
             line.Set('chart.key', ['total', 'solved']);
@@ -60,7 +64,7 @@ Statistics
             line.Set('chart.shadow', true);
             line.Set('chart.shadow.blur', 5);
             line.Set('chart.title', 'Solving rate');
-            line.Set('chart.labels', [<%= interval.join(",") %>]);
+            line.Set('chart.labels', [<%= interval.join(",").html_safe %>]);
             line.Draw();
             
 <%
@@ -85,7 +89,7 @@ Statistics
     act_bins[bin] += 1
   end
 %>
-            var line2 = new RGraph.Line('activity_graph', [<%= act_bins.join(",") %>]);
+            var line2 = new RGraph.Line('activity_graph', [<%= act_bins.join(",").html_safe %>]);
             line2.Set('chart.gutter.left', 35);
             line2.Set('chart.background.barcolor1','#020');
             line2.Set('chart.background.barcolor2','#020');
@@ -95,7 +99,7 @@ Statistics
             line2.Set('chart.colors', ['#0f0']);
             line2.Set('chart.linewidth', 2);
             line2.Set('chart.title', 'Activity');
-            line2.Set('chart.labels', [<%= interval.join(",") %>]);
+            line2.Set('chart.labels', [<%= interval.join(",").html_safe %>]);
             line2.Draw();
 
 </script>

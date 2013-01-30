@@ -1,4 +1,6 @@
-socket = io.connect('http://localhost', { port: 5000 });
+//= require jquery_scrollTo
+
+socket = io.connect('http://mayhem.mit.edu', { port: 5000, query: 'shib=guaranteed-airline-harassment-underlying' });
 
 socket.on('connected', function (data) {
   if ($('#chat_input')) $('#chat_input').attr('disabled',false);
@@ -11,98 +13,86 @@ socket.on('connected', function (data) {
     update_users();
   });
 });
+
 socket.on('chat',function (msg,user) {
   if ($('#chatlist')) {
     $('#chatlist').append(msg.text);
-    scrollChat();
-    blinkTitle();
+    Chat.scroll();
+    Chat.blink_title();
     if (msg.user) subscribe_user(msg.user,false);
   }
 });
+
 socket.on('joined',function (user) {
   subscribe_user(user,false);
 });
 socket.on('left',function (user) {
   unsubscribe_user(user);
 });
+
 socket.on('new round',function (msg) {
   // request the new round
-  new Ajax.Updater('roundstable', '/round/info', {
-    parameters: { id: msg.round, c: 1 },
-    insertion: 'bottom',
-    method: 'get',
-    evalScripts: true    
+  $.get('/round/info', { id: msg.round, c: 1 }, function(data) {
+	  $('#roundstable').append(data);
   });
 });
+
 socket.on('new asset', function(msg) {
   insert_asset(msg.workspace,msg.text);
 });
+
 socket.on('new workspace', function(msg) {
-  new Ajax.Updater('comments', '/workspace/show', {
-    parameters: { id: msg.workspace, c: 1 },
-    insertion: 'bottom',
-    evalScripts: true,
-    method: 'get',
-    onComplete: function() {
-      var element = $('comments').lastChild;
+  $.get('/workspace/show', { id: msg.workspace, c: 1 },
+	  function(data) {
+	  	$('#comments').append(data);
       sortWorkspaces();
-      if (element) {
-        element.scrollTo();
-        new Effect.BlindDown(element, { duration: 0.5 });
-      }
-    }
+		  $.scrollTo($('#comments > :last-child'))
+	  });
   });
-});
+
 socket.on('new puzzle', function(msg) {
-  new Ajax.Updater(msg.table, '/puzzles/info', {
-    parameters: { id: msg.puzzle, type: 'mini', c: 1 },
-    insertion: 'bottom',
-    method: 'get',
-    evalScripts: true
-  });
+  $.get('/puzzles/info', { id: msg.puzzle, type: 'mini', c: 1 },
+    	function(data) {
+	   $('#'+msg.table).append(data);
+	  });
 });
 
 socket.on('update round', function(msg) {
-  new Ajax.Updater(msg.table, '/round/info', {
-    parameters: { id: msg.round },
-    method: 'get'
-  });
+  $('#'+msg.table).load('/round/info', { id: msg.round });
 });
 socket.on('update puzzle', function(msg) {
-  new Ajax.Updater(msg.table, '/puzzles/info', {
-    parameters: { id: msg.puzzle, type: 'mini' },
-    method: 'get'
-  });
+  console.log("Told to update puzzle.");
+  $('#'+msg.table).load('/puzzles/info', { id: msg.puzzle, type: 'mini' });
 });
 socket.on('update puzzle info', function(msg) {
-  new Ajax.Updater('info', '/puzzles/info', {
-    parameters: { id: msg.puzzle, type: 'full' },
-    method: 'get'
-  });
+  $('#'+msg.puzzle).load('/puzzles/info', { id: msg.puzzle, type: 'full' });
 });
 socket.on('update workspace', function(msg) {
-  new Ajax.Updater(msg.container, '/workspace/show', {
-    parameters: { id: msg.workspace },
-    evalScripts: true
-  });
+  $('#'+msg.container).load( '/workspace/show', { id: msg.workspace },
+	  function() {
+		  sortWorkspaces();
+		  $.scrollTo($('#'+msg.container))
+      if (Grid) Grid.prepare($('#'+msg.container));
+	  });
 });
 socket.on('update table cell', function(msg) {
   update_table_cell(msg.cell,msg.text,msg.table);
-  if ($(msg.cell)) $(msg.cell).removeClassName('updating');
+  $('#'+msg.cell).removeClass('updating');
 });
 socket.on('update grid cell', function(msg) {
-  update_grid_cell(msg.cell,msg.text);
-  if ($(msg.cell)) $(msg.cell).removeClassName('updating');
+  if (grids && grids[msg.ws + '_' + msg.grid]) {
+    grids[msg.ws + '_' + msg.grid].cells[msg.row][msg.col].update_txt(msg.text);
+  }
 });
 
 socket.on('destroy puzzle', function(msg) {
-  if ($(msg.puzzle)) $(msg.puzzle).remove();
+  $('#'+msg.puzzle).remove();
 });
 socket.on('destroy round', function(msg) {
-  if ($(msg.round)) $(msg.round).remove();
+  $('#'+msg.round).remove();
 });
 socket.on('destroy workspace', function(msg) {
-  if ($(msg.workspace)) $(msg.workspace).remove();
+  $('#'+msg.workspace).remove();
 });
 socket.on('destroy attachment', function(msg) {
   delete_asset(msg.workspace,msg.asset);
@@ -127,9 +117,9 @@ function unsubscribe_user(user) {
 
 function update_users() {
   if ($('#chatusers')) {
-    $('#chatusers :first-child').html("");
+    $('#chatusers > :first-child').html("");
     for (var u in users) {
-      $('#chatusers :first-child').append('<li> '+u+'</li>');
+      $('#chatusers > :first-child').append('<li> '+u+'</li>');
     }
   }
 }

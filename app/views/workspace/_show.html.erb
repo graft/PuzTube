@@ -10,18 +10,18 @@
     </div>
     <div class="title_right">
       Updated <%= relative_time workspace.updated_at %> by <%= workspace.editor %>
-      <%= form_for workspace, 
+      <%= form_for :workspace, 
         :url => prioritize_workspace_path(:id => workspace.id),
         :remote => true, 
         :html => {
         :class => 'iform', 
-        :id => workspace.div_id + '.prio', 
+        :id => workspace.div_id + '_prio', 
         :autocomplete => 'off' } do %>
           <%= select :workspace, 
             :priority, 
             options_for_select(Workspace.priorities,workspace.priority),
-            { :id => workspace.div_id + '.priobox' },
-            {:onchange => "$('#{workspace.div_id}.prio').onsubmit()"} %>
+            {},
+            { :'data-change-submit' => "#{workspace.div_id}_prio"} %>
       <% end %>
     </div>
   </div>

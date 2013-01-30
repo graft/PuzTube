@@ -1,6 +1,6 @@
 <%
   # A tiny activities graph for puzzles
-  acts = puzzle.activities.map{|a| a.created_at}
+  acts = Activity.where(:puzzle_id => puzzle).pluck(:created_at)
   mx = Time.now
   mn = puzzle.created_at
   num = 40
