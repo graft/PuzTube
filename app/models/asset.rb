@@ -21,21 +21,37 @@ class Asset < ActiveRecord::Base
   
   def icon
     # types we care about - audio, video
-    ct = file.content_type;
-    return file.url(:thumb) if (ct =~ /^image/)
-    return '/images/icon_zip.png' if (ct =~ /zip/)
-    return '/images/icon_mp3.png' if (ct =~ /audio\/(mpeg|mpg|x-mpeg|mp3|x-mp3|mpeg3)/)
-    return '/images/icon_audio.png' if (ct =~ /audio\//)
-    return '/images/icon_avi.png' if (ct =~ /video\/(avi|msvideo|x-msvideo)/)
-    return '/images/icon_bin.png' if (ct =~ /application\/(octet-stream|x-octet-stream)/)
-    return '/images/icon_doc.png' if (ct =~ /application\/(doc|msword)/)
-    return '/images/icon_pdf.png' if (ct =~ /(application|text)\/(pdf|x-pdf)/)
-    return '/images/icon_txt.png' if (ct =~ /text\//)
-    return '/images/icon_xls.png' if (ct =~ /application\/(xls|excel)/)
-    '/images/icon_file.png'
+    case file.content_type
+    when /^image/
+      file.url(:thumb)
+    when /zip/
+      icon_img :zip
+    when /audio\/(mpeg|mpg|x-mpeg|mp3|x-mp3|mpeg3)/
+      icon_img :mp3
+    when /audio\//
+      icon_img :audio
+    when /video\/(avi|msvideo|x-msvideo)/
+      icon_img :avi
+    when /application\/(octet-stream|x-octet-stream)/
+      icon_img :bin
+    when /application\/(doc|msword)/
+      icon_img :doc
+    when /(application|text)\/(pdf|x-pdf)/
+      icon_img :pdf
+    when /text\//
+      icon_img :txt
+    when /application\/(xls|excel)/
+      icon_img :xls
+    else
+      icon_img :file
+    end
   end
 
   private
+  def icon_img type
+    "/images/icon_#{type}.png"
+  end
+
   def forbid_pdf
     return false if (file_content_type =~ /application\/.*pdf/)
   end
