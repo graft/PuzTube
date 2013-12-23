@@ -2,9 +2,6 @@ log/*.log
 db/development.sqlite3
 public/uploads
 db/schema.rb
-tmp/pids/*
-tmp/cache/*
-tmp/sessions/*
-tmp/sockets/*
+tmp
 config/juggernaut*
 .htpasswd
