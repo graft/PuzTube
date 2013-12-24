@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
 		:path => ":rails_root/public/uploads/:basename_:id_:style.:extension"
   validates_attachment_size :photo, :less_than => 1.megabyte
   validates_attachment_content_type :photo, :content_type => ['image/jpeg', 'image/png', 'image/gif']
+  attr_accessible :login, :name, :email, :info
   
   def set_default_options
     options ||= { :sorting => "status", :grouped => false }
