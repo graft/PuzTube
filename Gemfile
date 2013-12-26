@@ -21,6 +21,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'haml'
+
 gem 'differ'
 
 gem 'socketio-client'
