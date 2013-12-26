@@ -1,27 +1,15 @@
-class PuzzlesController < ApplicationController
-  before_filter :require_user
+class PuzzlesController < ThreadsController
+  thread_type Puzzle
 
-  # GET /puzzles/1
-  # GET /puzzles/1.xml
   def show
     @puzzle = Puzzle.find(params[:id])
     @round = @puzzle.round
     @chats = Chat.find(:all, :conditions => {:chat_id => @puzzle.chat_id}, :order => "created_at DESC", :limit => 25)
-    
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @puzzle }
-    end
   end
   
   def chat
-    @puzzle = Puzzle.find(params[:id])
-    text = params[:chat_input]
-    user = current_or_anon_login
-    emit_activity(@puzzle, "spoke in chat")
-    channel = @puzzle.chat_id
-    send_chat(user,channel,text)
-    render :nothing => true
+    super.chat
+    emit_activity(@thread, "spoke in chat")
   end
 
   def edit_row
@@ -30,7 +18,6 @@ class PuzzlesController < ApplicationController
     render :nothing => true
   end  
   
-  # GET /puzzles/1/edit
   def edit
     @puzzle = Puzzle.find(params[:id])
     @round = Round.find(@puzzle.round_id)
@@ -55,19 +42,13 @@ class PuzzlesController < ApplicationController
     end
   end
 
-  # POST /puzzles
-  # POST /puzzles.xml
   def create
     @puzzle = Puzzle.new(params[:puzzle])
 
-    respond_to do |format|
-      if @puzzle.save
-        format.html { redirect_to(@puzzle) }
-        format.xml  { render :xml => @puzzle, :status => :created, :location => @puzzle }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @puzzle.errors, :status => :unprocessable_entity }
-      end
+    if @puzzle.save
+      redirect_to(@puzzle)
+    else
+      render :action => "new"
     end
   end
 
