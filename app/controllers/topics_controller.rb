@@ -7,20 +7,18 @@ class TopicsController < ThreadsController
 
   def show
     @topic = Topic.find_by_name(params[:name])
-    @chats = Chat.find(:all, :conditions => {:chat_id => @topic.chat_id}, :order => "created_at DESC", :limit => 35)
+    @chats = Chat.find(:all, :conditions => {:chat_id => @topic.chat_id}, 
+                         :order => "created_at DESC", :limit => 35)
   end
 
   def new
     @topic = Topic.new
   end
 
-  # GET /topics/1/edit
   def edit
     @topic = Topic.find_by_name(params[:name])
   end
 
-  # POST /topics
-  # POST /topics.xml
   def create
     @topic = Topic.new(params[:topic])
 

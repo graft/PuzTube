@@ -21,6 +21,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'js-routes'
+
 gem 'haml'
 
 gem 'differ'

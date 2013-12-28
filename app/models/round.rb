@@ -1,15 +1,11 @@
 class Round < ActiveRecord::Base
+  include PuzzleThread
   has_many :puzzles
-  has_many :workspaces, :as => :thread, :order => 'priority'
   belongs_to :hunt
   attr_accessible :name, :hunt_id, :url, :hint, :captain, :answer
 
   SORTING = { 'priority' => :priority_order, 'status' => :status_order, 'creation' => :created_at, 'name' => :name }
   PRIORITY_OPTIONS = { "High" => 0, "Normal" => 1, "Low" => 2 }
-
-  def chat_id
-    "round-#{id}"
-  end
 
   def div_id
     "rnd-#{id}"

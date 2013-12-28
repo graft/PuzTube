@@ -1,0 +1,24 @@
+.button#togglechat
+  = link_to "hide chat", "#"
+.rounded#chatwindow{ :"ng-controller" => "chatController" }
+  .rounded_title#chattitle
+    .title_left Chat: #{thread.name}
+    .title_right
+      %span#chatclock
+  #chatpane{ :"scroll-bottom" => true }
+    %ul#chatlist
+      %li
+        %b {{ dateFormat(Chats.list[0]) }}
+      %li{ :"ng-repeat" => "chat in Chats.list" }
+        %b {{ timeFormat(chat) }} {{ chat.user }}:
+        {{ chat.text}}
+  #chatbox
+    %input#chat_input{ :type => :text, :"ng-model" => "chat_text", :size => 20, :"ui-keypress" => "{13:'post_chat()'}" }
+  #chatusers
+    Users:
+    %ul#userlist
+      %li{ :"ng-repeat" => "(user,t) in Chats.users" } {{user}}
+        
+= link_to 'Log', chat_log_path(:channel => thread.chat_id,:thread=>thread.id,:type=> thread.class.to_s), :target => "_blank"
+
+= link_to_function "pop \u2197", 'pop_window();', :style => "float:right;"

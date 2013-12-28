@@ -18,7 +18,8 @@
 }
 #chatpane {
 	padding:3px;
-	overflow: auto
+	overflow: auto;
+  height: 300px;
 }
 #chatbox {
 	height: 20px;

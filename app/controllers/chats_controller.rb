@@ -1,6 +1,4 @@
 class ChatsController < ApplicationController
-  # GET /chats
-  # GET /chats.xml
   def index
     @chats = Chat.all
     respond_to do |format|
@@ -11,68 +9,15 @@ class ChatsController < ApplicationController
 
   def broadcasts
     @broadcasts = Chat.find(:all, :conditions => { :chat_id => "all" }, :order => "created_at DESC")
-    respond_to do |format|
-      format.html # index.html.erb
-      format.xml  { render :xml => @chats }
-    end
   end
 
-  # GET /chats/1
-  # GET /chats/1.xml
-  def show
-    @chat = Chat.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @chat }
-    end
-  end
-
-  # GET /chats/new
-  # GET /chats/new.xml
-  def new
-    @chat = Chat.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @chat }
-    end
-  end
-
-  # GET /chats/1/edit
-  def edit
-    @chat = Chat.find(params[:id])
-  end
-
-  # POST /chats
-  # POST /chats.xml
-  def create
-    @chat = Chat.new(params[:chat])
-
-    respond_to do |format|
-      if @chat.save
-        format.html { redirect_to(@chat) }
-        format.xml  { render :xml => @chat, :status => :created, :location => @chat }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @chat.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /chats/1
-  # PUT /chats/1.xml
   def update
     @chat = Chat.find(params[:id])
 
-    respond_to do |format|
-      if @chat.update_attributes(params[:chat])
-        format.html { redirect_to(broadcasts_path) }
-        format.xml  { head :ok }
-      else
-        format.html { render :action => "edit" }
-        format.xml  { render :xml => @chat.errors, :status => :unprocessable_entity }
-      end
+    if @chat.update_attributes(params[:chat])
+      redirect_to(broadcasts_path)
+    else
+      render :action => "edit"
     end
   end
   
@@ -87,6 +32,10 @@ class ChatsController < ApplicationController
   
   def window
     @chats = Chat.find(:all, :conditions => { :chat_id => params[:channel] }, :order => "created_at DESC", :limit => 35)
+  end
+
+  def recent
+    render :json => Chat.find(:all, :conditions => { :chat_id => params[:channel] }, :order => "created_at DESC", :limit => 35).reverse
   end
 
   # DELETE /chats/1

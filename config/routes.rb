@@ -1,6 +1,9 @@
 Puztube2::Application.routes.draw do
   resources :hunts
   match '/hunts/stats/:id' => 'hunts#stats', :as => :stats
+
+  match '/threads/chat/:channel' => 'threads#chat', :as => :thread_chat
+
   match '/puzzles/edit_row' => 'puzzles#edit_row', :method => :post, :as => :edit_puzzlerow
   match '/puzzles/delete/:id' => 'puzzles#destroy', :method => :delete, :as => :delete_puzzle
   match '/puzzles/edit/:id' => 'puzzles#edit', :as => :edit_puzzle
@@ -8,7 +11,7 @@ Puztube2::Application.routes.draw do
   match '/puzzles/info' => 'puzzles#info', :as => :info_puzzle 
   match '/puzzles/worker/:id' => 'puzzles#worker', :as => :worker_puzzle 
   match '/puzzles/:id' => 'puzzles#show', :as => :puzzle 
-  match '/puzzles/chat/:id' => 'puzzles#chat', :as => :puzzle_chat
+
 
   match '/rounds/create_puzzle' => 'rounds#create_puzzle', :as => :create_rpuzzle 
   match '/hunts/new_round/:id' => 'hunts#new_round', :as => :new_round 
@@ -30,6 +33,7 @@ Puztube2::Application.routes.draw do
   resources :chats
   match '/chats/log/:channel' => 'chats#log', :as => :chat_log 
   match '/chats/window/:channel' => 'chats#window', :as => :chat_window 
+  match '/chats/recent/:channel' => 'chats#recent', :as => :recent_chats 
   match '/broadcasts' => 'chats#broadcasts', :as => :broadcasts 
 
   resources :rounds
@@ -44,7 +48,6 @@ Puztube2::Application.routes.draw do
   match '/topic/:name' => 'topics#destroy', :method => :delete, :as => :destroy_topic 
   match '/topics' => 'topics#index', :as => :topics 
   match '/topic/show/:name' => 'topics#show', :as => :topic 
-  match '/topics/chat/:id' => 'topics#chat', :as => :topic_chat
 
   match '/workspace/new_attachment' => 'workspace#new_attachment', :conditions => { :method => :post }, :as => :new_attachment 
   match '/workspace/delete_attachment' => 'workspace#delete_attachment', :as => :delete_attachment 

@@ -1,8 +1,6 @@
 class Topic < ActiveRecord::Base
-  validates_uniqueness_of :name
+  include PuzzleThread
   has_many :workspaces, :as => :thread, :order => 'priority'
+  validates_uniqueness_of :name
   
-  def chat_id
-    "topic-#{id}"
-  end
 end

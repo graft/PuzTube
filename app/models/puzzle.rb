@@ -1,19 +1,16 @@
 class Puzzle < ActiveRecord::Base
+  include PuzzleThread
   belongs_to :round
-  has_many :workspaces, :as => :thread, :order => 'priority'
   has_many :tables, :as => :thread, :order => 'priority'
   has_many :users
   has_many :activities
+  has_many :workspaces, :as => :thread, :order => 'priority'
   attr_accessible :name, :url, :hint, :captain, :meta, :answer, :status, :priority
 
   def comments
     (workspaces+tables).sort! { |c1,c2|
       c1.priority <=> c2.priority
     }
-  end
-
-  def chat_id
-    "puzzle-#{id}"
   end
 
   def t_id
