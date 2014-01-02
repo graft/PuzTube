@@ -11,6 +11,7 @@ Puztube2::Application.routes.draw do
   match '/puzzles/info' => 'puzzles#info', :as => :info_puzzle 
   match '/puzzles/worker/:id' => 'puzzles#worker', :as => :worker_puzzle 
   match '/puzzles/:id' => 'puzzles#show', :as => :puzzle 
+  match '/puzzles/:id/activities' => 'puzzles#activities', :as => :puzzle_activities
 
 
   match '/rounds/create_puzzle' => 'rounds#create_puzzle', :as => :create_rpuzzle 
@@ -18,6 +19,8 @@ Puztube2::Application.routes.draw do
   match '/rounds/delete/:id' => 'rounds#destroy', :method => :delete, :as => :delete_round 
   match '/rounds/edit/:id' => 'rounds#edit', :as => :edit_round 
   match '/rounds' => 'rounds#index', :as => :rounds 
+
+  match '/hunt/:hunt/rounds' => 'rounds#list', :as => :rounds_list
 
   match '/round/info' => 'rounds#info', :as => :info_round 
   match '/round/:id' => 'rounds#show', :as => :round 

@@ -1,26 +1,16 @@
+root = exports ? this
 
-socket = io.connect 'http://localhost', { port: 5000, query: 'shib=guaranteed-airline-harassment-underlying' }
+root.socket = io.connect 'http://localhost', { port: 5000, query: 'shib=guaranteed-airline-harassment-underlying' }
 
-socket.on 'connected', (data) ->
-  $('#chat_input').attr('disabled',false) if $('#chat_input')
-  $('#editables').show() if ($('#editables'))
-  socket.emit 'nick', user
-  socket.emit 'join', channel, (users) ->
-    for user in users
-      getSrv('Chats').subscribe_user user, true
-    applyScope('#chatwindow')
+root.Socket = {}
 
-socket.on 'chat', (msg) ->
-  return if !msg.chat
-  getSrv('Chats').add_chat msg.chat
-  getSrv('Chats').subscribe_user msg.chat.user
-  applyScope('#chatwindow')
-  $('#chatpane').trigger 'newitem'
+root.Socket.modules = []
 
-socket.on 'joined', (user) ->
-  getSrv('Chats').subscribe_user user
-  applyScope('#chatwindow')
+root.Socket.join = (users) ->
+  for module in root.Socket.modules
+    module.join(users) if module.join
 
-socket.on 'left', (user) ->
-  getSrv('Chats').unsubscribe_user user
-  applyScope('#chatwindow')
+root.socket.on 'connected', (data) ->
+  console.log "Joined channel"
+  root.socket.emit 'nick', user
+  root.socket.emit 'join', channel, root.Socket.join

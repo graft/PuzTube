@@ -1,18 +1,19 @@
 class RoundsController < ApplicationController
   before_filter :require_user
-  # GET /rounds
-  # GET /rounds.xml
   def index
     @current_hunt = DataStore.find_by_key("current_hunt")
    
-    respond_to do |format|
-      if !@current_hunt.nil?
-        format.html { redirect_to hunt_path(@current_hunt.value.to_i) }
-      else
-        format.html # index.html.erb
-      end
-      format.xml  { render :xml => @rounds }
+    if @current_hunt
+      redirect_to hunt_path @current_hunt.value.to_i
     end
+  end
+
+  def list
+    hunt = params[:hunt].scan(/hunt-([0-9]+)/).flatten.first
+    json = Round.where(:hunt_id => hunt)
+              .all(:include => :puzzles)
+              .map{ |r| r.as_json(:include => :puzzles) }
+    render :json => json
   end
 
   def info
@@ -37,16 +38,10 @@ class RoundsController < ApplicationController
       render :partial => 'show', :locals => { :round => @round }
     end
   end
-  # GET /rounds/1
-  # GET /rounds/1.xml
+
   def show
     @round = Round.find(params[:id])
     @chats = Chat.find(:all, :conditions => {:chat_id => @round.chat_id}, :order => "created_at DESC", :limit => 10)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @rounds }
-    end
   end
 
   def create_puzzle
@@ -61,30 +56,22 @@ class RoundsController < ApplicationController
     end
     render :nothing => true
   end
-  # GET /rounds/1/edit
+
   def edit
     @round = Round.find(params[:id])
     render :partial => 'edit', :locals => { :round => @round }
   end
 
-  # POST /rounds
-  # POST /rounds.xml
   def create
     @round = Round.new(params[:round])
 
-    respond_to do |format|
-      if @round.save
-        format.html { redirect_to(@round) }
-        format.xml  { render :xml => @round, :status => :created, :location => @round }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @round.errors, :status => :unprocessable_entity }
-      end
+    if @round.save
+      redirect_to(@round)
+    else
+      render :action => "new"
     end
   end
 
-  # PUT /rounds/1
-  # PUT /rounds/1.xml
   def update
     @round = Round.find(params[:id])
     @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
@@ -96,8 +83,6 @@ class RoundsController < ApplicationController
     render :nothing => true
   end
 
-  # DELETE /rounds/1
-  # DELETE /rounds/1.xml
   def destroy
     @round = Round.find(params[:id])
     

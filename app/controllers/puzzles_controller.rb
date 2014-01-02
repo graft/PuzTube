@@ -65,6 +65,11 @@ class PuzzlesController < ThreadsController
     render :nothing => true
   end
 
+  def activities
+    @puzzle = Puzzle.find(params[:id])
+    render :json => Activity.where(:puzzle_id => @puzzle).all
+  end
+
   def destroy
     @puzzle = Puzzle.find(params[:id])
 

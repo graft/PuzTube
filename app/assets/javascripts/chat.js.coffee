@@ -1,8 +1,14 @@
+#= require socket-chat
+
 @puztubeApp.factory 'Chats', [ '$http', ->
   @list = []
   @users = {}
   @add_chat = (chat) =>
     @list.push chat
+  @post_chat = (chat) =>
+    @add_chat chat
+    @subscribe_user chat.user
+
   @concat_chats = (chats) =>
     @add_chat chat for chat in chats
   @subscribe_user = (user) =>

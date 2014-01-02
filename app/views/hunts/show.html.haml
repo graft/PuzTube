@@ -1,0 +1,34 @@
+%script{ :type => "text/javascript", :charset => "utf-8" }
+  user = '#{ current_user.login }';
+  channel = '#{ @hunt.chat_id }';
+
+= javascript_include_tag "http://localhost:5000/socket.io/socket.io.js"
+= javascript_include_tag "socket-users"
+= javascript_include_tag :defaults
+= javascript_include_tag :hunts
+
+- content_for :title, "#{@hunt.name}"
+
+= render :partial => "welcome/login"
+= render :partial => "templates"
+
+= javascript_include_tag "RGraph/libraries/RGraph.common.core"
+= javascript_include_tag "RGraph/libraries/RGraph.line.js"
+= javascript_include_tag "RGraph/libraries/RGraph.common.key.js"
+= javascript_include_tag "stats"
+
+#hunt{ :"ng-controller" => "huntController" }
+  %div{ :"ng-show" => "visible" }
+    %h1= @hunt.name
+    .rounded#statbox
+      %span.button.graphbutton#show_graph
+        = link_to 'Show', stats_path(:id=>@hunt.id), :method => 'get', :remote => true, :'data-update-target' => "statbox"
+    #stats Statistics
+    - if current_user.team_captain
+      = link_to 'New round', new_round_path(@hunt.id), :remote => true
+    %input{ :type => :checkbox, :"ng-model" => "grouped", :value => "1" }
+    Group by round
+    %br
+    #roundstable
+      .round_grouped{ :"ng-show" => "grouped", :"ng-repeat" => "round in hunt.rounds", :"ng-include" => "'round_grouped'" }
+      .round_ungrouped{ :"ng-hide" => "grouped", :"ng-include" => "'round_ungrouped'" }
