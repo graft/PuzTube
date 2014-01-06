@@ -1,13 +1,12 @@
 #= require socket-hunt
 
 @puztubeApp.factory 'Hunt', [ '$http', ->
-  @rounds = []
   @puzzles = []
 
-  @set_rounds = (rounds) =>
-    @rounds = rounds
+  @update_obj = (hunt) =>
+    $.extend @, hunt
     @puzzles = []
-    for round in rounds
+    for round in @rounds
       for puzzle in round.puzzles
         puzzle.round = round.name
         @puzzles.push puzzle
@@ -20,18 +19,33 @@
 
   $scope.grouped = true
 
-  $scope.request_rounds = ->
-    $http.post(Routes.rounds_list_path({ hunt: channel }))
-      .success (rounds) -> Hunt.set_rounds rounds
+  $scope.user = user
+
+  $scope.request_hunt = ->
+    $http.post(Routes.get_hunt_path({ channel: channel }))
+      .success (hunt) -> Hunt.update_obj hunt
 
   $scope.edit_puzzle = (puzzle) ->
     puzzle.editing = true
+
   $scope.cancel_edit = (puzzle) ->
     puzzle.editing = false
+
+  $scope.create_round = ->
+    $scope.creating_round = true
+    $scope.new_round =
+      name: "Round Name"
+      url: "Round URL"
+      hunt_id: Hunt.id
+    console.log "Creating round"
+  $scope.post_new_round = ->
+    
+  $scope.cancel_new_round = -> creating_round = false
+
   $scope.puzzle_row = (puzzle) ->
     if puzzle.editing then 'puzzle_row_edit' else 'puzzle_row'
       
-  $scope.request_rounds()
+  $scope.request_hunt()
 
   $scope.canvas = (puzzle) -> 'act-'+puzzle.id
 

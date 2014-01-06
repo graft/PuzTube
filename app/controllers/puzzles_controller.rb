@@ -12,10 +12,24 @@ class PuzzlesController < ThreadsController
     emit_activity(@thread, "spoke in chat")
   end
 
-  def edit_row
+  def update
     @puzzle = Puzzle.find(params[:puzzle][:id])
     broadcast_puzzle_edit(@puzzle,params[:puzzle])
     render :nothing => true
+  end
+
+  def get
+    @puzzle = Puzzle.find(params[:id])
+    render :json => @puzzle
+  end
+
+  def workspaces
+    @puzzle = Puzzle.find(params[:id], :include => :workspaces)
+    render :json => @puzzle.workspaces
+  end
+
+  def edit_row
+    @puzzle = Puzzle.find(params[:puzzle][:id])
   end  
   
   def edit

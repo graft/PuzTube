@@ -24,6 +24,12 @@
       %tbody
         %tr{ "ng-repeat" => "puzzle in round.puzzles", :"ng-include" => "puzzle_row(puzzle)" }
 
+%script{ :type => "text/ng-template", :id => "edit_controls" }
+  %b Edit
+  %b | &#x21BA;
+  %b | &#x2612;
+  %b{ :"ng-show" => "title" } | {{ title }}
+
 %script{ :type => "text/ng-template", :id => "round_ungrouped" }
   %table.puzzletable{ style: "border:1px solid #354;" }
     %thead{ :"ng-include" => "'puzzle_header'" }
@@ -80,3 +86,11 @@
   %td
     %a{ "ng-click" => "update_puzzle(puzzle)" } Update
     %a{ "ng-click" => "cancel_edit(puzzle)" } Cancel
+
+%script{ :type => "text/ng-template", :id => "round_create" }
+  %p
+    %input{ :type => :text, :"ng-model" => "new_round.name" }
+    %input{ :type => :text, :"ng-model" => "new_round.url" }
+    %a{ :"ng-click" => "post_new_round()" } Create
+    %a{ :"ng-click" => "cancel_new_round()" } Cancel
+  %p 

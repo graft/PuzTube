@@ -1,6 +1,4 @@
 class HuntsController < ApplicationController
-  # GET /hunts
-  # GET /hunts.xml
   def index
     @hunts = Hunt.all
 
@@ -10,44 +8,15 @@ class HuntsController < ApplicationController
     end
   end
 
-  # GET /hunts/1
-  # GET /hunts/1.xml
   def show
     @hunt = Hunt.find(params[:id])
-    
-    @sorting = current_user.options[:sorting]
-    sort_key = Round::SORTING[@sorting]
-    @grouped = current_user.options[:grouped]
-    
-    if @grouped
-      @hunt.rounds.sort! do |r1,r2|
-        r1.priority_order <=> r2.priority_order
-      end
-      @hunt.rounds.each do |round|
-        round.puzzles.sort! {|r1,r2| r1.send(sort_key) <=> r2.send(sort_key)}
-      end
-    else
-      @hunt.puzzles.sort! {|r1,r2| r1.send(sort_key) <=> r2.send(sort_key)}
-    end
-
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @hunt }
-    end
   end
 
-  # GET /hunts/new
-  # GET /hunts/new.xml
-  def new
-    @hunt = Hunt.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.xml  { render :xml => @hunt }
-    end
+  def get
+    @hunt = Hunt.includes(:rounds => :puzzles).find get_id(params[:channel])
+    render :json => @hunt.to_json(:include => {:rounds => {:include => :puzzles}})
   end
-  
+
   def new_round
     @hunt = Hunt.find(params[:id])
     @round = @hunt.rounds.build

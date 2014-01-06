@@ -2,7 +2,7 @@ Puztube2::Application.routes.draw do
   resources :hunts
   match '/hunts/stats/:id' => 'hunts#stats', :as => :stats
 
-  match '/threads/chat/:channel' => 'threads#chat', :as => :thread_chat
+  match '/threads/:channel/chat' => 'threads#chat', :as => :thread_chat
 
   match '/puzzles/edit_row' => 'puzzles#edit_row', :method => :post, :as => :edit_puzzlerow
   match '/puzzles/delete/:id' => 'puzzles#destroy', :method => :delete, :as => :delete_puzzle
@@ -21,6 +21,7 @@ Puztube2::Application.routes.draw do
   match '/rounds' => 'rounds#index', :as => :rounds 
 
   match '/hunt/:hunt/rounds' => 'rounds#list', :as => :rounds_list
+  match '/hunt/:channel/get' => 'hunts#get', :as => :get_hunt
 
   match '/round/info' => 'rounds#info', :as => :info_round 
   match '/round/:id' => 'rounds#show', :as => :round 

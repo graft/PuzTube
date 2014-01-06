@@ -6,6 +6,11 @@ require 'csv'
 module ApplicationHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper 
+
+  def get_id channel
+    id = channel.scan(/^\w+-([0-9]+)/).flatten.first
+  end
+
   def send_chat(user,channel,text)
     @chat = Chat.new( { :user => user } )
     @chat.text = sanitize_text text

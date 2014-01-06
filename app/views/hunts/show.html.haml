@@ -1,5 +1,5 @@
 %script{ :type => "text/javascript", :charset => "utf-8" }
-  user = '#{ current_user.login }';
+  ! user = #{ current_user.to_json }
   channel = '#{ @hunt.chat_id }';
 
 = javascript_include_tag "http://localhost:5000/socket.io/socket.io.js"
@@ -24,8 +24,9 @@
       %span.button.graphbutton#show_graph
         = link_to 'Show', stats_path(:id=>@hunt.id), :method => 'get', :remote => true, :'data-update-target' => "statbox"
     #stats Statistics
-    - if current_user.team_captain
-      = link_to 'New round', new_round_path(@hunt.id), :remote => true
+    %a{ :"ng-click" => "create_round()", :"ng-show" => "user.team_captain && !creating_round" } New Round
+    %div{ :"ng-show" => "user.team_captain && creating_round", :"ng-include" => "'round_create'" }
+    %br
     %input{ :type => :checkbox, :"ng-model" => "grouped", :value => "1" }
     Group by round
     %br
