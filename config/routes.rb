@@ -18,9 +18,9 @@ Puztube2::Application.routes.draw do
   match '/hunts/new_round/:id' => 'hunts#new_round', :as => :new_round 
   match '/rounds/delete/:id' => 'rounds#destroy', :method => :delete, :as => :delete_round 
   match '/rounds/edit/:id' => 'rounds#edit', :as => :edit_round 
+  match '/rounds/create' => 'rounds#create', :as => :create_round
   match '/rounds' => 'rounds#index', :as => :rounds 
 
-  match '/hunt/:hunt/rounds' => 'rounds#list', :as => :rounds_list
   match '/hunt/:channel/get' => 'hunts#get', :as => :get_hunt
 
   match '/round/info' => 'rounds#info', :as => :info_round 

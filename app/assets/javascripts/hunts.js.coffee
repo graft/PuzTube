@@ -32,19 +32,21 @@
     puzzle.editing = false
 
   $scope.create_round = ->
-    $scope.creating_round = true
     $scope.new_round =
       name: "Round Name"
       url: "Round URL"
       hunt_id: Hunt.id
-    console.log "Creating round"
+
   $scope.post_new_round = ->
+    console.log "Posting round"
+    $http.post(Routes.create_round_path({ round: $scope.new_round }))
+    $scope.new_round = null
     
-  $scope.cancel_new_round = -> creating_round = false
+  $scope.cancel_new_round = -> $scope.new_round = null
 
   $scope.puzzle_row = (puzzle) ->
     if puzzle.editing then 'puzzle_row_edit' else 'puzzle_row'
-      
+
   $scope.request_hunt()
 
   $scope.canvas = (puzzle) -> 'act-'+puzzle.id

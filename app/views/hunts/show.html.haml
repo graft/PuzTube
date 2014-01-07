@@ -24,8 +24,8 @@
       %span.button.graphbutton#show_graph
         = link_to 'Show', stats_path(:id=>@hunt.id), :method => 'get', :remote => true, :'data-update-target' => "statbox"
     #stats Statistics
-    %a{ :"ng-click" => "create_round()", :"ng-show" => "user.team_captain && !creating_round" } New Round
-    %div{ :"ng-show" => "user.team_captain && creating_round", :"ng-include" => "'round_create'" }
+    %a{ :"ng-click" => "create_round()", :"ng-show" => "user.team_captain && !new_round" } New Round
+    %div{ :"ng-show" => "user.team_captain && new_round", :"ng-include" => "'round_create'" }
     %br
     %input{ :type => :checkbox, :"ng-model" => "grouped", :value => "1" }
     Group by round
