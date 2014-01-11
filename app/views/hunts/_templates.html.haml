@@ -34,9 +34,9 @@
 
 %script{ :type => "text/ng-template", :id => "round_info" }
   .title_right
-    %a.button{ :"ng-click" => "edit_round(round)"} &#x270E;
-    %a.button{ :"ng-click" => "refresh_activities(round)" } &#x21BA;
-    %a.button{ :"ng-click" => "destroy_round(round)" } &#x2702;
+    %a.button{ :"ng-click" => "edit_round(round)", :title => "Edit round"} &#x270E;
+    %a.button{ :"ng-click" => "refresh_activities(round)", :title => "Refresh activity" } &#x21BA;
+    %a.button{ :"ng-click" => "destroy_round(round)", :title => "Delete round" } &#x2702;
   %h2
     %a{ :href => "{{ round_path( round ) }}", :target => "_blank" } {{ round.name }}
     (
@@ -109,8 +109,8 @@
   .cell{ :"ng-include" => "'puzzle_activity'" }
   .cell.controls
     .title_right
-      %a.button{ "ng-click" => "edit_puzzle(puzzle)" } &#x270E;
-      %a.button{ "ng-click" => "destroy_puzzle(puzzle)" } &#x2702;
+      %a.button{ "ng-click" => "edit_puzzle(puzzle)", :title => "Edit puzzle" } &#x270E;
+      %a.button{ "ng-click" => "destroy_puzzle(puzzle)", :title => "Delete puzzle" } &#x2702;
 
 %script{ :type => "text/ng-template", :id => "puzzle_row_edit" }
   .cell
