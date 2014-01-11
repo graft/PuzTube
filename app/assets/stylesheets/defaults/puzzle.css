@@ -1,0 +1,43 @@
+
+.puzzle {
+  border: 1px solid;
+  margin-bottom: 2px;
+  margin-top: 2px;
+  border-radius: 4px;
+}
+
+.puzzle .cell {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 2px;
+}
+
+.puzzle .small {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.puzzle .priority {
+  background-color: red;
+  width: 8%;
+  text-align: center;
+}
+.puzzle .status {
+  background-color: blue;
+  width: 8%;
+  text-align: center;
+}
+.puzzle .answer {
+  background-color: #0f0;
+  width: 15%;
+}
+.puzzle .main {
+  width: 40%;
+}
+.puzzle .hint {
+  width: 20%;
+}
+
+.puzzle .controls {
+  width: 15%;
+}

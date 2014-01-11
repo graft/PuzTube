@@ -267,6 +267,7 @@ module ApplicationHelper
     activity.puzzle_id = puzzle.id
     activity.hunt_id = puzzle.round.hunt_id
     activity.user_id = current_user.id
+    activity.task = task
     activity.save
   end
 

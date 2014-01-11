@@ -1,40 +1,67 @@
 %script{ :type => "text/ng-template", :id => "round_grouped" }
   .round{ :id => "{{ round.id }}" }
-    .rounded_title
-      .title_left{ :"ng-include" => "'edit_controls'" }
-    %h2
-      %a{ :href => "{{ round_path( round ) }}", :target => "_blank" } {{ round.name }}
-      (
-      %a{ :href => "{{ round.url }}", :target => "_blank" } url &#10138;
-      )
-    %b Priority: {{ round.priority }}
-    %br
-    %b Hint: {{ round.hint }}
-    %br
-    %b Captain: {{ round.captain }}
-    %br
-    %b Answer: {{ round.answer }}
-    %br
+    .round_info{ :"ng-show" => "!round.editing", :"ng-include" => "'round_info'" }
+    .round_info{ :"ng-show" => "round.editing", :"ng-include" => "'round_edit'" }
 
     // TODO: put back team captain limits
-    %a{ :"ng-click" => "create_puzzle(round)" } Add puzzle
-    %a{ :"ng-click" => "refresh_activities(round)" } Refresh activity
-    %table.puzzletable
-      %thead{ :"ng-include" => "'puzzle_header'" }
-      %tbody
-        %tr{ "ng-repeat" => "puzzle in round.puzzles", :"ng-include" => "puzzle_row(puzzle)" }
+    %a.button{ :"ng-show" => "!round.new_puzzle", :"ng-click" => "create_puzzle(round)" } &#x2795;
+    .puzzle_creation{ :"ng-show" => "round.new_puzzle", :"ng-include" => "'puzzle_create'"}
+    .puzzle{ "ng-repeat" => "puzzle in round.puzzles", :"ng-include" => "puzzle_row(puzzle)" }
 
+%script{ :type => "text/ng-template", :id => "round_edit" }
+  .title_right
+    %a.button{ :"ng-click" => "post_edit_round(round)"} &#x2713;
+    %a.button{ :"ng-click" => "cancel_edit_round(round)"} &#x2298;
+  %p
+    %label
+      name:
+      %input{ :"ng-model" => "round.editing.name" }
+    %label
+      url:
+      %input{ :"ng-model" => "round.editing.url" }
+    %label
+      priority:
+      %select{ :"ng-model" => "round.editing.priority", :"ng-options" => "prio for prio in round_priorities" }
+    %label
+      hint:
+      %input{ :"ng-model" => "round.editing.hint" }
+    %label
+      captain:
+      %input{ :"ng-model" => "round.editing.captain" }
+    %label
+      answer:
+      %input{ :"ng-model" => "round.editing.answer" }
+
+%script{ :type => "text/ng-template", :id => "round_info" }
+  .title_right
+    %a.button{ :"ng-click" => "edit_round(round)"} &#x270E;
+    %a.button{ :"ng-click" => "refresh_activities(round)" } &#x21BA;
+    %a.button{ :"ng-click" => "destroy_round(round)" } &#x2702;
+  %h2
+    %a{ :href => "{{ round_path( round ) }}", :target => "_blank" } {{ round.name }}
+    (
+    %a{ :href => "{{ round.url }}", :target => "_blank" } url &#10138;
+    )
+  %b Priority: {{ round.priority }}
+  %br
+  %b Hint: {{ round.hint }}
+  %br
+  %b Captain: {{ round.captain }}
+  %br
+  %b Answer: {{ round.answer }}
+  %br
+      
 %script{ :type => "text/ng-template", :id => "edit_controls" }
-  %b Edit
+  %b &#x270E;
   %b | &#x21BA;
-  %b | &#x2612;
+  %b | &#x2702;
   %b{ :"ng-show" => "title" } | {{ title }}
 
 %script{ :type => "text/ng-template", :id => "round_ungrouped" }
   %table.puzzletable{ style: "border:1px solid #354;" }
     %thead{ :"ng-include" => "'puzzle_header'" }
     %tbody
-      %tr{ :"ng-repeat" => "puzzle in hunt.puzzles", :"ng-include" => "'puzzle_row'" }
+      %tr{ :"ng-repeat" => "puzzle in hunt.puzzles", :"ng-include" => "'puzzle_row_flat'" }
 
 %script{ :type => "text/ng-template", :id => "puzzle_header" }
   %tr
@@ -50,47 +77,84 @@
 %script{ :type => "text/ng-template", :id => "puzzle_activity" }
   %canvas{ :"id" => "{{ canvas(puzzle) }}", :width => 150, :height => 30 }
 
-%script{ :type => "text/ng-template", :id => "puzzle_row" }
+%script{ :type => "text/ng-template", :id => "puzzle_row_flat" }
+  %tr
   %td {{ puzzle.priority }}
   %td {{ puzzle.status }}
   %td{ :"ng-hide" => "grouped" } {{ puzzle.round }}
   %td{ :"ng-include" => "'puzzle_activity'" }
   %td
-    %a{ :href => "puzzle_path(puzzle)", :target => "_blank" } {{ puzzle.name }}
+    %a{ :href => "{{ puzzle_path(puzzle) }}", :target => "_blank" } {{ puzzle.name }}
     (
-    %a{ :href => "puzzle.url", :target => "_blank" } url &#10138;
+    %a{ :href => "{{ puzzle.url }}", :target => "_blank" } url &#10138;
     )
   %td {{ puzzle.hint }}
   %td {{ puzzle.captain }}
   %td {{ puzzle.answer }}
-  %td
-    %a{ "ng-click" => "edit_puzzle(puzzle)" } Edit
-    %a{ "ng-click" => "delete_puzzle(puzzle)" } &#9746;
+
+%script{ :type => "text/ng-template", :id => "puzzle_row" }
+  .cell.priority {{ puzzle.priority }}
+  .cell.status {{ puzzle.status }}
+  .cell{ :"ng-hide" => "grouped" } {{ puzzle.round }}
+  .cell.main
+    %a{ :href => "{{ puzzle_path(puzzle) }}", :target => "_blank" } {{ puzzle.name }}
+    (
+    %a{ :href => "{{ puzzle.url }}", :target => "_blank" } url &#10138;
+    )
+    %br
+    %span.small{ :"ng-show" => "puzzle.captain" } Captain: {{ puzzle.captain }}
+  .cell.hint
+    %span{ :"ng-show" => "puzzle.hint" } {{ puzzle.hint }}
+  .cell.answer{ :"ng-show" => "puzzle.answer" } {{ puzzle.answer }}
+  .cell{ :"ng-include" => "'puzzle_activity'" }
+  .cell.controls
+    .title_right
+      %a.button{ "ng-click" => "edit_puzzle(puzzle)" } &#x270E;
+      %a.button{ "ng-click" => "destroy_puzzle(puzzle)" } &#x2702;
 
 %script{ :type => "text/ng-template", :id => "puzzle_row_edit" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.priority" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.status" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.round" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.name" }
-    %input{ :type => :text, :"ng-model" => "puzzle.url" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.hint" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.captain" }
-  %td
-    %input{ :type => :text, :"ng-model" => "puzzle.answer" }
-  %td
-    %a{ "ng-click" => "update_puzzle(puzzle)" } Update
-    %a{ "ng-click" => "cancel_edit(puzzle)" } Cancel
+  .cell
+    %label
+      priority:
+      %select{ :"ng-model" => "puzzle.editing.priority", :"ng-options" => "prio for prio in puzzle_priorities" }
+    %label
+      status:
+      %select{ :"ng-model" => "puzzle.editing.status", :"ng-options" => "status for status in puzzle_statuses" }
+    %label
+      round:
+      %input{ :type => :text, :"ng-model" => "puzzle.editing.round" }
+    %label
+      name:
+      %input{ :type => :text, :"ng-model" => "puzzle.editing.name" }
+    %label
+      url:
+      %input{ :type => :text, :"ng-model" => "puzzle.editing.url" }
+    %label
+      hint:
+      %input{ :type => :text, :"ng-model" => "puzzle.editing.hint" }
+    %label
+      captain:
+      %input{ :type => :text, :"ng-model" => "puzzle.editing.captain" }
+    %label
+      answer:
+      %input{ :type => :text, :"ng-model" => "puzzle.editing.answer" }
+  .cell.controls
+    .title_right
+      %a.button{ "ng-click" => "post_edit_puzzle(puzzle)" } &#x2713;
+      %a.button{ "ng-click" => "cancel_edit_puzzle(puzzle)" } &#x2298;
 
 %script{ :type => "text/ng-template", :id => "round_create" }
   %p
     %input{ :type => :text, :"ng-model" => "new_round.name" }
     %input{ :type => :text, :"ng-model" => "new_round.url" }
-    %a{ :"ng-click" => "post_new_round()" } Create
-    %a{ :"ng-click" => "cancel_new_round()" } Cancel
+    %a.button{ :"ng-click" => "post_new_round()" } &#x2713;
+    %a.button{ :"ng-click" => "cancel_new_round()" } &#x2298;
+  %p 
+
+%script{ :type => "text/ng-template", :id => "puzzle_create" }
+  %p
+    %input{ :type => :text, :"ng-model" => "round.new_puzzle.name" }
+    %input{ :type => :text, :"ng-model" => "round.new_puzzle.url" }
+    %a.button{ :"ng-click" => "post_new_puzzle(round)" } &#x2713;
+    %a.button{ :"ng-click" => "cancel_new_puzzle(round)" } &#x2298;
   %p 

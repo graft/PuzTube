@@ -1,0 +1,73 @@
+%script{ :type => "text/ng-template", :id => "workspace_bar" }
+  .workspace_button{ :"ng-repeat" => "type in valid_workspaces" }
+    %a.button{ :"ng-click" => "workspaces.add(workspaces.workspace_type(type).template)",
+      :title => "{{ workspaces.workspace_type(type).title }}" } {{ type }}
+  %a.button{ :"ng-click" => "cancel_workspace()" } &#x2298;
+
+%script{ :type => "text/ng-template", :id => "workspace_header" }
+  {{ workspace.title }} &nbsp;
+  .title_right
+    %a.button{ :"ng-click" => "workspaces.edit(workspace)", :"ng-show" => "workspaces.is_editable(workspace)" } &#x270E;
+    %a.button{ :"ng-click" => "workspaces.delete(workspace)" } &#x2702;
+
+%script{ :type => "text/ng-template", :id => "workspace_edit" }
+  .workspace_header
+    %label 
+      title:
+      %input{ :"ng-model" => "workspace.editing.title" }
+    .title_right
+      %a.button{ :"ng-click" => "workspaces.post(workspace)", :"ng-show" => "workspaces.is_editable(workspace)" } &#x2713;
+      %a.button{ :"ng-click" => "workspaces.cancel(workspace)" } &#x2298;
+  .workspace_contents
+    %textarea{ :"ng-model" => "workspace.editing.content" }
+
+%script{ :type => "text/ng-template", :id => "workspace_etherpad" }
+  .workspace_header{ :"ng-include" => "'workspace_header'" }
+  .workspace_contents{ :"ng-show" => "workspace.priority != 'Hidden'" }
+    Etherpad goes here
+
+%script{ :type => "text/ng-template", :id => "workspace_files" }
+  .workspace_normal{ :"ng-show" => "!workspace.editing" }
+    .workspace_header{ :"ng-include" => "'workspace_header'" }
+    .workspace_contents{ :"ng-show" => "workspace.priority != 'Hidden'" }
+      %a.button{ :"ng-click" => "workspaces.asset(workspace)" } &#x2795;
+    .asset{ :"ng-repeat" => "asset in workspace.assets" }
+      %a{ :href => "{{ asset.file.url }}", :target => '_blank' }
+        %img{ :"ng-src" => "{{ asset.icon }}" }
+        {{ asset.file.original_filename }}
+        {{ asset.file.content_type }}
+        {{ file_size(asset) }}
+      .player{ :"ng-show" => "asset.is_mpeg", :"ng-include" => "'mp3player'" }
+      .title_right
+        %a.button{ :"ng-click" => "destroy_asset(asset,workspace)" } &#x2702;
+  .workspace_edit{ :"ng-show" => "workspace.editing", :"ng-include" => "'workspace_edit'" }
+
+%script{ :type => "text/ng-template", :id => "mp3player" }
+  %object{ :classid => "clsid:D27CDB6E-AE6D-11cf-96B8-444553540000", :codebase => "http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0", :width => "165", :height => "38", :id => "niftyPlayer1", :align => "" }
+    %param{ :name => :movie,  :value => "/niftyplayer.swf?file={{ asset.file.url }}" }
+    %param{ :name => :quality, :value => :high }
+    %param{ :name => :bgcolor, :value => "#FFFFFF" }
+    %embed{ :src => "/niftyplayer.swf?file={{ asset.file.url }}", :quality => :high, :bgcolor => "#000000", :width => "165", :height => "38", :name => "niftyPlayer1", :align => "", :type => "application/x-shockwave-flash", :pluginspage => "http://www.macromedia.com/go/getflashplayer" }
+
+%script{ :type => "text/ng-template", :id => "workspace_text" }
+  .workspace_normal{ :"ng-show" => "!workspace.editing" }
+    .workspace_header{ :"ng-include" => "'workspace_header'" }
+    .workspace_contents{ :"ng-bind-html" => "workspace.markdown_content" }
+  .workspace_edit{ :"ng-show" => "workspace.editing", :"ng-include" => "'workspace_edit'" }
+
+%script{ :type => "text/ng-template", :id => "workspace_table" }
+  .workspace_normal{ :"ng-show" => "!workspace.editing" }
+    .workspace_header{ :"ng-include" => "'workspace_header'" }
+    .workspace_contents
+      .table
+        .tr
+          .th{:"ng-repeat" => "head in workspace.table_header" }
+            %input{ :"ng-model" => "head.contents", :type => :text, :"ng-blur" => "workspaces.update_cell(workspace,head)" }
+        .tr{:"ng-repeat" => "row in workspace.table_rows" }
+          .td{:"ng-repeat" => "cell in row"}
+            %input{ :"ng-model" => "cell.contents", :type => :text, :"ng-blur" => "workspaces.update_cell(workspace,cell)" }
+      %a{:"ng-click" => "workspaces.add_row(workspace)"} +row
+      %a{:"ng-click" => "workspaces.add_col(workspace)"} +col
+
+  .workspace_edit{ :"ng-show" => "workspace.editing", :"ng-include" => "'workspace_edit'" }
+

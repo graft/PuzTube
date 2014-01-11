@@ -10,8 +10,9 @@ class RoundsController < ApplicationController
 
   def create
     @round = Round.create(params[:round])
-    @round.save
-    Push.send :command => :add, :round => @round
+    if @round.save
+      Push.send :command => "new round", :round => @round, :channel => @round.hunt.chat_id
+    end
     render :nothing => true
   end
 
@@ -21,16 +22,8 @@ class RoundsController < ApplicationController
 
   def edit
     @round = Round.find(params[:id])
-    render :partial => 'edit', :locals => { :round => @round }
-  end
-
-  def update
-    @round = Round.find(params[:id])
-    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
-
-     if @round.update_attributes(params[:round])
-      logger.info "Rendered channel for #{@round.hunt.chat_id}"
-      Push.send :command => :update, :round => @round.id, :channel => @round.hunt.chat_id, :table => @round.div_id
+    if @round.update_attributes(params[:round])
+      Push.send :command => 'update round', :round => @round, :channel => @round.hunt.chat_id
     end
     render :nothing => true
   end
@@ -38,7 +31,7 @@ class RoundsController < ApplicationController
   def destroy
     @round = Round.find(params[:id])
     
-    Push.send :command => "remove", :round => @round.id, :channel => [ @round.hunt.chat_id, @round.chat_id ]
+    Push.send :command => "destroy round", :round => @round, :channel => @round.hunt.chat_id
     @round.hidden = true
     @round.hunt_id = nil
     @round.save

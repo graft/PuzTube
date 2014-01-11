@@ -2,8 +2,16 @@
   width: 72%;
 }
 
+#puzzle {
+  width: 72%;
+}
+
 #statbox {
 position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;background-color: #fff;
+}
+
+#workspaces {
+  margin-top: 10px;
 }
 
 .graphbutton {
@@ -16,4 +24,9 @@ position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
 
 .iform {
 	display: inline;
+}
+
+label {
+  white-space: nowrap;
+  font-weight: bold;
 }

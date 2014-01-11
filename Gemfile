@@ -27,8 +27,6 @@ gem 'haml'
 
 gem 'differ'
 
-gem 'socketio-client'
-
 gem 'paperclip'
 
 # To use ActiveModel has_secure_password

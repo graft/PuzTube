@@ -8,6 +8,10 @@ class HuntsController < ApplicationController
     end
   end
 
+  def new
+    @hunt = Hunt.new
+  end
+
   def show
     @hunt = Hunt.find(params[:id])
   end

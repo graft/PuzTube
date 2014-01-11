@@ -11,6 +11,11 @@ class TopicsController < ThreadsController
                          :order => "created_at DESC", :limit => 35)
   end
 
+  def get
+    @topic = Topic.find(get_id params[:channel])
+    render :json => @topic.to_json(:include => :workspaces)
+  end
+
   def new
     @topic = Topic.new
   end

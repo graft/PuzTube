@@ -1,14 +1,17 @@
 %script{ :type => "text/javascript" }
-  user = '#{ current_user.login }';
+  ! user = #{ current_user.to_json };
   channel = '#{ @topic.chat_id }';
   thread = '#{ @topic.class }';
-= javascript_include_tag :defaults
-= javascript_include_tag :chat
-= javascript_include_tag :workspaces
 = javascript_include_tag "http://#{hostname}:5000/socket.io/socket.io.js"
+= javascript_include_tag :defaults
 = javascript_include_tag "socket-users"
+= javascript_include_tag :chat
+= javascript_include_tag :topic
+= javascript_include_tag :workspace
 
 - content_for :title, "#{@topic.name}"
+
+= render :partial => 'workspace/templates'
 
 #mainpage
 
@@ -18,9 +21,9 @@
   = link_to 'Back', topics_path
   %br
 
-.hidden#editables
-  = link_to 'New Comment', new_workspace_path(:type => 'topic', :name => @topic.name), :remote => true, :method => :post
-#comments
-- @topic.workspaces.each do |ws|
-  = render :partial => 'workspace/block', :locals => { :workspace => ws }
+#topic{ :"ng-controller" => "topicController", :"ng-show" => "visible" }
+  %a{ :"ng-click" => "add_workspace()", :"ng-show" => "!adding_workspace" } New workspace
+  #workspace_bar{ :"ng-show" => "adding_workspace", :"ng-include" => "'workspace_bar'" }
+  #workspaces
+    .workspace{ :"ng-repeat" => "workspace in topic.workspaces", :"ng-include" => "workspace.workspace_type" }
 = render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @topic, :multi => nil }

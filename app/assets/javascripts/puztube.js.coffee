@@ -1,4 +1,11 @@
 @puztubeApp = angular.module('puztubeApp', ['ui.utils']).run ($rootScope)->
+  $rootScope.puzzle_statuses = [ "Needs Insight", "Under Control", "Solved", "Unimportant", "New", "Needs MIT-Local" ]
+  $rootScope.puzzle_status = (puzzle) => $rootScope.puzzle_statuses[puzzle.status]
+
+  $rootScope.puzzle_priorities = [ "Urgent", "High", "Normal", "Low" ]
+
+  $rootScope.round_priorities = [ "High", "Normal", "Low" ]
+
   $rootScope.time_format = (time) ->
     if time < 3540
       parseInt(time/60)+' min'

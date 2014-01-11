@@ -1,9 +1,28 @@
 .workspace {
   background-color: #f4ffaa; 
+  margin-bottom: 5px;
+  border-radius: 4px;
+  border: 2px solid #000;
+}
+
+.workspace_contents {
+  padding: 2px;
+}
+.workspace_contents textarea {
+  width: 100%;
+  height: 120px;
+}
+
+.workspace_header {
+  background-color: #888;
+  padding: 4px;
+}
+
+.workspace_button {
+  display: inline;
 }
 
 .title_left {
- padding:2px;
  float:left;
 }
 .title_left a {
@@ -11,25 +30,48 @@
 }
 .title_right {
   float:right;
-  padding:2px;
 }
 
-.priority_Normal .rounded_title, .rounded_box {
-  background-color: #568;
-}
-.priority_Normal .rounded_content {
-  background-color: #bcd;
-}
-.priority_Normal .asset {
-  background-color: #667;
+.workspace .priority {
+  font-size: 10px;
+  font-weight: bold;
 }
 
-.priority_Useless .rounded_title, .rounded_box {
-  background-color: #a8a;
+.workspace .table {
+  display: table;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
+  border-collapse: collapse;
 }
-.priority_Useless .rounded_content {
-  background-color: #fcf;
+
+.workspace .tr {
+  display: table-row;
+  width: 100%;
+  padding: 0px;
+  margin: 0px;
 }
-.priority_Useless .asset {
-  background-color: #545;
+
+.workspace .th {
+  display: table-cell;
+  border: 1px solid #400;
+  padding: 0px;
+  margin: 0px;
+}
+
+.workspace .td {
+  display: table-cell;
+  border: 1px solid;
+  padding: 0px;
+  margin: 0px;
+}
+
+.workspace .table input {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.workspace .td input {
+  background-color: #cff;
 }

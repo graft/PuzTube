@@ -1,10 +1,10 @@
 %script{ :type => "text/javascript", :charset => "utf-8" }
-  ! user = #{ current_user.to_json }
+  ! user = #{ current_user.to_json };
   channel = '#{ @hunt.chat_id }';
 
-= javascript_include_tag "http://localhost:5000/socket.io/socket.io.js"
-= javascript_include_tag "socket-users"
+= javascript_include_tag "http://#{hostname}:5000/socket.io/socket.io.js"
 = javascript_include_tag :defaults
+= javascript_include_tag "socket-users"
 = javascript_include_tag :hunts
 
 - content_for :title, "#{@hunt.name}"
@@ -23,9 +23,9 @@
     .rounded#statbox
       %span.button.graphbutton#show_graph
         = link_to 'Show', stats_path(:id=>@hunt.id), :method => 'get', :remote => true, :'data-update-target' => "statbox"
-    #stats Statistics
-    %a{ :"ng-click" => "create_round()", :"ng-show" => "user.team_captain && !new_round" } New Round
-    %div{ :"ng-show" => "user.team_captain && new_round", :"ng-include" => "'round_create'" }
+      #stats Statistics
+    %a{ :"ng-click" => "create_round()", :"ng-show" => "user.team_captain && !new_round" } Add Round
+    .round_creation{ :"ng-show" => "user.team_captain && new_round", :"ng-include" => "'round_create'" }
     %br
     %input{ :type => :checkbox, :"ng-model" => "grouped", :value => "1" }
     Group by round

@@ -1,60 +1,63 @@
 class WorkspaceController < ApplicationController
-  def new
-    if (params[:type] == "topic")
-      @thread = Topic.find_by_name(params[:name])
-    elsif (params[:type] == "round")
-      @thread = Round.find(params[:id])
-    else
-      @thread = Puzzle.find(params[:id])
-    end
-    @workspace = @thread.workspaces.build({:priority=>"Normal"})
-    @workspace.editor = current_or_anon_login
+  def create
+    @workspace = Workspace.create(:thread_id => params[:thread_id],
+                                 :thread_type => params[:thread_type],
+                                 :workspace_type => params[:workspace_type],
+                                 :priority => "Normal")
+
+    @workspace.setup_type
+
     if @workspace.save
-      Push.send :command => "new workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id
-      emit_activity(@thread, "created a workspace") if params[:type] == "puzzle"
+      Push.send :command => "new workspace", 
+        :channel => @workspace.thread.chat_id, 
+        :workspace => @workspace.render
+      emit_activity(@workspace.thread, "created a workspace") if params[:thread_type] == "Puzzle"
     end
     render :nothing => true
   end
   
   def delete
     @workspace = Workspace.find(params[:id])
-    Push.send :command => "destroy workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.div_id
-    @workspace.destroy
+    @workspace.priority = 'Hidden'
+
+    Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.render
+
+    @workspace.thread_id = nil
+    @workspace.thread_type = nil
+    @workspace.save
     render :nothing => true
   end
   
-  def edit
+  def table
     @workspace = Workspace.find(params[:id])
-    render :partial => 'edit', :locals => { :workspace => @workspace, :yourtext => nil }
-  end
 
-  def show
-    @workspace = Workspace.find(params[:id])
-    if (params[:c])
-      render :partial => 'block', :locals => { :workspace => @workspace, :yourtext => nil }
-    else
-      render :partial => 'show', :locals => { :workspace => @workspace, :yourtext => nil }
+    emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
+    if params[:add]
+      @workspace.add_row if params[:add] == "row"
+      @workspace.add_col if params[:add] == "col"
+      @workspace.save
+      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.render
     end
-  end
+    if params[:update]
+      @workspace.update_cell params[:row], params[:col], params[:update]
+      @workspace.save
+      Push.send :command => "update cell", :channel => @workspace.thread.chat_id,
+        :workspace => @workspace.id, :row => params[:row].to_i, :col => params[:col].to_i,
+        :update => params[:update]
+    end
 
-  def prioritize
-    @workspace = Workspace.find(params[:id])
-    return false if (params[:workspace][:priority] == @workspace.priority)
-    if @workspace.update_attributes(params[:workspace])
-      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id, :container => @workspace.div_id
-    end
     render :nothing => true
   end
 
   def update
     @workspace = Workspace.find(params[:id])
     
-    if @workspace.updated_at > Time.at(params[:locktime].to_i)
-      render :partial => 'edit', :locals => { :workspace => @workspace, :yourtext => params[:workspace][:content] }
+    if @workspace.updated_at > Time.parse(params[:locktime])
+      render :nothing => true
       return false
     elsif @workspace.update_attributes(params[:workspace])
       emit_activity(@workspace.thread,"edited workspace #{@workspace.title}") if @workspace.thread_type == "Puzzle"
-      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.id, :container => @workspace.div_id
+      Push.send :command => "update workspace", :channel => @workspace.thread.chat_id, :workspace => @workspace.render
     end
     render :nothing => true
   end
