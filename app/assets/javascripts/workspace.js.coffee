@@ -1,3 +1,5 @@
+#= require 'markdown.min'
+
 @puztubeApp.factory 'Workspaces', [ '$http', '$sce', ($http, $sce) ->
   @add = (type) => 
     $http.post(Routes.create_workspace_path({ thread_id: @thread.id, thread_type: @thread_type, workspace_type: type })).success ->
