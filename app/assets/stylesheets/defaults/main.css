@@ -6,6 +6,10 @@
   width: 72%;
 }
 
+#topic {
+  width: 72%;
+}
+
 #statbox {
 position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;background-color: #fff;
 }
