@@ -6,7 +6,7 @@ class TopicsController < ThreadsController
   end
 
   def show
-    @topic = Topic.find_by_name(params[:name])
+    @topic = Topic.find_by_name!(params[:name])
     @chats = Chat.find(:all, :conditions => {:chat_id => @topic.chat_id}, 
                          :order => "created_at DESC", :limit => 35)
   end
