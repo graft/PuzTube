@@ -1,19 +1,38 @@
 @puztubeApp.factory 'Chats', [ '$http', ->
   @list = []
   @users = {}
+
+  @join = (users) =>
+    for user in users
+      @subscribe_user user
+
   @add_chat = (chat) =>
     @list.push chat
+
+  @post_chat = (msg) =>
+    @add_chat msg.chat
+    @subscribe_user msg.chat.user
+
+  @scroll_chat = -> $('#chatpane').trigger 'newitem'
+
   @concat_chats = (chats) =>
     @add_chat chat for chat in chats
-  @subscribe_user = (user) =>
-    @users[user] = true
-  @unsubscribe_user = (user) =>
-    delete @users[user] if @users[user]
+
+  @subscribe_user = (user) => @users[user] = true
+  @unsubscribe_user = (user) => delete @users[user] if @users[user]
+
   @
 ]
 
-@puztubeApp.controller "chatController", ($scope, $http, Chats) ->
+@puztubeApp.controller "chatController", ($scope, $http, Chats, socket) ->
   $scope.Chats = Chats
+
+  socket.on 'connected', (data) ->
+    socket.emit 'nick', user.login
+    socket.emit 'join', channel, Chats.join
+  socket.on 'joined', Chats.subscribe_user, Chats
+  socket.on 'left', Chats.unsubscribe_user
+  socket.on 'chat', Chats.post_chat, Chats.scroll_chat
 
   $scope.dateFormat = (chat) ->
     date = new Date(chat.created_at)

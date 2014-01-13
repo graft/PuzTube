@@ -34,7 +34,7 @@ var users = {};
 
 var commands = {
   'to_channel': function (msg) {
-    io.log.info("Sending to channel: "+msg);
+    io.log.info("Sending to channel: "+msg.channel);
     io.sockets.in(msg.channel).emit(msg.command, msg);
   },
   'to_user': function (msg) {
@@ -44,6 +44,34 @@ var commands = {
     io.sockets.emit(msg.command,msg);
   }
 };
+
+var net = require('net');
+
+var server = net.createServer(function(socket) {
+  socket.on('data',function (msg) {
+    // unfortunately, the control cannot speak properly
+    io.log.debug("Parsing "+msg);
+    try {
+      msg = JSON.parse(msg);
+    }
+    catch(err)
+    {
+      io.log.debug("Could not parse message!");
+      return;
+    }
+	  io.log.debug(msg.command);
+    if (msg.channel)
+      commands["to_channel"](msg);
+    else if (msg.private)
+      commands["to_user"](msg);
+    else
+      commands["to_all"](msg);
+  });
+});
+
+server.listen(8000,'127.0.0.1');
+
+
 
 io.sockets.on('connection', function (socket) {
   socket.emit('connected', { hello: 'world' });
@@ -63,23 +91,13 @@ io.sockets.on('connection', function (socket) {
     clients.forEach(function(c) {
       if (c.nick) userlist.push(c.nick);
     });
-    get_users(userlist);
+    if (get_users) get_users(userlist);
     if (socket.nick) socket.broadcast.to(channel).emit('joined',socket.nick);
   });
-  socket.on('control',function (msg) {
-    // unfortunately, the control cannot speak properly
-    msg = JSON.parse(msg);
-    socket.nick = "control";
-	  io.log.debug(msg.command);
-	  socket.emit('control-ack', { moon: "went bye" });
-    if (msg.channel)
-      commands["to_channel"](msg);
-    else if (msg.private)
-      commands["to_user"](msg);
-    else
-      commands["to_all"](msg);
-  });
   socket.on('disconnect', function () {
-    if (socket.channel && socket.nick) io.sockets.in(socket.channel).emit('left', socket.nick);
+    if (socket.channel && socket.nick) {
+      io.log.info("Removing "+socket.nick+" from "+socket.channel);
+      io.sockets.in(socket.channel).emit('left', socket.nick);
+    }
   });
 });

@@ -12,20 +12,30 @@ class PuzzlesController < ThreadsController
     emit_activity(@thread, "spoke in chat")
   end
 
-  def edit_row
-    @puzzle = Puzzle.find(params[:puzzle][:id])
-    broadcast_puzzle_edit(@puzzle,params[:puzzle])
-    render :nothing => true
-  end  
-  
+  def get
+    @puzzle = Puzzle.find(get_id params[:channel])
+    if @puzzle.meta
+      json = @puzzle.as_json(:include => {:round => {:include => :puzzles}})
+      json["workspaces"] = @puzzle.workspaces.map{|w| w.render}
+      render :json => json
+    else
+      json = @puzzle.as_json(:include => :round)
+      json["workspaces"] = @puzzle.workspaces.map{|w| w.render}
+      render :json => json
+    end
+  end
+
+  def workspaces
+    @puzzle = Puzzle.find(params[:id], :include => :workspaces)
+    render :json => @puzzle.workspaces
+  end
+
   def edit
     @puzzle = Puzzle.find(params[:id])
-    @round = Round.find(@puzzle.round_id)
-    if params[:type] == 'mini'
-      render :partial => 'miniedit'
-    else
-      render :partial => 'edit'
+    if @puzzle.update_attributes(params[:puzzle])
+      Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.round.hunt.chat_id
     end
+    render :nothing => true
   end
   
   def info
@@ -43,20 +53,14 @@ class PuzzlesController < ThreadsController
   end
 
   def create
-    @puzzle = Puzzle.new(params[:puzzle])
-
+    params[:puzzle].update( :priority => "Normal", :status => "New")
+    @puzzle = Puzzle.create(params[:puzzle])
     if @puzzle.save
-      redirect_to(@puzzle)
-    else
-      render :action => "new"
+      Push.send :command => "new puzzle", :puzzle => @puzzle, :channel => @puzzle.round.hunt.chat_id
     end
-  end
-
-  def update
-    @puzzle = Puzzle.find(params[:id])
-    broadcast_puzzle_edit(@puzzle,params[:puzzle])
     render :nothing => true
   end
+
 
   def worker
     @puzzle = Puzzle.find(params[:id])
@@ -65,11 +69,17 @@ class PuzzlesController < ThreadsController
     render :nothing => true
   end
 
+  def activities
+    @puzzle = Puzzle.find(params[:id])
+    render :json => Activity.where(:puzzle_id => @puzzle).all
+  end
+
   def destroy
     @puzzle = Puzzle.find(params[:id])
 
-    Push.send :command => "destroy puzzle", :channel => @puzzle.round.hunt.chat_id, :puzzle => @puzzle.t_id
-    @puzzle.destroy
+    Push.send :command => "destroy puzzle", :channel => @puzzle.round.hunt.chat_id, :puzzle => @puzzle
+    @puzzle.round_id = nil
+    @puzzle.save
     render :nothing => true
   end
 

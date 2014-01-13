@@ -6,6 +6,11 @@ require 'csv'
 module ApplicationHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper 
+
+  def get_id channel
+    id = channel.scan(/^\w+-([0-9]+)/).flatten.first
+  end
+
   def send_chat(user,channel,text)
     @chat = Chat.new( { :user => user } )
     @chat.text = sanitize_text text
@@ -20,8 +25,12 @@ module ApplicationHelper
     "<a href=\"/users/#{user}\" target=\"blank\">#{user}</a>"
   end
 
-  def hostname
-    "localhost"
+  def main_host
+    PuzTube.main_host
+  end
+
+  def node_host
+    PuzTube.node_host
   end
 
   def javascript_escape(str)
@@ -262,6 +271,7 @@ module ApplicationHelper
     activity.puzzle_id = puzzle.id
     activity.hunt_id = puzzle.round.hunt_id
     activity.user_id = current_user.id
+    activity.task = task
     activity.save
   end
 

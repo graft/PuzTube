@@ -1,32 +1,19 @@
-require 'SocketIO'
+require 'socket'
 require 'json'
 
 module Push
   # okay make a new
   class << self
     def socket
-      @socket ||= SocketIO.connect("http://localhost:5000",sync: true) do
-        Rails.logger.info "Starting new socket."
-        before_start do
-          on_message do |m|
-            puts "incoming message: #{m}"
-          end
-          on_event('news') do |d|
-            Rails.logger.info d.first
-          end
-        end
-      end
+      TCPSocket.open 'localhost', 8000
     end
 
     def send(msg)
       begin
         Rails.logger.info "Sending push message #{msg}"
-        socket.emit('control', msg.to_json)
+        socket.puts msg.to_json
       rescue Exception => e
         Rails.logger.info "Socket Push error #{e}"
-        # try again.
-        @socket = nil
-        socket.emit('control',msg)
       end
     end
   end

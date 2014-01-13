@@ -2,7 +2,7 @@ class Round < ActiveRecord::Base
   include PuzzleThread
   has_many :puzzles
   belongs_to :hunt
-  attr_accessible :name, :hunt_id, :url, :hint, :captain, :answer
+  attr_accessible :name, :hunt_id, :url, :hint, :captain, :answer, :priority
 
   SORTING = { 'priority' => :priority_order, 'status' => :status_order, 'creation' => :created_at, 'name' => :name }
   PRIORITY_OPTIONS = { "High" => 0, "Normal" => 1, "Low" => 2 }

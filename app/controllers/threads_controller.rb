@@ -17,8 +17,7 @@ class ThreadsController < ApplicationController
     begin
       thread_class = Kernel.const_get params[:thread]
       raise "#{thread_class} is not a thread" unless thread_class.is_thread?
-      id = params[:channel].scan(/^\w+-([0-9]+)/).flatten.first
-      @thread = thread_class.find(id)
+      @thread = thread_class.find(get_id params[:channel])
       text = params[:chat_input]
       user = current_or_anon_login
       channel = @thread.chat_id

@@ -1,107 +1,37 @@
 class RoundsController < ApplicationController
   before_filter :require_user
-  # GET /rounds
-  # GET /rounds.xml
   def index
     @current_hunt = DataStore.find_by_key("current_hunt")
    
-    respond_to do |format|
-      if !@current_hunt.nil?
-        format.html { redirect_to hunt_path(@current_hunt.value.to_i) }
-      else
-        format.html # index.html.erb
-      end
-      format.xml  { render :xml => @rounds }
+    if @current_hunt
+      redirect_to hunt_path @current_hunt.value.to_i
     end
   end
 
-  def info
-    @round = Round.find(params[:id])
-    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
-    @grouped = (current_user&&current_user.options)?current_user.options[:grouped]:false
-    sorter = Proc.new { |p1,p2|
-        if @sorting == "status"
-          p1.status_order <=> p2.status_order
-        elsif @sorting == "priority"
-          p1.priority_order <=> p2.priority_order
-        elsif @sorting == "name"
-          p1.name <=> p2.name
-        else
-          p1.created_at <=> p2.created_at
-        end
-      }
-    @round.puzzles.sort! &sorter
-    if params[:c]
-      render :partial => 'round', :locals => { :round => @round }
-    else
-      render :partial => 'show', :locals => { :round => @round }
+  def create
+    @round = Round.create(params[:round])
+    if @round.save
+      Push.send :command => "new round", :round => @round, :channel => @round.hunt.chat_id
     end
+    render :nothing => true
   end
-  # GET /rounds/1
-  # GET /rounds/1.xml
+
   def show
     @round = Round.find(params[:id])
-    @chats = Chat.find(:all, :conditions => {:chat_id => @round.chat_id}, :order => "created_at DESC", :limit => 10)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @rounds }
-    end
   end
 
-  def create_puzzle
-    @round = Round.find(params[:id])
-    @puzzle = @round.puzzles.build
-    @puzzle.name = "New Puzzle"
-    @puzzle.status = "New"
-    @puzzle.priority = "Normal"
-    
-    if @puzzle.save
-      Push.send :command => "new puzzle", :channel => @round.hunt.chat_id, :puzzle => @puzzle.id, :table => @round.puzzle_table_id
-    end
-    render :nothing => true
-  end
-  # GET /rounds/1/edit
   def edit
     @round = Round.find(params[:id])
-    render :partial => 'edit', :locals => { :round => @round }
-  end
-
-  # POST /rounds
-  # POST /rounds.xml
-  def create
-    @round = Round.new(params[:round])
-
-    respond_to do |format|
-      if @round.save
-        format.html { redirect_to(@round) }
-        format.xml  { render :xml => @round, :status => :created, :location => @round }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @round.errors, :status => :unprocessable_entity }
-      end
-    end
-  end
-
-  # PUT /rounds/1
-  # PUT /rounds/1.xml
-  def update
-    @round = Round.find(params[:id])
-    @sorting = (current_user&&current_user.options)?current_user.options[:sorting]:"status"
-
-     if @round.update_attributes(params[:round])
-      logger.info "Rendered channel for #{@round.hunt.chat_id}"
-      Push.send :command => "update round", :round => @round.id, :channel => @round.hunt.chat_id, :table => @round.div_id
+    if @round.update_attributes(params[:round])
+      Push.send :command => 'update round', :round => @round, :channel => @round.hunt.chat_id
     end
     render :nothing => true
   end
 
-  # DELETE /rounds/1
-  # DELETE /rounds/1.xml
   def destroy
     @round = Round.find(params[:id])
     
-    Push.send :command => "destroy round", :round => @round.div_id, :channel => @round.hunt.chat_id
+    Push.send :command => "destroy round", :round => @round, :channel => @round.hunt.chat_id
     @round.hidden = true
     @round.hunt_id = nil
     @round.save

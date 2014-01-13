@@ -1,0 +1,49 @@
+%script{ :type => "text/ng-template", :id => "puzzle_info" }
+  %p
+    %h1 {{ puzzle.name }}
+    %b Captain:
+    {{ puzzle.captain }}
+    %br
+    %b Url:
+    {{ puzzle.url }}
+    %br
+    %b Blurb:
+    {{ puzzle.hint }}
+    %br
+    %b Answer:
+    {{ puzzle.answer }}
+    %br
+    %b Wrong Answer:
+    {{ puzzle.wrong_answer }}
+    %br
+    %b Round:
+    {{ puzzle.round.name }}
+    %br
+    %b Round Hint:
+    {{ puzzle.round.hint }}
+    %br
+    %b Status:
+    {{ puzzle.status }}
+    %br
+    %b Priority:
+    {{ puzzle.priority }}
+    %br
+  %a{ :"ng-click" => "work_on_puzzle()" } Working on this
+
+  %br
+  //%a{ :"ng-click" => "edit_puzzle()" } Edit
+
+
+  %p{ :"ng-show" => "puzzle.meta" }
+    %b Round puzzles:
+    %table.puzzletable
+      %tr
+        %th Name
+        %th Answer
+        %th Captain
+        %th Blurb
+      %tr{ :"ng-repeat" => "puz in puzzle.round.puzzles" }
+        %td {{ puz.name }}
+        %td {{ puz.answer }}
+        %td {{ puz.captain }}
+        %td {{ puz.hint }}
