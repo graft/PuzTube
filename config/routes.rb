@@ -70,5 +70,5 @@ Puztube2::Application.routes.draw do
   match '/workspace/update_cell' => 'workspace#update_cell', :as => :update_cell 
   match '/workspace/rc' => 'workspace#add_rc', :as => :add_rc 
 
-  root :to => 'topics#show', :name => 'Project Electric Mayhem'
+  root :to => 'topics#show', :name => 'Death and Mayhem'
 end
