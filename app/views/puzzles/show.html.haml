@@ -5,12 +5,11 @@
   channel = '#{ @puzzle.chat_id }';
   thread = '#{ @puzzle.class }';
 
-= javascript_include_tag "http://#{hostname}:5000/socket.io/socket.io.js"
+= javascript_include_tag "#{node_host}/socket.io/socket.io.js"
 = javascript_include_tag :defaults
 = javascript_include_tag "socket-users"
 = javascript_include_tag "chat"
 = javascript_include_tag "puzzle"
-= javascript_include_tag "markdown.min"
 = javascript_include_tag "workspace"
 
 = render :partial => 'templates'

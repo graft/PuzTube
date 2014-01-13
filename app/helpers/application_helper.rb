@@ -25,8 +25,12 @@ module ApplicationHelper
     "<a href=\"/users/#{user}\" target=\"blank\">#{user}</a>"
   end
 
-  def hostname
-    "localhost"
+  def main_host
+    PuzTube.main_host
+  end
+
+  def node_host
+    PuzTube.node_host
   end
 
   def javascript_escape(str)
