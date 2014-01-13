@@ -52,7 +52,7 @@ class WorkspaceController < ApplicationController
   def update
     @workspace = Workspace.find(params[:id])
     
-    if @workspace.updated_at > Time.parse(params[:locktime])
+    if @workspace.updated_at > Time.zone.parse(params[:locktime])
       render :nothing => true
       return false
     elsif @workspace.update_attributes(params[:workspace])
