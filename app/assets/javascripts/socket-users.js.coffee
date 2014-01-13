@@ -1,5 +1,5 @@
 @puztubeApp.factory 'socket', ($rootScope) ->
-  socket = io.connect 'http://localhost', { port: 5000, query: 'shib=guaranteed-airline-harassment-underlying' }
+  socket = io.connect 'https://mitdfa.com', { resource: 'puznode/socket.io', query: 'shib=guaranteed-airline-harassment-underlying' }
   m =
     on: (event,callback,followup) ->
       socket.on(event, ->
