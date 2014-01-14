@@ -1,5 +1,7 @@
-class RoundsController < ApplicationController
+class RoundsController < ThreadsController
+  thread_type Round
   before_filter :require_user
+
   def index
     @current_hunt = DataStore.find_by_key("current_hunt")
    
@@ -18,6 +20,13 @@ class RoundsController < ApplicationController
 
   def show
     @round = Round.find(params[:id])
+  end
+
+  def get
+    @round = Round.find(get_id params[:channel])
+    json = @round.as_json(:include => :puzzles)
+    json["workspaces"] = @round.workspaces.map{|w| w.render}
+    render :json => json
   end
 
   def edit

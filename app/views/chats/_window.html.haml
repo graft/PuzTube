@@ -1,4 +1,4 @@
-#chatwindow{ :"ng-controller" => "chatController" }
+#chatwindow{ :"ng-controller" => "chatController", :"ng-show" => "visible" }
   #chatpane{ :"scroll-bottom" => true }
     %ul#chatlist
       %li{ :"ng-repeat" => "chat in Chats.list" }
@@ -11,6 +11,6 @@
       %ul#userlist
         %li{ :"ng-repeat" => "(user,t) in Chats.users" } {{user}}
           
-    = link_to 'Log', chat_log_path(:channel => thread.chat_id,:thread=>thread.id,:type=> thread.class.to_s), :target => "_blank"
+    %a{ :href => "log_path", :target => "_blank" } Log
 
-    = link_to_function "pop \u2197", 'pop_window();', :style => "float:right;"
+    %a{ :"ng-click" => "hide_chat()" } Hide

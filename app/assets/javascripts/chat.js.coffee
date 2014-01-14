@@ -13,7 +13,7 @@
     @add_chat msg.chat
     @subscribe_user msg.chat.user
 
-  @scroll_chat = -> $('#chatpane').trigger 'newitem'
+  @scroll_chat = => $('#chatpane').trigger 'newitem'
 
   @concat_chats = (chats) =>
     @add_chat chat for chat in chats
@@ -26,6 +26,12 @@
 
 @puztubeApp.controller "chatController", ($scope, $http, Chats, socket) ->
   $scope.Chats = Chats
+
+  $scope.visible = true
+  
+  $scope.hide_chat = => $scope.visible = false
+
+  $scope.log_pane = Routes.chat_log_path(channel)
 
   socket.on 'connected', (data) ->
     socket.emit 'nick', user.login

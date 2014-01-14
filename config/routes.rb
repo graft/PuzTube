@@ -18,6 +18,7 @@ Puztube2::Application.routes.draw do
   match '/rounds/create' => 'rounds#create', :as => :create_round
   match '/rounds' => 'rounds#index', :as => :rounds 
   match '/round/info' => 'rounds#info', :as => :info_round 
+  match '/round/:channel/get' => 'rounds#get', :as => :get_round 
   match '/round/:id' => 'rounds#show', :as => :show_round 
 
   match '/hunt/:channel/get' => 'hunts#get', :as => :get_hunt

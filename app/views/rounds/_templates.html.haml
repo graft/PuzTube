@@ -1,0 +1,34 @@
+%script{ :type => "text/ng-template", :id => "round_info" }
+  %p
+    %h1 {{ round.name }}
+    %b Captain:
+    {{ round.captain }}
+    %br
+    %b Url:
+    {{ round.url }}
+    %br
+    %b Hint:
+    {{ round.hint }}
+    %br
+    %b Answer:
+    {{ round.answer }}
+    %br
+    %b Wrong Answers:
+    {{ round.wrong_answer }}
+    %br
+    %b Priority:
+    {{ round.priority }}
+    %br
+
+  %b Round puzzles:
+  %table.puzzletable
+    %tr
+      %th Name
+      %th Answer
+      %th Captain
+      %th Blurb
+    %tr{ :"ng-repeat" => "puz in round.puzzles" }
+      %td {{ puz.name }}
+      %td {{ puz.answer }}
+      %td {{ puz.captain }}
+      %td {{ puz.hint }}

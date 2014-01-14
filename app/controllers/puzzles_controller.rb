@@ -1,5 +1,6 @@
 class PuzzlesController < ThreadsController
   thread_type Puzzle
+  before_filter :require_user
 
   def show
     @puzzle = Puzzle.find(params[:id])

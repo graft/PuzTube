@@ -6,6 +6,7 @@ require 'csv'
 module ApplicationHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::SanitizeHelper 
+  include PuzTube
 
   def get_id channel
     id = channel.scan(/^\w+-([0-9]+)/).flatten.first
@@ -23,14 +24,6 @@ module ApplicationHelper
 
   def with_link(user)
     "<a href=\"/users/#{user}\" target=\"blank\">#{user}</a>"
-  end
-
-  def main_host
-    PuzTube.main_host
-  end
-
-  def node_host
-    PuzTube.node_host
   end
 
   def javascript_escape(str)
