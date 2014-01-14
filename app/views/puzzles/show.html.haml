@@ -5,7 +5,7 @@
   channel = '#{ @puzzle.chat_id }';
   thread = '#{ @puzzle.class }';
 
-= javascript_include_tag "#{node_host}/socket.io/socket.io.js"
+= javascript_include_tag "#{node_uri}/socket.io/socket.io.js"
 = javascript_include_tag :defaults
 = javascript_include_tag "socket-users"
 = javascript_include_tag "chat"
@@ -27,4 +27,4 @@
   #workspaces
     .workspace{ :"ng-repeat" => "workspace in puzzle.workspaces", :"ng-include" => "workspace.workspace_type", :"ng-show" => "workspace.priority != 'Hidden'" }
 
-= render :partial => 'chats/window', :locals => { :chats => @chats, :thread => @puzzle, :multi => nil }
+= render :partial => 'chats/window'

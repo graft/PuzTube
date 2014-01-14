@@ -1,5 +1,6 @@
+<% environment.context_class.instance_eval { include PuzTube } %>
 @puztubeApp.factory 'socket', ($rootScope) ->
-  socket = io.connect 'https://mitdfa.com', { resource: 'puznode/socket.io', query: 'shib=guaranteed-airline-harassment-underlying' }
+  socket = io.connect '<%= node_host %>', { resource: '<%= node_resource 'socket.io' %>', query: 'shib=guaranteed-airline-harassment-underlying' }
   m =
     on: (event,callback,followup) ->
       socket.on(event, ->
