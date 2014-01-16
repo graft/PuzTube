@@ -1,12 +1,22 @@
 JsRoutes.setup do |c|
-  c.prefix = "/puztube"
+  c.prefix = "/"
 end
 
 module PuzTube
-  def self.main_host
-    "https://mitdfa.com/puztube"
+  def main_uri
+    "http://localhost:3000"
   end
-  def self.node_host
-    "https://mitdfa.com/puznode"
+
+  def node_uri
+    [ node_host, node_resource ].compact.join("/")
+  end
+
+  def node_host
+    "http://localhost:5000"
+  end
+
+  def node_resource post=nil
+    #[ "puznode", post ].compact.join("/")
+    post
   end
 end
