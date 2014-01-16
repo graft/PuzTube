@@ -44,7 +44,7 @@
   $scope.puzzle = Puzzle
   $scope.workspaces = Workspaces
 
-  $scope.valid_workspaces = [ 'text', 'table', 'attachments' ]
+  $scope.valid_workspaces = [ 'text', 'etherpad', 'table', 'attachments' ]
 
   Workspaces.thread = Puzzle
   Workspaces.thread_type = 'Puzzle'

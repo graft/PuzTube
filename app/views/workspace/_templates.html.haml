@@ -24,7 +24,7 @@
 %script{ :type => "text/ng-template", :id => "workspace_etherpad" }
   .workspace_header{ :"ng-include" => "'workspace_header'" }
   .workspace_contents{ :"ng-show" => "workspace.priority != 'Hidden'" }
-    Etherpad goes here
+    %iframe.etherpad{ :"ng-src" => "{{ workspace.pad_url }}", :style => "width: 100%;" }
 
 %script{ :type => "text/ng-template", :id => "workspace_files" }
   .workspace_normal{ :"ng-show" => "!workspace.editing" }

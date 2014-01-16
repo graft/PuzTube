@@ -8,6 +8,8 @@ class Workspace < ActiveRecord::Base
     case workspace_type
     when "workspace_table"
       self.content = ([([""]*5).join("\t")]*5).join("\n")
+    when "workspace_etherpad"
+      self.content = rand(36**9).to_s(36)
     end
   end
 

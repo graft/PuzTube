@@ -51,6 +51,8 @@
     if workspace.workspace_type == 'workspace_text'
       if workspace.content
         workspace.markdown_content = $sce.trustAsHtml(markdown.toHTML(workspace.content))
+    if workspace.workspace_type == 'workspace_etherpad'
+      workspace.pad_url = $sce.trustAsResourceUrl("http://localhost:9001/p/PAD-#{workspace.content}?showChat=false&showLineNumbers=false&userName=#{user.login}")
 
 
   @add_row = (workspace) =>
