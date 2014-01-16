@@ -9,12 +9,12 @@ module ApplicationHelper
   include PuzTube
 
 
-  def send_chat user, channel, text
-    @chat = Chat.new(:user => user,
-                     :text => sanitize_text(text),
-                     :chat_id => channel)
+  def send_chat opts
+    @chat = Chat.new(:user => opts[:user],
+                     :text => sanitize_text(opts[:text]),
+                     :chat_id => opts[:channel])
     if @chat.save
-      Push.send :command => "chat", :channel => channel, :chat => @chat
+      Push.send :command => "chat", :channel => opts[:channel], :chat => @chat
     end
   end
 

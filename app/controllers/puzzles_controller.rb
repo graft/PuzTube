@@ -31,7 +31,7 @@ class PuzzlesController < ThreadsController
     guess = @puzzle.guess
     if @puzzle.update_attributes(:guess => nil, :wrong_answer => @puzzle.wrong_guess)
       Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
-      send_chat :OPERATOR, @puzzle.chat_id, "#{guess} was incorrect"
+      send_chat :user => :OPERATOR, :channel => @puzzle.chat_id, :text => "#{guess} was incorrect"
     end
     render :nothing => true
   end
@@ -41,7 +41,7 @@ class PuzzlesController < ThreadsController
     guess = @puzzle.guess
     if @puzzle.update_attributes(:guess => nil)
       Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
-      send_chat :OPERATOR, @puzzle.chat_id, "#{guess} was rejected"
+      send_chat :user => :OPERATOR, :channel => @puzzle.chat_id, :text => "#{guess} was rejected"
     end
     render :nothing => true
   end
@@ -51,7 +51,7 @@ class PuzzlesController < ThreadsController
     guess = @puzzle.guess
     if @puzzle.update_attributes(:guess => nil, :answer => guess, :status => :Solved)
       Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
-      Push.send :command => "chat", :user => :BROADCAST, :text => "Puzzle #{@puzzle.name} in Round #{@puzzle.round.name} was solved with answer #{@puzzle.answer}"
+      send_chat :user => :BROADCAST, :text => "Puzzle #{@puzzle.name} in Round #{@puzzle.round.name} was solved with answer #{@puzzle.answer}"
     end
     render :nothing => true
   end

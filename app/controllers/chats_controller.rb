@@ -25,7 +25,7 @@ class ChatsController < ApplicationController
     text = params[:chat_input]
     user = current_or_anon_login
     channel = params[:channel]
-    send_chat user, channel, text
+    send_chat :user => user, :channel => channel, :text => text
     if get_class(channel) == Puzzle
       thread = Puzzle.find(get_id channel)
       emit_activity(thread, "spoke in chat")
