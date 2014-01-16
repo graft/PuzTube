@@ -7,5 +7,9 @@ class Hunt < ActiveRecord::Base
   def chat_id
     "hunt-#{id}"
   end  
+
+  def update_channels
+    [ chat_id, hunt.chat_id ]
+  end
   
 end

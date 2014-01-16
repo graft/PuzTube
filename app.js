@@ -35,7 +35,9 @@ var users = {};
 var commands = {
   'to_channel': function (msg) {
     io.log.info("Sending to channel: "+msg.channel);
-    io.sockets.in(msg.channel).emit(msg.command, msg);
+    msg.channel.forEach(function(channel) {
+      io.sockets.in(channel).emit(msg.command, msg);
+    });
   },
   'to_user': function (msg) {
     users[msg.private].emit(msg.command, msg);

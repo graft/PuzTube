@@ -27,10 +27,8 @@
 	padding: 3px;
 }
 #chat_input {
-  width: 100%;
-  border: 1px solid;
-  padding: 2px;
   margin: 0px;
+  width: 100%;
 }
 
 

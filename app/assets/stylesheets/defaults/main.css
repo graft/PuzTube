@@ -14,6 +14,14 @@
   width: 72%;
 }
 
+#info {
+  margin-bottom: 10px;
+}
+
+#edit {
+  margin-bottom: 10px;
+}
+
 #statbox {
 position: relative; border:1px solid #fcc;width:740px;padding:15px 0px;background-color: #fff;
 }
@@ -37,4 +45,9 @@ position:absolute; left: 5px; top: 5px;font-size:larger; color:#c88;
 label {
   white-space: nowrap;
   font-weight: bold;
+}
+
+.flat {
+  border: 1px solid;
+  padding: 2px;
 }

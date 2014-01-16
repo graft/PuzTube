@@ -12,20 +12,4 @@ class ThreadsController < ApplicationController
   def thread_class
     self.class.thread_class
   end
-
-  def chat
-    begin
-      thread_class = Kernel.const_get params[:thread]
-      raise "#{thread_class} is not a thread" unless thread_class.is_thread?
-      @thread = thread_class.find(get_id params[:channel])
-      text = params[:chat_input]
-      user = current_or_anon_login
-      channel = @thread.chat_id
-      send_chat(user,channel,text)
-    rescue Exception => e
-      logger.info "#{e.message}"
-    ensure
-      render :nothing => true
-    end
-  end
 end

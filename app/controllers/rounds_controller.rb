@@ -32,7 +32,7 @@ class RoundsController < ThreadsController
   def edit
     @round = Round.find(params[:id])
     if @round.update_attributes(params[:round])
-      Push.send :command => 'update round', :round => @round, :channel => @round.hunt.chat_id
+      Push.send :command => 'update round', :round => @round, :channel => @round.update_channels
     end
     render :nothing => true
   end
@@ -40,7 +40,7 @@ class RoundsController < ThreadsController
   def destroy
     @round = Round.find(params[:id])
     
-    Push.send :command => "destroy round", :round => @round, :channel => @round.hunt.chat_id
+    Push.send :command => "destroy round", :round => @round, :channel => @round.update_channels
     @round.hidden = true
     @round.hunt_id = nil
     @round.save

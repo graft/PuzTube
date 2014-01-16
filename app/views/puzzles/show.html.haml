@@ -21,8 +21,10 @@
 #puzzle{ :"ng-controller" => "puzzleController", :"ng-show" => "visible" }
   #info{ :"ng-show" => "!puzzle.editing", :"ng-include" => "'puzzle_info'" }
   #edit{ :"ng-show" => "puzzle.editing", :"ng-include" => "'puzzle_edit'" }
+  #meta{ :"ng-show" => "puzzle.meta", :"ng-iclude" => "'puzzle_meta'" }
 
-  %a{ :"ng-click" => "add_workspace()", :"ng-show" => "!adding_workspace" } New workspace
+  %a.tbutton{ :"ng-click" => "add_workspace()", :"ng-show" => "!adding_workspace" } New workspace
+  %br
   #workspace_bar{ :"ng-show" => "adding_workspace", :"ng-include" => "'workspace_bar'" }
   #workspaces
     .workspace{ :"ng-repeat" => "workspace in puzzle.workspaces", :"ng-include" => "workspace.workspace_type", :"ng-show" => "workspace.priority != 'Hidden'" }

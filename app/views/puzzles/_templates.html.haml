@@ -28,22 +28,54 @@
     %b Priority:
     {{ puzzle.priority }}
     %br
-  %a{ :"ng-click" => "work_on_puzzle()" } Working on this
+    %b Guess:
+    %input.flat{ :"ng-model" => "puzzle.guess" }
+    %a.tbutton{ :"ng-click" => "guess(puzzle)" } hello operator
+    %br
+  %a.button{ :"ng-click" => "edit_puzzle(puzzle)" } &#x270E;
 
+%script{ :type => "text/ng-template", :id => "puzzle_edit" }
+  %label
+    priority:
+    %select{ :"ng-model" => "puzzle.editing.priority", :"ng-options" => "prio for prio in puzzle_priorities" }
   %br
-  //%a{ :"ng-click" => "edit_puzzle()" } Edit
+  %label
+    status:
+    %select{ :"ng-model" => "puzzle.editing.status", :"ng-options" => "status for status in puzzle_statuses" }
+  %br
+  %label
+    name:
+    %input.flat{ :type => :text, :"ng-model" => "puzzle.editing.name" }
+  %br
+  %label
+    url:
+    %input.flat{ :type => :text, :"ng-model" => "puzzle.editing.url" }
+  %br
+  %label
+    hint:
+    %input.flat{ :type => :text, :"ng-model" => "puzzle.editing.hint" }
+  %br
+  %label
+    captain:
+    %input.flat{ :type => :text, :"ng-model" => "puzzle.editing.captain" }
+  %br
+  %label
+    wrong answers:
+    %input.flat{ :type => :text, :"ng-model" => "puzzle.editing.wrong_answer" }
+  %br
+  %a.button{ "ng-click" => "post_edit_puzzle(puzzle)" } &#x2713;
+  %a.button{ "ng-click" => "cancel_edit_puzzle(puzzle)" } &#x2298;
 
-
-  %p{ :"ng-show" => "puzzle.meta" }
-    %b Round puzzles:
-    %table.puzzletable
-      %tr
-        %th Name
-        %th Answer
-        %th Captain
-        %th Blurb
-      %tr{ :"ng-repeat" => "puz in puzzle.round.puzzles" }
-        %td {{ puz.name }}
-        %td {{ puz.answer }}
-        %td {{ puz.captain }}
-        %td {{ puz.hint }}
+%script{ :type => "text/ng-template", :id => "puzzle_meta" }
+  %b Round puzzles:
+  %table.puzzletable
+    %tr
+      %th Name
+      %th Answer
+      %th Captain
+      %th Blurb
+    %tr{ :"ng-repeat" => "puz in puzzle.round.puzzles" }
+      %td {{ puz.name }}
+      %td {{ puz.answer }}
+      %td {{ puz.captain }}
+      %td {{ puz.hint }}

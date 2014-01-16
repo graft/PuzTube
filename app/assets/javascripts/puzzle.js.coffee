@@ -56,7 +56,7 @@
         for w in Puzzle.workspaces
           Workspaces.process w
 
-  $scope.edit_puzzle = ->
+  $scope.edit_puzzle = (puzzle) ->
     $scope.puzzle.editing =
       name: puzzle.name
       url: puzzle.url
@@ -64,7 +64,6 @@
       status: puzzle.status
       hint: puzzle.hint
       captain: puzzle.captain
-      answer: puzzle.answer
       wrong_answer: puzzle.wrong_answer
 
   $scope.add_workspace = -> $scope.adding_workspace = true
@@ -77,6 +76,10 @@
   $scope.post_edit_puzzle = ->
     $http.post(Routes.edit_puzzle_path($scope.puzzle.id, {puzzle: $scope.puzzle.editing}))
       .success -> $scope.puzzle.editing = null
+
+  $scope.guess= (puzzle) ->
+    $http.post(Routes.edit_puzzle_path($scope.puzzle.id, {puzzle: { guess: puzzle.guess }}))
+      .success -> $scope.puzzle.guess = null
 
   $scope.cancel_edit_puzzle = (puzzle) -> puzzle.editing = null
 

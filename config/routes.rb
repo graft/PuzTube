@@ -36,6 +36,7 @@ Puztube2::Application.routes.draw do
   match '/chats/log/:channel' => 'chats#log', :as => :chat_log 
   match '/chats/window/:channel' => 'chats#window', :as => :chat_window 
   match '/chats/recent/:channel' => 'chats#recent', :as => :recent_chats 
+  match '/chats/post/:channel' => 'chats#post', :as => :post_chat 
   match '/broadcasts' => 'chats#broadcasts', :as => :broadcasts 
 
   resources :rounds

@@ -66,7 +66,7 @@
   $scope.unset_focus = -> focused = false
 
   $scope.post_chat = ->
-    $http.post(Routes.thread_chat_path({ thread: thread, channel: channel, chat_input: $scope.chat_text }))
+    $http.post(Routes.post_chat_path({ channel: channel, chat_input: $scope.chat_text }))
     $scope.chat_text = ""
 
   $scope.request_chats = ->

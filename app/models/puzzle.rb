@@ -5,22 +5,12 @@ class Puzzle < ActiveRecord::Base
   has_many :users
   has_many :activities
   has_many :workspaces, :as => :thread, :order => 'priority'
-  attr_accessible :name, :url, :hint, :captain, :meta, :answer, :status, :priority, :round_id
+  attr_accessible :name, :url, :hint, :captain, :meta, :answer, :status, :priority, :round_id, :wrong_answer, :guess
 
-  def comments
-    (workspaces+tables).sort! { |c1,c2|
-      c1.priority <=> c2.priority
-    }
+  def update_channels
+    [ chat_id, round.chat_id, round.hunt.chat_id ]
   end
 
-  def t_id
-    "PZR#{id}"
-  end
-  
-  def act_id
-    "PZA#{id}"
-  end
-  
   def status_color
     case status
     when "Needs Insight"

@@ -5,7 +5,7 @@
         %b {{ timeFormat(chat) }} {{ chat.user }}:
         {{ chat.text}}
   #chatbox
-    %input#chat_input{ :type => :text, :"ng-model" => "chat_text", :size => 20, :"ui-keypress" => "{13:'post_chat()'}", :autocomplete => :off }
+    %input.flat#chat_input{ :type => :text, :"ng-model" => "chat_text", :size => 20, :"ui-keypress" => "{13:'post_chat()'}", :autocomplete => :off }
     #chatusers
       Users:
       %ul#userlist

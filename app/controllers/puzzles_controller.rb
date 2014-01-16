@@ -34,7 +34,7 @@ class PuzzlesController < ThreadsController
   def edit
     @puzzle = Puzzle.find(params[:id])
     if @puzzle.update_attributes(params[:puzzle])
-      Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.round.hunt.chat_id
+      Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
     end
     render :nothing => true
   end
@@ -78,7 +78,7 @@ class PuzzlesController < ThreadsController
   def destroy
     @puzzle = Puzzle.find(params[:id])
 
-    Push.send :command => "destroy puzzle", :channel => @puzzle.round.hunt.chat_id, :puzzle => @puzzle
+    Push.send :command => "destroy puzzle", :channel => @puzzle.update_channels, :puzzle => @puzzle
     @puzzle.round_id = nil
     @puzzle.save
     render :nothing => true

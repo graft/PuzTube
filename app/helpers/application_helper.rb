@@ -12,16 +12,6 @@ module ApplicationHelper
     id = channel.scan(/^\w+-([0-9]+)/).flatten.first
   end
 
-  def send_chat(user,channel,text)
-    @chat = Chat.new( { :user => user } )
-    @chat.text = sanitize_text text
-    @chat.chat_id = channel
-    if (@chat.save)
-      logger.info "Pushing chat request to channel #{channel}"
-      Push.send :command => "chat", :channel => channel, :chat => @chat
-    end
-  end
-
   def with_link(user)
     "<a href=\"/users/#{user}\" target=\"blank\">#{user}</a>"
   end

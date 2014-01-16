@@ -11,6 +11,7 @@ module Push
     def send(msg)
       begin
         Rails.logger.info "Sending push message #{msg}"
+        msg[:channel] = [ msg[:channel] ].compact unless msg[:channel].is_a? Array
         socket.puts msg.to_json
       rescue Exception => e
         Rails.logger.info "Socket Push error #{e}"
