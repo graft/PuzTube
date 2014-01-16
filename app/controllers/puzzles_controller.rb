@@ -26,6 +26,36 @@ class PuzzlesController < ThreadsController
     end
   end
 
+  def wrong
+    @puzzle = Puzzle.find(params[:id])
+    guess = @puzzle.guess
+    if @puzzle.update_attributes(:guess => nil, :wrong_answer => @puzzle.wrong_guess)
+      Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
+      send_chat :OPERATOR, @puzzle.chat_id, "#{guess} was incorrect"
+    end
+    render :nothing => true
+  end
+
+  def reject
+    @puzzle = Puzzle.find(params[:id])
+    guess = @puzzle.guess
+    if @puzzle.update_attributes(:guess => nil)
+      Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
+      send_chat :OPERATOR, @puzzle.chat_id, "#{guess} was rejected"
+    end
+    render :nothing => true
+  end
+
+  def solve
+    @puzzle = Puzzle.find(params[:id])
+    guess = @puzzle.guess
+    if @puzzle.update_attributes(:guess => nil, :answer => guess, :status => :Solved)
+      Push.send :command => 'update puzzle', :puzzle => @puzzle, :channel => @puzzle.update_channels
+      Push.send :command => "chat", :user => :BROADCAST, :text => "Puzzle #{@puzzle.name} in Round #{@puzzle.round.name} was solved with answer #{@puzzle.answer}"
+    end
+    render :nothing => true
+  end
+
   def workspaces
     @puzzle = Puzzle.find(params[:id], :include => :workspaces)
     render :json => @puzzle.workspaces
@@ -39,20 +69,6 @@ class PuzzlesController < ThreadsController
     render :nothing => true
   end
   
-  def info
-    @puzzle = Puzzle.find(params[:id])
-    @round = Round.find(@puzzle.round_id)
-    if params[:type] == 'mini'
-      if params[:c]
-        render :partial => 'miniblock', :locals => { :puzzle => @puzzle }
-      else
-        render :partial => 'miniinfo', :locals => { :puzzle => @puzzle }
-      end
-    else
-      render :partial => 'info', :locals => { :puzzle => @puzzle }
-    end
-  end
-
   def create
     params[:puzzle].update( :priority => "Normal", :status => "New")
     @puzzle = Puzzle.create(params[:puzzle])
@@ -98,7 +114,6 @@ class PuzzlesController < ThreadsController
     if puzzle.update_attributes(params)
       Push.send :command => "update puzzle", :channel => puzzle.round.hunt.chat_id, :puzzle => puzzle.id, :table => puzzle.t_id
       Push.send :command => "update puzzle info", :channel => puzzle.chat_id, :puzzle => puzzle.id
-      Push.send :command => "chat", :text => "<li>#{h Time.now.strftime("%H:%M")} <b>MAYHEM BROADCAST</b> <font style=#{ javascript_escape("'color: red;'")}>Puzzle #{h puzzle.name} in Round #{h javascript_escape puzzle.round.name} was solved with answer #{h javascript_escape puzzle.answer}</font></li>" if broad
     end
   end
 end

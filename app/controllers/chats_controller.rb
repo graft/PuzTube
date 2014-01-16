@@ -22,20 +22,17 @@ class ChatsController < ApplicationController
   end
  
   def post
-    begin
-      text = params[:chat_input]
-      user = current_or_anon_login
-      channel = params[:channel]
-      @chat = Chat.new(:user => user,
-                       :text => sanitize_text(text),
-                       :chat_id => params[:channel])
-      if @chat.save
-        logger.info "Pushing chat request to channel #{channel}"
-        Push.send :command => "chat", :channel => channel, :chat => @chat
-      end
-      render :nothing => true
+    text = params[:chat_input]
+    user = current_or_anon_login
+    channel = params[:channel]
+    send_chat user, channel, text
+    if get_class(channel) == Puzzle
+      thread = Puzzle.find(get_id channel)
+      emit_activity(thread, "spoke in chat")
     end
+    render :nothing => true
   end 
+
   def log
     @chats = Chat.find(:all, :conditions => [ "chat_id = ?",params[:channel]])
     if (params[:type] == "Puzzle")

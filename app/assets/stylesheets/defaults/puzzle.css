@@ -6,7 +6,7 @@
   border-radius: 4px;
 }
 
-.puzzle .cell {
+.cell {
   display: table-cell;
   vertical-align: middle;
   padding: 2px;
@@ -40,4 +40,30 @@
 
 .puzzle .controls {
   width: 15%;
+}
+
+.operator_row {
+  background: #ffc;
+  border-top: 1px solid #000;
+  border-collapse: separate;
+  border-spacing: 2px;
+  padding: 3px;
+}
+.operator_row .cell {
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #ddb;
+}
+
+.operator_row .switch_buttons {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 2px;
+  width: 150px;
+}
+
+#operator {
+  border: 2px solid #000;
+  border-radius: 5px;
+  width: 50%;
 }

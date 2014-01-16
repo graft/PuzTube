@@ -62,7 +62,7 @@ var server = net.createServer(function(socket) {
       return;
     }
 	  io.log.debug(msg.command);
-    if (msg.channel)
+    if (msg.channel && msg.channel.length > 0)
       commands["to_channel"](msg);
     else if (msg.private)
       commands["to_user"](msg);

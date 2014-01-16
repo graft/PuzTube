@@ -11,6 +11,9 @@ Puztube2::Application.routes.draw do
   match '/puzzle/:id' => 'puzzles#show', :as => :show_puzzle
   match '/puzzle/:channel/get' => 'puzzles#get', :as => :get_puzzle
   match '/puzzle/:id/activities' => 'puzzles#activities', :as => :puzzle_activities
+  match '/puzzle/:id/wrong' => 'puzzles#wrong', :as => :wrong_answer
+  match '/puzzle/:id/reject' => 'puzzles#reject', :as => :reject_answer
+  match '/puzzle/:id/solve' => 'puzzles#solve', :as => :solve_puzzle
 
 
   match '/rounds/destroy/:id' => 'rounds#destroy', :method => :delete, :as => :destroy_round 

@@ -5,18 +5,13 @@ class Round < ActiveRecord::Base
   has_many :workspaces, :as => :thread, :order => 'priority'
   attr_accessible :name, :hunt_id, :url, :hint, :captain, :answer, :priority
 
+  def update_channels
+    [ chat_id, hunt.chat_id ]
+  end
+
   SORTING = { 'priority' => :priority_order, 'status' => :status_order, 'creation' => :created_at, 'name' => :name }
   PRIORITY_OPTIONS = { "High" => 0, "Normal" => 1, "Low" => 2 }
 
-  def div_id
-    "rnd-#{id}"
-  end
-  def t_id
-    "rnt-#{id}"
-  end
-  def puzzle_table_id
-    "rpt-#{id}"
-  end
   def priority_color
     case priority
     when "High"

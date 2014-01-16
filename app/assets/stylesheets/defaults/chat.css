@@ -57,6 +57,17 @@
   font-size: 10pt;
 }
 
+#chatlist .operator {
+  color: green;
+}
+#chatlist .broadcast {
+  color: blue;
+}
+#chatlist .important {
+  color: red;
+  font-weight: bold;
+}
+
 #chatusers {
 	height: 80px;
 	overflow:auto;

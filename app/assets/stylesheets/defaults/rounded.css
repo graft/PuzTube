@@ -55,6 +55,7 @@ a.tbutton {
   border-radius: 2px;
   padding: 1px;
 	text-decoration: none;
+  white-space: nowrap;
   background-color: #ddd;
   margin: 1px;
   color: #000;

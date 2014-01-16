@@ -8,8 +8,22 @@ module ApplicationHelper
   include ActionView::Helpers::SanitizeHelper 
   include PuzTube
 
+
+  def send_chat user, channel, text
+    @chat = Chat.new(:user => user,
+                     :text => sanitize_text(text),
+                     :chat_id => channel)
+    if @chat.save
+      Push.send :command => "chat", :channel => channel, :chat => @chat
+    end
+  end
+
   def get_id channel
     id = channel.scan(/^\w+-([0-9]+)/).flatten.first
+  end
+
+  def get_class
+    Kernel.const_get channel.scan(/^(\w+)-([0-9]+)/).flatten.first.capitalize
   end
 
   def with_link(user)

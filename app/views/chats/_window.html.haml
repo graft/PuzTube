@@ -2,8 +2,10 @@
   #chatpane{ :"scroll-bottom" => true }
     %ul#chatlist
       %li{ :"ng-repeat" => "chat in Chats.list" }
-        %b {{ timeFormat(chat) }} {{ chat.user }}:
-        {{ chat.text}}
+        %b
+          {{ timeFormat(chat) }}
+          %span{ :"ng-class" => "{OPERATOR: 'operator', BROADCAST: 'broadcast'}[chat.user]"} {{ chat.user }}:
+        %span{ :"ng-class" => "{OPERATOR: 'important', BROADCAST: 'important'}[chat.user]"} {{ chat.text }}
   #chatbox
     %input.flat#chat_input{ :type => :text, :"ng-model" => "chat_text", :size => 20, :"ui-keypress" => "{13:'post_chat()'}", :autocomplete => :off }
     #chatusers

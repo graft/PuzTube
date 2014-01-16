@@ -3,7 +3,12 @@
 
   @round_created = (round) => @rounds.push round
   @round_destroyed = (round) => @rounds = (r for r in @rounds when r.id != round.id)
-  @round_updated = (round) => $.extend(r,round) if r.id == round.id for r in @rounds
+  @round_updated = (round) =>
+    $.extend(r,round) if r.id == round.id for r in @rounds
+    for puzzle in @puzzles
+      if puzzle.round_id = round.id
+        puzzle.round = round.name
+        puzzle.round_hint = round.hint
 
   @puzzle_created = (puzzle) =>
     @puzzles.push puzzle
@@ -28,6 +33,7 @@
     for round in @rounds
       for puzzle in round.puzzles
         puzzle.round = round.name
+        puzzle.round_hint = round.hint
         @puzzles.push puzzle
 
   @
@@ -136,10 +142,19 @@
       .success -> puzzle.editing = null
 
   $scope.cancel_edit_puzzle = (puzzle) -> puzzle.editing = null
+
   $scope.destroy_puzzle = (puzzle) ->
     return unless confirm "Are you sure?"
     $http.post(Routes.destroy_puzzle_path({ id: puzzle.id }))
 
+  $scope.reject_answer = (puzzle) ->
+    $http.post(Routes.reject_answer_path(puzzle.id))
+
+  $scope.wrong_answer = (puzzle) ->
+    $http.post(Routes.wrong_answer_path(puzzle.id))
+
+  $scope.solve_puzzle = (puzzle) ->
+    $http.post(Routes.solve_puzzle_path(puzzle.id))
 
   $scope.request_hunt()
 

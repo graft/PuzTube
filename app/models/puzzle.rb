@@ -11,6 +11,10 @@ class Puzzle < ActiveRecord::Base
     [ chat_id, round.chat_id, round.hunt.chat_id ]
   end
 
+  def wrong_guess
+    ((wrong_answer || "").split(" ") + [ guess ]).join(" ")
+  end
+
   def status_color
     case status
     when "Needs Insight"

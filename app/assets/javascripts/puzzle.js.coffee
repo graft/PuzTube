@@ -79,8 +79,8 @@
 
   $scope.guess= (puzzle) ->
     $http.post(Routes.edit_puzzle_path($scope.puzzle.id, {puzzle: { guess: puzzle.guess }}))
-      .success -> $scope.puzzle.guess = null
 
   $scope.cancel_edit_puzzle = (puzzle) -> puzzle.editing = null
+
 
   $scope.request_puzzle()

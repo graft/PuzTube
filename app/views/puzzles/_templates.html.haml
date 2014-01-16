@@ -28,10 +28,11 @@
     %b Priority:
     {{ puzzle.priority }}
     %br
-    %b Guess:
-    %input.flat{ :"ng-model" => "puzzle.guess" }
-    %a.tbutton{ :"ng-click" => "guess(puzzle)" } hello operator
-    %br
+    %div{:"ng-hide" => "puzzle.answer" }
+      %b Guess:
+      %input.flat{ :"ng-model" => "puzzle.guess" }
+      %a.tbutton{ :"ng-click" => "guess(puzzle)" } hello operator
+      %br
   %a.button{ :"ng-click" => "edit_puzzle(puzzle)" } &#x270E;
 
 %script{ :type => "text/ng-template", :id => "puzzle_edit" }

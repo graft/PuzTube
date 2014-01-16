@@ -158,3 +158,29 @@
     %a.button{ :"ng-click" => "post_new_puzzle(round)" } &#x2713;
     %a.button{ :"ng-click" => "cancel_new_puzzle(round)" } &#x2298;
   %p 
+
+%script{ :type => "text/ng-template", :id => "operator_table" }
+  %h2 Operator Switchboard
+  .operator_row{ :"ng-repeat" => "puzzle in hunt.puzzles | orderBy:updated_at", :"ng-show" => "puzzle.guess" }
+    .cell 
+      %b name:
+      {{ puzzle.name }} 
+      %br
+      %b round:
+      {{ puzzle.round }} 
+    .cell 
+      %span{ :"ng-show" => "puzzle.hint" }
+        %b hint:
+        {{ puzzle.hint }} 
+      %br
+      %span{ :"ng-show" => "puzzle.round_hint" }
+        %b round hint:
+        {{ puzzle.round_hint }} 
+    .cell
+      %b guess:
+      {{ puzzle.guess }} 
+    .switch_buttons
+      %a.tbutton{ :"ng-click" => "solve_puzzle(puzzle)" } correct
+      %a.tbutton{ :"ng-click" => "wrong_answer(puzzle)" } wrong
+      %a.tbutton{ :"ng-click" => "reject_answer(puzzle)" } reject
+    

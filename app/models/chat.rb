@@ -1,5 +1,5 @@
 class Chat < ActiveRecord::Base
-	attr_accessible :user
+	attr_accessible :user, :chat_id, :text
   def timeformat
     created_at.getlocal.strftime("%H:%M")
   end

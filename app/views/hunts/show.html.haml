@@ -24,12 +24,12 @@
       %span.button.graphbutton#show_graph
         = link_to 'Show', stats_path(:id=>@hunt.id), :method => 'get', :remote => true, :'data-update-target' => "statbox"
       #stats Statistics
+    #operator{ :"ng-include" => "'operator_table'", :"ng-show" => "user.team_captain" }
     %a{ :"ng-click" => "create_round()", :"ng-show" => "user.team_captain && !new_round" } Add Round
     .round_creation{ :"ng-show" => "user.team_captain && new_round", :"ng-include" => "'round_create'" }
-    %br
-    %input{ :type => :checkbox, :"ng-model" => "grouped", :value => "1" }
-    Group by round
-    %br
     #roundstable
+      %input{ :type => :checkbox, :"ng-model" => "grouped", :value => "1" }
+      Group by round
+      %br
       .round_grouped{ :"ng-show" => "grouped", :"ng-repeat" => "round in hunt.rounds", :"ng-include" => "'round_grouped'" }
       .round_ungrouped{ :"ng-hide" => "grouped", :"ng-include" => "'round_ungrouped'" }
