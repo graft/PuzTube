@@ -47,7 +47,8 @@ class ChatsController < ApplicationController
   end
 
   def recent
-    render :json => Chat.find(:all, :conditions => { :chat_id => params[:channel] }, :order => "created_at DESC", :limit => 35).reverse
+    chats = Chat.arel_table
+    render :json => Chat.where(chats[:chat_id].eq(params[:channel]).or(chats[:chat_id].eq(nil))).limit(35).all(:order => "created_at")
   end
 
   # DELETE /chats/1
